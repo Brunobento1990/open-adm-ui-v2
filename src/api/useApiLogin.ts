@@ -13,6 +13,7 @@ export function useApiLogin() {
   const api = useApi({
     method: ApiMethod.Post,
     url: ApiRoutePath.Login,
+    naoEnviarToken: true,
     naoRenderizarResposta: true,
   })
 

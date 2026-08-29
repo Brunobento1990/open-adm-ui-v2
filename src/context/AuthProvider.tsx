@@ -4,9 +4,8 @@ import { keysLocalStorage } from '../configs/keysLocalStorage'
 import { useLocalStorageApp } from '../hook/useLocalStorageApp'
 import { useNavigationApp } from '../hook/useNavigationApp'
 import { PrivateRoutePath, PublicRoutePath } from '../routes/appRoutes'
-import type { AuthLoginResponse } from '../types/AuthTypes'
+import type { AuthLoginResponse, FuncionarioAutenticado } from '../types/AuthTypes'
 import type { Empresa } from '../types/EmpresaTypes'
-import type { Usuario } from '../types/UsuarioTypes'
 import { AuthContext } from './AuthContext'
 
 type AuthProviderProps = {
@@ -18,25 +17,25 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const { getItem, removeItem, setItem } = useLocalStorageApp()
   const [tokenJwt, setTokenJwt] = useState(() => getItem<string>(keysLocalStorage.jwt))
   const [usuario, setUsuario] = useState(() =>
-    getItem<Usuario>(keysLocalStorage.usuario, true),
+    getItem<FuncionarioAutenticado>(keysLocalStorage.usuario, true),
   )
   const [empresa, setEmpresa] = useState(() =>
     getItem<Empresa>(keysLocalStorage.empresa, true),
   )
   function login(response: AuthLoginResponse) {
-    setItem(keysLocalStorage.jwt, response.tokenJwt)
+    setItem(keysLocalStorage.jwt, response.token)
+    setItem(keysLocalStorage.refreshToken, response.refreshToken)
     setItem(keysLocalStorage.usuario, response.usuario, true)
-    setItem(keysLocalStorage.empresa, response.empresa, true)
 
-    setTokenJwt(response.tokenJwt)
+    setTokenJwt(response.token)
     setUsuario(response.usuario)
-    setEmpresa(response.empresa)
 
     navigate(PrivateRoutePath.Dashboard)
   }
 
   function logout() {
     removeItem(keysLocalStorage.jwt)
+    removeItem(keysLocalStorage.refreshToken)
     removeItem(keysLocalStorage.usuario)
     removeItem(keysLocalStorage.empresa)
 

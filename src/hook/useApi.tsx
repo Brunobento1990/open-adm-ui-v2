@@ -41,6 +41,7 @@ const errorResponseKeys = {
     description: 'descricao',
     errors: 'erros',
     errorsPascal: 'Erros',
+    message: 'mensagem',
 };
 
 function getErrorMessages(errors: any): string | string[] {
@@ -99,6 +100,16 @@ export function useApi(props: propsUseApi) {
             return;
         }
 
+        const message = error?.response?.data?.[errorResponseKeys.message];
+        if (typeof message === 'string' && message.trim()) {
+            snack.show(message, 'error');
+
+            if (error?.response?.status === 401 && !props.naoDeslogarAoReceber401) {
+                logout();
+            }
+            return;
+        }
+
         let errors =
             error?.response?.data?.[errorResponseKeys.errors] ??
             error?.response?.data?.[errorResponseKeys.errorsPascal];
@@ -133,10 +144,12 @@ export function useApi(props: propsUseApi) {
             abortControllerRef.current = new AbortController();
             const { signal } = abortControllerRef.current;
             const jwt = getItem(keysLocalStorage.jwt);
+            const refreshToken = getItem(keysLocalStorage.refreshToken);
 
             const headers = {
                 ...(!props.naoEnviarToken && {
                     Authorization: `Bearer ${jwt || ''}`,
+                    RefreshToken: `${refreshToken || ''}`,
                 }),
                 ...(props.header ?? {}),
             };

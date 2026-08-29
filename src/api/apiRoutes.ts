@@ -7,7 +7,7 @@ export enum ApiRoutePath {
   Contato = '/contato',
   ConexaoWhatsApp = '/conexao-whatsapp',
   AtendimentoNumero = '/telefone-atendimento',
-  Login = '/login',
+  Login = '/login/funcionario',
   Menu = '/menu',
   Produto = '/produto',
   PublicoComanda = '/publico/comandas',

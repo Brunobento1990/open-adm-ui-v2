@@ -1,8 +1,16 @@
-import type { Empresa } from './EmpresaTypes'
-import type { Usuario } from './UsuarioTypes'
+export interface FuncionarioAutenticado {
+  id: string
+  dataDeCriacao: string
+  dataDeAtualizacao: string
+  numero: number
+  nome: string
+  email: string
+  telefone?: string | null
+  avatar?: string | null
+}
 
 export interface AuthLoginResponse {
-  tokenJwt: string
-  usuario: Usuario
-  empresa: Empresa
+  token: string
+  refreshToken: string
+  usuario: FuncionarioAutenticado
 }

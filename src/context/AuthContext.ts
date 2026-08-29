@@ -1,7 +1,6 @@
 import { createContext } from 'react'
-import type { AuthLoginResponse } from '../types/AuthTypes'
+import type { AuthLoginResponse, FuncionarioAutenticado } from '../types/AuthTypes'
 import type { Empresa } from '../types/EmpresaTypes'
-import type { Usuario } from '../types/UsuarioTypes'
 
 export type AuthContextValue = {
   empresa?: Empresa
@@ -10,7 +9,7 @@ export type AuthContextValue = {
   login: (response: AuthLoginResponse) => void
   logout: () => void
   tokenJwt?: string
-  usuario?: Usuario
+  usuario?: FuncionarioAutenticado
 }
 
 export const AuthContext = createContext<AuthContextValue | undefined>(undefined)
