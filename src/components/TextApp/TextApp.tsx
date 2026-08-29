@@ -17,10 +17,10 @@ const variantMap: Record<TextAppVariant, 'h1' | 'h4' | 'h6' | 'body2'> = {
   [TextAppVariant.Label]: 'body2',
 }
 
-const colorMap: Record<TextAppColor, 'text.primary' | 'text.secondary' | 'inherit' | 'primary'> =
+const colorMap: Record<TextAppColor, 'text.primary' | 'text.secondary' | 'inherit' | 'primary.main'> =
   {
     [TextAppColor.Default]: 'text.primary',
-    [TextAppColor.Primary]: 'primary',
+    [TextAppColor.Primary]: 'primary.main',
     [TextAppColor.Secondary]: 'text.secondary',
     [TextAppColor.Inherit]: 'inherit',
   }
@@ -37,6 +37,14 @@ const weightMap: Record<TextAppWeight, number> = {
   [TextAppWeight.Medium]: 500,
   [TextAppWeight.SemiBold]: 600,
   [TextAppWeight.Bold]: 700,
+}
+
+function resolveColor(color: NonNullable<TextAppProps['color']>) {
+  if (color in colorMap) return colorMap[color as TextAppColor]
+
+  return typeof color === 'string'
+    ? color.replace(/\s+%/g, '%')
+    : color
 }
 
 export {
@@ -74,10 +82,10 @@ export function TextApp({
     <Typography
       align={align}
       className={className}
-      color={color in colorMap ? colorMap[color as TextAppColor] : color}
       gutterBottom={gutterBottom}
       noWrap={noWrap}
       sx={[{
+        color: resolveColor(color),
         fontSize: fontSizeValue,
         fontWeight: fontWeightValue,
       }, ...(Array.isArray(sx) ? sx : [sx])]}

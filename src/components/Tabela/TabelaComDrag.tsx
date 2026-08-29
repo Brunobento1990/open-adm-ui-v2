@@ -76,11 +76,17 @@ export function TabelaComDrag(props: TabelaComDragProps) {
     }
 
     const columns = useMemo<ColDef[]>(() => {
-        const addHeaderTooltip = (column: TypeColumns): ColDef => ({
-            ...column,
-            cellClass: 'ag-center-cols-cell',
-            headerTooltip: column.sortable ? `Ordenar por ${column.headerName}` : undefined,
-        })
+        const addHeaderTooltip = (column: TypeColumns): ColDef => {
+            const { flex, width, ...columnDefinition } = column
+
+            return {
+                ...columnDefinition,
+                initialFlex: flex ?? undefined,
+                initialWidth: width,
+                cellClass: 'ag-center-cols-cell',
+                headerTooltip: column.sortable ? `Ordenar por ${column.headerName}` : undefined,
+            }
+        }
 
         return props.columns.map(addHeaderTooltip)
     }, [props.columns])

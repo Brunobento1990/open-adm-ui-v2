@@ -16,6 +16,7 @@ export enum ApiRoutePath {
   Empresa = '/empresa',
   MovimentacaoEstoque = '/estoque-movimentacao',
   Usuario = '/usuario',
+  UltimosPedidos = '/ultimos-pedidos',
 }
 
 export enum UsuarioApiRoutePath {

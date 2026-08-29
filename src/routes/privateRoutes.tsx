@@ -5,6 +5,7 @@ import { CategoriaFormPage } from '../pages/private/categoria/CategoriaFormPage'
 import { CategoriaPage } from '../pages/private/categoria/CategoriaPage'
 import { ClienteFormPage } from '../pages/private/cliente/ClienteFormPage'
 import { ClientePage } from '../pages/private/cliente/ClientePage'
+import { ClienteUltimosPedidosPage } from '../pages/private/cliente/ClienteUltimosPedidosPage'
 import { ComandaFormPage } from '../pages/private/comanda/ComandaFormPage'
 import { ComandaPage } from '../pages/private/comanda/ComandaPage'
 import { EstoqueMovimentacaoPage } from '../pages/private/estoque/EstoqueMovimentacaoPage'
@@ -94,6 +95,16 @@ export const privateRoutes: PrivateRouteConfig[] = [
     title: 'Clientes',
     path: PrivateRoutePath.Cliente,
     component: <ClientePage />,
+  },
+  {
+    title: 'Últimos pedidos de clientes CPF',
+    path: PrivateRoutePath.ClienteUltimosPedidosCpf,
+    component: <ClienteUltimosPedidosPage isJuridico={false} />,
+  },
+  {
+    title: 'Últimos pedidos de clientes CNPJ',
+    path: PrivateRoutePath.ClienteUltimosPedidosCnpj,
+    component: <ClienteUltimosPedidosPage isJuridico />,
   },
   {
     title: 'Comandas',

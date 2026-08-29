@@ -10,6 +10,8 @@ import { SkeletonApp as Skeleton } from '../../components/SkeletonApp/SkeletonAp
 import { StackApp as Stack } from '../../components/StackApp/StackApp'
 import { TextApp as Typography } from '../../components/TextApp/TextApp'
 import { useThemeApp } from '../../hook/useThemeApp'
+import { useNavigationApp } from '../../hook/useNavigationApp'
+import { PrivateRoutePath } from '../../routes/appRoutes'
 import type {
   Dashboard,
   DashboardProdutoVendido,
@@ -166,6 +168,7 @@ function ProductList({ products }: { products: DashboardProdutoVendido[] }) {
 
 export function HomePage() {
   const { colorWithOpacity, cores, getPaletteColor } = useThemeApp()
+  const { navigate } = useNavigationApp()
   const dashboardApi = useApiDashboard()
   const [dashboard, setDashboard] = useState<Dashboard>()
 
@@ -406,8 +409,8 @@ export function HomePage() {
           {loading ? <LoadingRows /> : (
             <Stack divider={<Divider flexItem />}>
               <IndicatorRow icon={DashboardIcon.Acesso} label="Acessos no mês" value={dashboard?.quantidadeDeAcessoEcommerce ?? 0} />
-              <IndicatorRow icon={DashboardIcon.Clientes} label="Clientes CNPJ" value={dashboard?.quantidadeDeUsuarioCnpj ?? 0} />
-              <IndicatorRow icon={DashboardIcon.Clientes} label="Clientes CPF" value={dashboard?.quantidadeDeUsuarioCpf ?? 0} />
+              <IndicatorRow icon={DashboardIcon.Clientes} label="Clientes CNPJ" onClick={() => navigate(PrivateRoutePath.ClienteUltimosPedidosCnpj)} value={dashboard?.quantidadeDeUsuarioCnpj ?? 0} />
+              <IndicatorRow icon={DashboardIcon.Clientes} label="Clientes CPF" onClick={() => navigate(PrivateRoutePath.ClienteUltimosPedidosCpf)} value={dashboard?.quantidadeDeUsuarioCpf ?? 0} />
             </Stack>
           )}
         </SectionCard>
@@ -428,9 +431,26 @@ function StatusRow({ item, color, colorWithOpacity }: { item: DashboardStatusPed
   )
 }
 
-function IndicatorRow({ icon, label, value }: { icon: string; label: string; value: number }) {
+function IndicatorRow({ icon, label, onClick, value }: { icon: string; label: string; onClick?: () => void; value: number }) {
   return (
-    <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center', py: 1.25 }}>
+    <Stack
+      direction="row"
+      onClick={onClick}
+      role={onClick ? 'link' : undefined}
+      spacing={1.5}
+      tabIndex={onClick ? 0 : undefined}
+      onKeyDown={(event) => {
+        if (onClick && (event.key === 'Enter' || event.key === ' ')) onClick()
+      }}
+      sx={{
+        alignItems: 'center',
+        borderRadius: 1,
+        cursor: onClick ? 'pointer' : undefined,
+        px: onClick ? 0.75 : 0,
+        py: 1.25,
+        '&:hover': onClick ? { bgcolor: 'action.hover' } : undefined,
+      }}
+    >
       <Box sx={{ bgcolor: 'action.selected', borderRadius: 1.5, color: 'primary.main', display: 'grid', height: 36, placeItems: 'center', width: 36 }}><IconApp icon={icon} width="1.1875rem" /></Box>
       <Typography variant="body2" sx={{ flex: 1 }}>{label}</Typography>
       <Typography variant="body2" sx={{ fontWeight: 700 }}>{formatNumber(value)}</Typography>

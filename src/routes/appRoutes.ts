@@ -41,6 +41,8 @@ export enum PrivateRoutePath {
   ClienteEditarId = '/cadastros/clientes/editar/:id',
   ClienteVisualizar = '/cadastros/clientes/visualizar',
   ClienteVisualizarId = '/cadastros/clientes/visualizar/:id',
+  ClienteUltimosPedidosCpf = '/vendas/cliente/ultimos-pedido-cpf',
+  ClienteUltimosPedidosCnpj = '/vendas/cliente/ultimos-pedido-cnpj',
   Produto = '/cadastros/produtos',
   ProdutoAdicionar = '/cadastros/produtos/adicionar',
   ProdutoEditar = '/cadastros/produtos/editar',
