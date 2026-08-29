@@ -1,5 +1,6 @@
 import { useMediaQuery } from '@mui/material'
 import { alpha, useTheme } from '@mui/material/styles'
+import { TipoPaletaCorEnum } from '../types/TipoPaletaCorEnum'
 
 export function useThemeApp() {
   const theme = useTheme()
@@ -10,6 +11,15 @@ export function useThemeApp() {
   const sidebarActive = alpha(theme.palette.primary.main, theme.palette.mode === 'light' ? 0.12 : 0.2)
   const chatSentBubbleBackground = theme.palette.mode === 'light' ? '#dcf8c6' : '#1f5d43'
   const chatSentBubbleBorder = theme.palette.mode === 'light' ? '#c8edb1' : '#2c7a57'
+  const paletteColors: Record<TipoPaletaCorEnum, string> = {
+    [TipoPaletaCorEnum.Default]: theme.palette.text.primary,
+    [TipoPaletaCorEnum.Primary]: theme.palette.primary.main,
+    [TipoPaletaCorEnum.Secondary]: theme.palette.secondary.main,
+    [TipoPaletaCorEnum.Error]: theme.palette.error.main,
+    [TipoPaletaCorEnum.Info]: theme.palette.info.main,
+    [TipoPaletaCorEnum.Success]: theme.palette.success.main,
+    [TipoPaletaCorEnum.Warning]: theme.palette.warning.main,
+  }
 
   return {
     borderRadius: `${theme.shape.borderRadius}px`,
@@ -18,12 +28,14 @@ export function useThemeApp() {
       card: theme.palette.background.paper,
     },
     shadow: theme.shadows[2],
+    colorWithOpacity: (color: string, opacity: number) => alpha(color, opacity),
+    getPaletteColor: (color: TipoPaletaCorEnum) => paletteColors[color],
     cores: {
       divider: theme.palette.divider,
       dividerSoft: alpha(theme.palette.grey[500], theme.palette.mode === 'light' ? 0.08 : 0.12),
       primary: theme.palette.primary.main,
       text: theme.palette.text,
-      warning: theme.palette.warning.light,
+      warning: theme.palette.warning.main,
       error: theme.palette.error.main,
       success: theme.palette.success.main,
       info: theme.palette.info.main,

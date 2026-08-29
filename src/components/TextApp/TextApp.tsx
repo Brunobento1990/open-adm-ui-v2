@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material'
+import type { TypographyProps } from '@mui/material'
 import {
   TextAppAlign,
   TextAppColor,
@@ -59,23 +60,28 @@ export function TextApp({
   noWrap,
   gutterBottom,
   className,
+  sx,
 }: TextAppProps) {
   const componentProps = component ? { component } : {}
   const fontSizeValue = fontSize ?? (size ? sizeMap[size] : undefined)
   const fontWeightValue = fontWeight ?? (weight ? weightMap[weight] : undefined)
+  const typographyVariant: TypographyProps['variant'] =
+    variant in variantMap
+      ? variantMap[variant as TextAppVariant]
+      : variant as TypographyProps['variant']
 
   return (
     <Typography
       align={align}
       className={className}
-      color={colorMap[color]}
+      color={color in colorMap ? colorMap[color as TextAppColor] : color}
       gutterBottom={gutterBottom}
       noWrap={noWrap}
-      sx={{
+      sx={[{
         fontSize: fontSizeValue,
         fontWeight: fontWeightValue,
-      }}
-      variant={variantMap[variant]}
+      }, ...(Array.isArray(sx) ? sx : [sx])]}
+      variant={typographyVariant}
       {...componentProps}
     >
       {children}

@@ -3,7 +3,7 @@ export enum ApiRoutePath {
   Chat = '/chat',
   Cliente = '/cliente',
   Comanda = '/comanda',
-  Dashboard = '/dashboard',
+  Dashboard = '/home/adm',
   Contato = '/contato',
   ConexaoWhatsApp = '/conexao-whatsapp',
   AtendimentoNumero = '/telefone-atendimento',

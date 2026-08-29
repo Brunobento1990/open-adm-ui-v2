@@ -1,4 +1,5 @@
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
+import type { BoxProps } from '@mui/material'
 
 export enum BoxAppComponent {
   Div = 'div',
@@ -61,7 +62,10 @@ export enum BoxAppPlaceItems {
 
 export type BoxAppProps = {
   children?: ReactNode
-  component?: BoxAppComponent
+  component?: BoxAppComponent | BoxProps['component']
+  sx?: BoxProps['sx']
+  title?: string
+  role?: string
   display?: BoxAppDisplay
   flexDirection?: BoxAppFlexDirection
   alignItems?: BoxAppAlignItems

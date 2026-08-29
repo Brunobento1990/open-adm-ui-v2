@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import type { ElementType } from 'react'
+import type { TypographyProps } from '@mui/material'
 
 export enum TextAppVariant {
   Display = 'display',
@@ -40,8 +41,8 @@ export enum TextAppAlign {
 
 export type TextAppProps = {
   children?: ReactNode
-  variant?: TextAppVariant
-  color?: TextAppColor
+  variant?: TextAppVariant | TypographyProps['variant']
+  color?: TextAppColor | TypographyProps['color']
   size?: TextAppSize
   fontSize?: string | number
   weight?: TextAppWeight
@@ -51,4 +52,5 @@ export type TextAppProps = {
   noWrap?: boolean
   gutterBottom?: boolean
   className?: string
+  sx?: TypographyProps['sx']
 }

@@ -6,11 +6,14 @@ export function PaperApp({
   elevation = 0,
   fullHeight,
   padding = { xs: 2, sm: 2.5 },
+  sx,
+  variant,
 }: PaperAppProps) {
   return (
     <Paper
       elevation={elevation}
-      sx={{
+      variant={variant}
+      sx={[{
         display: fullHeight ? 'flex' : undefined,
         flexDirection: fullHeight ? 'column' : undefined,
         height: fullHeight ? '100%' : undefined,
@@ -24,7 +27,7 @@ export function PaperApp({
           palette.mode === 'dark'
             ? '0 24px 80px rgba(0, 0, 0, 0.35)'
             : '0 24px 80px rgba(15, 23, 42, 0.10)',
-      }}
+      }, ...(Array.isArray(sx) ? sx : [sx])]}
     >
       {children}
     </Paper>

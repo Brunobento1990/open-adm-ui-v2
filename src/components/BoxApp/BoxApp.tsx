@@ -52,6 +52,9 @@ export function BoxApp({
   className,
   noValidate,
   onSubmit,
+  role,
+  sx,
+  title,
 }: BoxAppProps) {
 
   return (
@@ -60,7 +63,9 @@ export function BoxApp({
       component={component}
       noValidate={noValidate}
       onSubmit={onSubmit}
-      sx={{
+      role={role}
+      title={title}
+      sx={[{
         display,
         flex,
         flexDirection,
@@ -105,7 +110,7 @@ export function BoxApp({
         textDecoration,
         transform,
         transition,
-      }}
+      }, ...(Array.isArray(sx) ? sx : [sx])]}
     >
       {children}
     </Box>
