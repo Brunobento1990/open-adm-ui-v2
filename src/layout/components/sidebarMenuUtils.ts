@@ -19,7 +19,14 @@ export function getInitialOpenMenuIds(
   menus: Menu[],
   pathname: string,
 ): string[] {
-  return menus
-    .filter((menu) => menu.filhos?.some(isMenu) && menuHasActivePath(menu, pathname))
-    .map((menu) => menu.id.toString())
+  return menus.flatMap((menu) => {
+    const children = menu.filhos?.filter(isMenu) ?? []
+    const descendantIds = getInitialOpenMenuIds(children, pathname)
+
+    if (children.length > 0 && menuHasActivePath(menu, pathname)) {
+      return [menu.id.toString(), ...descendantIds]
+    }
+
+    return descendantIds
+  })
 }

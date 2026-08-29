@@ -1,15 +1,11 @@
-export type MenuFilho = Menu | string
-
 export interface Menu {
   id: number
-  dataDeCriacao: string
-  paiId: number
   nome: string
   caminho?: string
   icone: string
-  filhos: MenuFilho[]
+  filhos: Menu[]
 }
 
-export function isMenu(value: MenuFilho): value is Menu {
+export function isMenu(value: Menu): value is Menu {
   return typeof value === 'object' && value !== null
 }
