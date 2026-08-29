@@ -1,0 +1,13 @@
+.git
+.github
+.vscode
+.agents
+.codex
+dist
+node_modules
+.env*
+!.env.production
+!.env.production.example
+*.log
+Dockerfile*
+README.md
