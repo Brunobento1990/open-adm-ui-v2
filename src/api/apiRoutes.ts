@@ -1,5 +1,6 @@
 export enum ApiRoutePath {
   Banner = '/banners',
+  LojaParceira = '/lojas-parceiras',
   Categoria = '/categoria',
   Chat = '/chat',
   Cliente = '/cliente',
@@ -24,6 +25,13 @@ export enum BannerApiRoutePath {
   Criar = '/create',
   Obter = '/get-banner',
   Atualizar = '/update',
+}
+
+export enum LojaParceiraApiRoutePath {
+  Atualizar = '/update',
+  Criar = '/create',
+  Excluir = '/delete',
+  Obter = '/get-loja',
 }
 
 export enum UsuarioApiRoutePath {

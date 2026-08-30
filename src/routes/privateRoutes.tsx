@@ -16,6 +16,8 @@ import { EstoqueMovimentacoesPage } from '../pages/private/estoque/EstoqueMovime
 import { EstoquePage } from '../pages/private/estoque/EstoquePage'
 import { EmpresaPage } from '../pages/private/empresa/EmpresaPage'
 import { HomePage } from '../pages/private/HomePage'
+import { LojaParceiraFormPage } from '../pages/private/lojaParceira/LojaParceiraFormPage'
+import { LojaParceiraPage } from '../pages/private/lojaParceira/LojaParceiraPage'
 import { MinhaContaPage } from '../pages/private/MinhaContaPage'
 import { ProdutoFormPage } from '../pages/private/produto/ProdutoFormPage'
 import { ProdutoPage } from '../pages/private/produto/ProdutoPage'
@@ -33,6 +35,26 @@ export type PrivateRouteConfig = {
 }
 
 export const privateRoutes: PrivateRouteConfig[] = [
+  {
+    title: 'Lojas parceiras',
+    path: PrivateRoutePath.LojaParceira,
+    component: <LojaParceiraPage />,
+  },
+  {
+    title: 'Loja parceira',
+    path: PrivateRoutePath.LojaParceiraAdicionar,
+    component: <LojaParceiraFormPage action={FormAction.Create} />,
+  },
+  {
+    title: 'Loja parceira',
+    path: PrivateRoutePath.LojaParceiraEditarId,
+    component: <LojaParceiraFormPage action={FormAction.Edit} />,
+  },
+  {
+    title: 'Visualizar loja parceira',
+    path: PrivateRoutePath.LojaParceiraVisualizarId,
+    component: <LojaParceiraFormPage action={FormAction.View} />,
+  },
   {
     title: 'Banners',
     path: PrivateRoutePath.Banner,

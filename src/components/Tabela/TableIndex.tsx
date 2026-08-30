@@ -33,14 +33,11 @@ type PaginacaoResponse = {
   totalRegistros: number
 }
 
-type AlterarStatusResponse = {
-  resultado: boolean
-}
-
 export interface ITableIndexProps {
   columns: TypeColumns[]
   url: string
   urlAdd?: string
+  urlDelete?: string
   urlView?: string
   urlEdit?: string
   notShowHeader?: boolean
@@ -141,12 +138,12 @@ export function TableIndex(props: ITableIndexProps) {
 
   async function alterarStatus(item: any) {
     const ativo = !item.ativo
-    const response = await alterarStatusApi.action<AlterarStatusResponse>({
+    const response = await alterarStatusApi.action({
       urlParams: `${ApiResourceRoutePath.AlterarStatus}/${encodeURIComponent(item.id)}/${ativo}`,
       message: `Registro ${ativo ? 'ativado' : 'inativado'} com sucesso`,
     })
 
-    if (response?.resultado) await refresh()
+    if (response !== undefined) await refresh()
   }
 
   const defaultColumns = DefaultColuns({
