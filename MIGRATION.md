@@ -16,3 +16,4 @@
 - [x] Migrar CRUD de lojas parceiras.
 - [x] Migrar CRUD de categoria.
 - [x] Migrar CRUD de peso.
+- [x] Migrar CRUD de tamanho.

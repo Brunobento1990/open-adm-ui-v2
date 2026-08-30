@@ -15,6 +15,7 @@ export enum ApiRoutePath {
   Produto = '/produto',
   PublicoComanda = '/publico/comandas',
   TabelaDePreco = '/tabela-de-preco',
+  Tamanho = '/tamanhos',
   Estoque = '/estoque',
   Empresa = '/empresa',
   MovimentacaoEstoque = '/estoque-movimentacao',
@@ -39,6 +40,12 @@ export enum PesoApiRoutePath {
   Atualizar = '/update',
   Criar = '/create',
   Obter = '/get-peso',
+}
+
+export enum TamanhoApiRoutePath {
+  Atualizar = '/update',
+  Criar = '/create',
+  Obter = '/get-tamanho',
 }
 
 export enum UsuarioApiRoutePath {

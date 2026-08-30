@@ -25,6 +25,8 @@ import { ProdutoFormPage } from '../pages/private/produto/ProdutoFormPage'
 import { ProdutoPage } from '../pages/private/produto/ProdutoPage'
 import { TabelaDePrecoFormPage } from '../pages/private/tabelaDePreco/TabelaDePrecoFormPage'
 import { TabelaDePrecoPage } from '../pages/private/tabelaDePreco/TabelaDePrecoPage'
+import { TamanhoFormPage } from '../pages/private/tamanho/TamanhoFormPage'
+import { TamanhoPage } from '../pages/private/tamanho/TamanhoPage'
 import { UsuarioFormPage } from '../pages/private/usuario/UsuarioFormPage'
 import { UsuarioPage } from '../pages/private/usuario/UsuarioPage'
 import { FormAction } from '../types/Form'
@@ -37,6 +39,26 @@ export type PrivateRouteConfig = {
 }
 
 export const privateRoutes: PrivateRouteConfig[] = [
+  {
+    title: 'Tamanhos',
+    path: PrivateRoutePath.Tamanho,
+    component: <TamanhoPage />,
+  },
+  {
+    title: 'Tamanho',
+    path: PrivateRoutePath.TamanhoAdicionar,
+    component: <TamanhoFormPage action={FormAction.Create} />,
+  },
+  {
+    title: 'Tamanho',
+    path: PrivateRoutePath.TamanhoEditarId,
+    component: <TamanhoFormPage action={FormAction.Edit} />,
+  },
+  {
+    title: 'Visualizar tamanho',
+    path: PrivateRoutePath.TamanhoVisualizarId,
+    component: <TamanhoFormPage action={FormAction.View} />,
+  },
   {
     title: 'Pesos',
     path: PrivateRoutePath.Peso,

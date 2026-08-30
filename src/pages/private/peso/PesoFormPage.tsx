@@ -10,6 +10,7 @@ import { YupAdapter } from '../../../lib/YupAdapter'
 import { PrivateRoutePath } from '../../../routes/appRoutes'
 import { FormAction, type IFormTypes } from '../../../types/Form'
 import { PesoFormField, type Peso } from '../../../types/PesoTypes'
+import { obterNumeroOpcional } from '../../../utils/numberUtils'
 
 const PesoField = {
   DescricaoMaxLength: 255,
@@ -34,12 +35,6 @@ const pesoValidationSchema = new YupAdapter()
     'Informe a descrição',
   )
   .build()
-
-function obterNumeroOpcional(value?: number) {
-  return value === undefined || String(value).trim() === ''
-    ? undefined
-    : Number(value)
-}
 
 export function PesoFormPage({ action }: IFormTypes) {
   const { id } = useParams<{ id: string }>()
