@@ -19,6 +19,8 @@ import { HomePage } from '../pages/private/HomePage'
 import { LojaParceiraFormPage } from '../pages/private/lojaParceira/LojaParceiraFormPage'
 import { LojaParceiraPage } from '../pages/private/lojaParceira/LojaParceiraPage'
 import { MinhaContaPage } from '../pages/private/MinhaContaPage'
+import { PesoFormPage } from '../pages/private/peso/PesoFormPage'
+import { PesoPage } from '../pages/private/peso/PesoPage'
 import { ProdutoFormPage } from '../pages/private/produto/ProdutoFormPage'
 import { ProdutoPage } from '../pages/private/produto/ProdutoPage'
 import { TabelaDePrecoFormPage } from '../pages/private/tabelaDePreco/TabelaDePrecoFormPage'
@@ -35,6 +37,26 @@ export type PrivateRouteConfig = {
 }
 
 export const privateRoutes: PrivateRouteConfig[] = [
+  {
+    title: 'Pesos',
+    path: PrivateRoutePath.Peso,
+    component: <PesoPage />,
+  },
+  {
+    title: 'Peso',
+    path: PrivateRoutePath.PesoAdicionar,
+    component: <PesoFormPage action={FormAction.Create} />,
+  },
+  {
+    title: 'Peso',
+    path: PrivateRoutePath.PesoEditarId,
+    component: <PesoFormPage action={FormAction.Edit} />,
+  },
+  {
+    title: 'Visualizar peso',
+    path: PrivateRoutePath.PesoVisualizarId,
+    component: <PesoFormPage action={FormAction.View} />,
+  },
   {
     title: 'Lojas parceiras',
     path: PrivateRoutePath.LojaParceira,

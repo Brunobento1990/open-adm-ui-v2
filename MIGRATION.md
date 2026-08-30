@@ -15,3 +15,4 @@
 - [x] Migrar CRUD de banner.
 - [x] Migrar CRUD de lojas parceiras.
 - [x] Migrar CRUD de categoria.
+- [x] Migrar CRUD de peso.
