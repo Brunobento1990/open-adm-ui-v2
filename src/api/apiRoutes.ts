@@ -12,13 +12,14 @@ export enum ApiRoutePath {
   Login = '/login/funcionario',
   Menu = '/menu',
   Peso = '/pesos',
-  Produto = '/produto',
+  Produto = '/produtos',
   PublicoComanda = '/publico/comandas',
   TabelaDePreco = '/tabela-de-preco',
   Tamanho = '/tamanhos',
+  MovimentoProduto = '/movimentacao-de-produto',
   Estoque = '/estoque',
+  Estoques = '/estoques',
   Empresa = '/empresa',
-  MovimentacaoEstoque = '/estoque-movimentacao',
   Usuario = '/usuario',
   UltimosPedidos = '/ultimos-pedidos',
 }
@@ -82,6 +83,9 @@ export enum ComandaApiRoutePath {
 export enum ApiResourceRoutePath {
   AlterarStatus = '/ativar',
   Movimentacao = '/movimentar',
-  MovimentacaoManual = '/movimentar-manualmente',
   Paginacao = '/paginacao',
+}
+
+export enum EstoquesApiRoutePath {
+  Movimentar = '/movimentar-estoque',
 }

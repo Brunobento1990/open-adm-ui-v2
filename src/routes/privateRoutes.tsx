@@ -11,14 +11,14 @@ import { ClienteUltimosPedidosPage } from '../pages/private/cliente/ClienteUltim
 import { ComandaFormPage } from '../pages/private/comanda/ComandaFormPage'
 import { ComandaPage } from '../pages/private/comanda/ComandaPage'
 import { EstoqueMovimentacaoPage } from '../pages/private/estoque/EstoqueMovimentacaoPage'
-import { EstoqueMovimentacaoManualPage } from '../pages/private/estoque/EstoqueMovimentacaoManualPage'
-import { EstoqueMovimentacoesPage } from '../pages/private/estoque/EstoqueMovimentacoesPage'
 import { EstoquePage } from '../pages/private/estoque/EstoquePage'
 import { EmpresaPage } from '../pages/private/empresa/EmpresaPage'
 import { HomePage } from '../pages/private/HomePage'
 import { LojaParceiraFormPage } from '../pages/private/lojaParceira/LojaParceiraFormPage'
 import { LojaParceiraPage } from '../pages/private/lojaParceira/LojaParceiraPage'
 import { MinhaContaPage } from '../pages/private/MinhaContaPage'
+import { MovimentoProdutoFormPage } from '../pages/private/movimentoProduto/MovimentoProdutoFormPage'
+import { MovimentoProdutoPage } from '../pages/private/movimentoProduto/MovimentoProdutoPage'
 import { PesoFormPage } from '../pages/private/peso/PesoFormPage'
 import { PesoPage } from '../pages/private/peso/PesoPage'
 import { ProdutoFormPage } from '../pages/private/produto/ProdutoFormPage'
@@ -39,6 +39,16 @@ export type PrivateRouteConfig = {
 }
 
 export const privateRoutes: PrivateRouteConfig[] = [
+  {
+    title: 'Movimentos de produto',
+    path: PrivateRoutePath.MovimentoProduto,
+    component: <MovimentoProdutoPage />,
+  },
+  {
+    title: 'Movimentar produto',
+    path: PrivateRoutePath.MovimentoProdutoAdicionar,
+    component: <MovimentoProdutoFormPage />,
+  },
   {
     title: 'Tamanhos',
     path: PrivateRoutePath.Tamanho,
@@ -284,15 +294,4 @@ export const privateRoutes: PrivateRouteConfig[] = [
     path: PrivateRoutePath.EstoqueMovimentacaoId,
     component: <EstoqueMovimentacaoPage />,
   },
-  {
-    title: 'Movimentar estoque',
-    path: PrivateRoutePath.EstoqueMovimentacao,
-    component: <EstoqueMovimentacaoManualPage />,
-  },
-  {
-    title: 'Movimentações de estoque',
-    path: PrivateRoutePath.EstoqueMovimentacoes,
-    component: <EstoqueMovimentacoesPage />,
-  },
-
 ]

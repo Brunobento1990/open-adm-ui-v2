@@ -1,52 +1,64 @@
 import type { Produto } from './ProdutoTypes'
+import type { Peso } from './PesoTypes'
+import type { Tamanho } from './TamanhoTypes'
 
-export enum TipoMovimentacaoEstoqueEnum {
-  Entrada = 1,
-  Saida = 2,
+export enum TipoMovimentacaoProdutoEnum {
+  Entrada = 0,
+  Saida = 1,
 }
 
-export const TipoMovimentacaoEstoqueLabel: Record<TipoMovimentacaoEstoqueEnum, string> = {
-  [TipoMovimentacaoEstoqueEnum.Entrada]: 'Entrada',
-  [TipoMovimentacaoEstoqueEnum.Saida]: 'Saída',
+export const TipoMovimentacaoProdutoLabel: Record<TipoMovimentacaoProdutoEnum, string> = {
+  [TipoMovimentacaoProdutoEnum.Entrada]: 'Entrada',
+  [TipoMovimentacaoProdutoEnum.Saida]: 'Saída',
 }
 
-export const TipoMovimentacaoEstoqueOptions = [
+export const TipoMovimentacaoProdutoOptions = [
   {
-    label: TipoMovimentacaoEstoqueLabel[TipoMovimentacaoEstoqueEnum.Entrada],
-    value: TipoMovimentacaoEstoqueEnum.Entrada,
+    label: TipoMovimentacaoProdutoLabel[TipoMovimentacaoProdutoEnum.Entrada],
+    value: TipoMovimentacaoProdutoEnum.Entrada,
   },
   {
-    label: TipoMovimentacaoEstoqueLabel[TipoMovimentacaoEstoqueEnum.Saida],
-    value: TipoMovimentacaoEstoqueEnum.Saida,
+    label: TipoMovimentacaoProdutoLabel[TipoMovimentacaoProdutoEnum.Saida],
+    value: TipoMovimentacaoProdutoEnum.Saida,
   },
 ]
 
-export enum TipoMovimentacaoEstoqueIconeEnum {
-  Entrada = 'solar:arrow-up-linear',
-  Saida = 'solar:arrow-down-linear',
+export enum MovimentoProdutoFormField {
+  Observacao = 'observacao',
+  PesoId = 'pesoId',
+  ProdutoId = 'produtoId',
+  Quantidade = 'quantidade',
+  TamanhoId = 'tamanhoId',
+  TipoMovimentacaoDeProduto = 'tipoMovimentacaoDeProduto',
 }
 
-export enum TipoMovimentacaoEstoqueCorEnum {
-  Entrada = 'success',
-  Saida = 'error',
+export interface MovimentoProdutoFormValues {
+  produtoId: string
+  produto?: Produto
+  tamanhoId?: string
+  tamanho?: Tamanho
+  pesoId?: string
+  peso?: Peso
+  quantidade: number
+  observacao?: string
+  tipoMovimentacaoDeProduto: TipoMovimentacaoProdutoEnum
+}
+
+export interface MovimentoProduto {
+  id: string
+  numero: number
+  dataDeCriacao: string
+  dataDeAtualizacao?: string
+  produto?: string
+  tamanho?: string
+  peso?: string
+  quantidadeMovimentada: number
+  tipoMovimentacaoDeProduto: TipoMovimentacaoProdutoEnum
 }
 
 export enum EstoqueFormField {
   ProdutoId = 'produtoId',
   Quantidade = 'quantidade',
-}
-
-export enum MovimentacaoEstoqueManualFormField {
-  ProdutoId = 'produtoId',
-  Quantidade = 'quantidade',
-  TipoMovimentacaoEstoque = 'tipoMovimentacaoEstoque',
-}
-
-export interface MovimentacaoEstoqueManualFormValues {
-  produtoId: string
-  produto?: Produto
-  quantidade: number
-  tipoMovimentacaoEstoque: TipoMovimentacaoEstoqueEnum
 }
 
 export interface Estoque {
@@ -56,13 +68,4 @@ export interface Estoque {
   produtoId: string
   produto: Produto
   quantidade: number
-}
-
-export interface MovimentacaoEstoque {
-  id: string
-  dataDeCadastro: string
-  estoqueId: string
-  estoque: Estoque
-  quantidade: number
-  tipoMovimentacao: TipoMovimentacaoEstoqueEnum
 }

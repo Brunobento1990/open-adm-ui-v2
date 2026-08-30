@@ -158,8 +158,8 @@ export function DropDownAutoFetchOpenApp(props: propsDropDown) {
                     : undefined,
         });
 
-        if (Array.isArray(response?.registros)) {
-            setValuesOriginais(response?.registros ?? []);
+        if (Array.isArray(response?.values)) {
+            setValuesOriginais(response?.values ?? []);
         } else if (Array.isArray(response)) {
             setValuesOriginais(response ?? []);
         }

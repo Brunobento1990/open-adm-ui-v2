@@ -59,6 +59,8 @@ export enum PrivateRoutePath {
   TamanhoEditarId = '/estoque/tamanho/editar/:id',
   TamanhoVisualizar = '/estoque/tamanho/visualizar',
   TamanhoVisualizarId = '/estoque/tamanho/visualizar/:id',
+  MovimentoProduto = '/estoque/movimentacao-produto',
+  MovimentoProdutoAdicionar = '/estoque/movimentacao-produto/adicionar',
   Cliente = '/cadastros/clientes',
   ClienteAdicionar = '/cadastros/clientes/adicionar',
   ClienteEditar = '/cadastros/clientes/editar',
@@ -82,7 +84,6 @@ export enum PrivateRoutePath {
   Estoque = '/estoques/posicao-de-estoque',
   EstoqueMovimentacao = '/estoque/movimentacao',
   EstoqueMovimentacaoId = '/estoque/movimentacao/:id',
-  EstoqueMovimentacoes = '/estoques/movimentacao-de-estoque',
   Dashboard = '/dashboard',
 }
 

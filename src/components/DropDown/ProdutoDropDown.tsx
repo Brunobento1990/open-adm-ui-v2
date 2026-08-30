@@ -54,13 +54,13 @@ export function ProdutoDropDown({
       required={required}
       value={value}
       url={`${ApiRoutePath.Produto}${ApiResourceRoutePath.Paginacao}`}
-      renderOption={(props: any, produto: Produto) => {
+      renderOption={(props: any, produto: any) => {
         const { key, ...optionProps } = props;
         return (
           <Stack key={key} {...optionProps} direction="row" spacing={1.25} sx={{ alignItems: 'center', height: '100%' }}>
             <Avatar
               alt={produto.descricao}
-              src={produto.urlFoto}
+              src={produto.foto}
               variant="rounded"
               sx={{ height: 38, width: 38 }}
             />

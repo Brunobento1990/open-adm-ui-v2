@@ -1,8 +1,5 @@
 import { ApiMethod, useApi } from '../hook/useApi'
-import type {
-  Estoque,
-  MovimentacaoEstoqueManualFormValues,
-} from '../types/EstoqueTypes'
+import type { Estoque } from '../types/EstoqueTypes'
 import { ApiResourceRoutePath, ApiRoutePath } from './apiRoutes'
 
 export function useApiEstoque() {
@@ -15,11 +12,6 @@ export function useApiEstoque() {
     method: ApiMethod.Put,
     url: `${ApiRoutePath.Estoque}${ApiResourceRoutePath.Movimentacao}`,
   })
-  const apiMovimentarManualmente = useApi({
-    method: ApiMethod.Put,
-    url: `${ApiRoutePath.Estoque}${ApiResourceRoutePath.MovimentacaoManual}`,
-  })
-
   return {
     obter: {
       fetch: (id: string) => apiObter.action<Estoque>({
@@ -33,13 +25,6 @@ export function useApiEstoque() {
         message: 'Estoque movimentado com sucesso',
       }),
       loading: apiMovimentar.loading,
-    },
-    movimentarManualmente: {
-      fetch: (values: Partial<MovimentacaoEstoqueManualFormValues>) => apiMovimentarManualmente.action({
-        body: values,
-        message: 'Estoque movimentado com sucesso',
-      }),
-      loading: apiMovimentarManualmente.loading,
     },
   }
 }
