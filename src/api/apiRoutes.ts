@@ -17,8 +17,7 @@ export enum ApiRoutePath {
   TabelaDePreco = '/tabela-de-preco',
   Tamanho = '/tamanhos',
   MovimentoProduto = '/movimentacao-de-produto',
-  Estoque = '/estoque',
-  Estoques = '/estoques',
+  Estoque = '/estoques',
   Empresa = '/empresa',
   Usuario = '/usuario',
   UltimosPedidos = '/ultimos-pedidos',
@@ -82,10 +81,12 @@ export enum ComandaApiRoutePath {
 
 export enum ApiResourceRoutePath {
   AlterarStatus = '/ativar',
-  Movimentacao = '/movimentar',
+  Dropdown = '/dropdown',
   Paginacao = '/paginacao',
 }
 
 export enum EstoquesApiRoutePath {
+  Atualizar = '/update',
   Movimentar = '/movimentar-estoque',
+  Obter = '/get-estoque',
 }

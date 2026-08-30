@@ -101,7 +101,9 @@ export function ModalChildren(props: propsModalChildren) {
                             onClick={props.action}
                             loading={props.loading}
                             disabled={props.disabledAction}
-                        />
+                        >
+                            {props.textoButton}
+                        </ButtonApp>
                     )}
                 </DialogActions>
             )}

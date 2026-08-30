@@ -1,4 +1,5 @@
 import { ApiResourceRoutePath, ApiRoutePath } from '../../api/apiRoutes'
+import { ApiMethod } from '../../hook/useApi'
 import type { Tamanho } from '../../types/TamanhoTypes'
 import { TamanhoFormField } from '../../types/TamanhoTypes'
 import { DropDownAutoFetchOpenApp } from './DropDownAutoFetchOpenApp'
@@ -6,8 +7,6 @@ import { DropDownAutoFetchOpenApp } from './DropDownAutoFetchOpenApp'
 const TamanhoDropDownConfig = {
   Id: 'tamanhoId',
   Label: 'Tamanho',
-  Page: 1,
-  PageSize: 100,
 } as const
 
 type TamanhoDropDownProps = {
@@ -35,12 +34,6 @@ export function TamanhoDropDown({
 }: TamanhoDropDownProps) {
   return (
     <DropDownAutoFetchOpenApp
-      body={{
-        asc: true,
-        listarInativo: false,
-        skip: TamanhoDropDownConfig.Page,
-        take: TamanhoDropDownConfig.PageSize,
-      }}
       error={error}
       helperText={helperText}
       id={id}
@@ -48,11 +41,12 @@ export function TamanhoDropDown({
       label={label}
       onBlur={onBlur}
       onChange={(_, tamanho) => onChange?.(id, tamanho)}
-      orderBy={TamanhoFormField.Descricao}
+      method={ApiMethod.Get}
       readonly={readonly}
       required={required}
       value={value}
-      url={`${ApiRoutePath.Tamanho}${ApiResourceRoutePath.Paginacao}`}
+      utilizarURLSearch
+      url={`${ApiRoutePath.Tamanho}${ApiResourceRoutePath.Dropdown}`}
     />
   )
 }

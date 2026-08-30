@@ -81,9 +81,9 @@ export enum PrivateRoutePath {
   TabelaDePrecoEditarId = '/vendas/tabela-de-preco/editar/:id',
   TabelaDePrecoVisualizar = '/vendas/tabela-de-preco/visualizar',
   TabelaDePrecoVisualizarId = '/vendas/tabela-de-preco/visualizar/:id',
-  Estoque = '/estoques/posicao-de-estoque',
-  EstoqueMovimentacao = '/estoque/movimentacao',
-  EstoqueMovimentacaoId = '/estoque/movimentacao/:id',
+  Estoque = '/estoque/posicao-estoque',
+  EstoqueMovimentacao = '/estoque/posicao-estoque/editar',
+  EstoqueMovimentacaoId = '/estoque/posicao-estoque/editar/:id',
   Dashboard = '/dashboard',
 }
 

@@ -57,15 +57,38 @@ export interface MovimentoProduto {
 }
 
 export enum EstoqueFormField {
+  Peso = 'peso',
+  PesoId = 'pesoId',
+  Produto = 'produto',
   ProdutoId = 'produtoId',
   Quantidade = 'quantidade',
+  Tamanho = 'tamanho',
+  TamanhoId = 'tamanhoId',
 }
 
 export interface Estoque {
   id: string
-  dataDeCadastro: string
+  numero: number
+  dataDeCriacao: string
   dataDeAtualizacao?: string
   produtoId: string
-  produto: Produto
+  produto?: string
+  categoria?: string
+  foto?: string
+  pesoId?: string
+  peso?: string
+  tamanhoId?: string
+  tamanho?: string
   quantidade: number
+  quantidadeDisponivel: number
+  quantidadeReservada: number
+}
+
+export interface EstoqueFiltro {
+  produtoId?: string
+  produto?: Produto
+  pesoId?: string
+  peso?: Peso
+  tamanhoId?: string
+  tamanho?: Tamanho
 }

@@ -285,12 +285,12 @@ export const privateRoutes: PrivateRouteConfig[] = [
     component: <AtendimentoChatPage />,
   },
   {
-    title: 'Estoque',
+    title: 'Posição de estoque',
     path: PrivateRoutePath.Estoque,
     component: <EstoquePage />,
   },
   {
-    title: 'Posição de estoque',
+    title: 'Atualizar estoque',
     path: PrivateRoutePath.EstoqueMovimentacaoId,
     component: <EstoqueMovimentacaoPage />,
   },

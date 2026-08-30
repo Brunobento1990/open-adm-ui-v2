@@ -1,4 +1,5 @@
 import { ApiResourceRoutePath, ApiRoutePath } from '../../api/apiRoutes'
+import { ApiMethod } from '../../hook/useApi'
 import type { Peso } from '../../types/PesoTypes'
 import { PesoFormField } from '../../types/PesoTypes'
 import { DropDownAutoFetchOpenApp } from './DropDownAutoFetchOpenApp'
@@ -6,8 +7,6 @@ import { DropDownAutoFetchOpenApp } from './DropDownAutoFetchOpenApp'
 const PesoDropDownConfig = {
   Id: 'pesoId',
   Label: 'Peso',
-  Page: 1,
-  PageSize: 100,
 } as const
 
 type PesoDropDownProps = {
@@ -35,12 +34,6 @@ export function PesoDropDown({
 }: PesoDropDownProps) {
   return (
     <DropDownAutoFetchOpenApp
-      body={{
-        asc: true,
-        listarInativo: false,
-        skip: PesoDropDownConfig.Page,
-        take: PesoDropDownConfig.PageSize,
-      }}
       error={error}
       helperText={helperText}
       id={id}
@@ -48,11 +41,12 @@ export function PesoDropDown({
       label={label}
       onBlur={onBlur}
       onChange={(_, peso) => onChange?.(id, peso)}
-      orderBy={PesoFormField.Descricao}
+      method={ApiMethod.Get}
       readonly={readonly}
       required={required}
       value={value}
-      url={`${ApiRoutePath.Peso}${ApiResourceRoutePath.Paginacao}`}
+      utilizarURLSearch
+      url={`${ApiRoutePath.Peso}${ApiResourceRoutePath.Dropdown}`}
     />
   )
 }

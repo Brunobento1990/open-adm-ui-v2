@@ -1,16 +1,16 @@
 import { ApiMethod, useApi } from '../hook/useApi'
 import type { Estoque } from '../types/EstoqueTypes'
-import { ApiResourceRoutePath, ApiRoutePath } from './apiRoutes'
+import { ApiRoutePath, EstoquesApiRoutePath } from './apiRoutes'
 
 export function useApiEstoque() {
   const apiObter = useApi({
     method: ApiMethod.Get,
-    url: ApiRoutePath.Estoque,
+    url: `${ApiRoutePath.Estoque}${EstoquesApiRoutePath.Obter}`,
     naoRenderizarResposta: true,
   })
-  const apiMovimentar = useApi({
+  const apiAtualizar = useApi({
     method: ApiMethod.Put,
-    url: `${ApiRoutePath.Estoque}${ApiResourceRoutePath.Movimentacao}`,
+    url: `${ApiRoutePath.Estoque}${EstoquesApiRoutePath.Atualizar}`,
   })
   return {
     obter: {
@@ -19,12 +19,12 @@ export function useApiEstoque() {
       }),
       loading: apiObter.loading,
     },
-    movimentar: {
-      fetch: (values: Partial<Estoque>) => apiMovimentar.action({
+    atualizar: {
+      fetch: (values: Partial<Estoque>) => apiAtualizar.action({
         body: values,
-        message: 'Estoque movimentado com sucesso',
+        message: 'Estoque atualizado com sucesso',
       }),
-      loading: apiMovimentar.loading,
+      loading: apiAtualizar.loading,
     },
   }
 }

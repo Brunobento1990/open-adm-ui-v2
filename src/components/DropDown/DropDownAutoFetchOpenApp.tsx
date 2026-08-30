@@ -1,7 +1,7 @@
 import { CircularProgress, Paper, TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Fragment, useEffect, useMemo, useState } from 'react';
-import { useApi, type TypeMethod } from '../../hook/useApi';
+import { ApiMethod, useApi, type TypeMethod } from '../../hook/useApi';
 import { useDebounce } from '../../hook/useDebounce';
 import { ButtonApp } from '../ButtonApp/ButtonApp';
 
@@ -142,16 +142,19 @@ export function DropDownAutoFetchOpenApp(props: propsDropDown) {
         }
 
         const response = await action<any>({
-            body: {
-                orderBy: props.orderBy,
-                search:
-                    pesquisaDebounce && pesquisaDebounce.length > 0
-                        ? pesquisaDebounce
-                        : undefined,
-                ...props.body,
-            },
+            body:
+                props.method === ApiMethod.Get && props.utilizarURLSearch
+                    ? undefined
+                    : {
+                        orderBy: props.orderBy,
+                        search:
+                            pesquisaDebounce && pesquisaDebounce.length > 0
+                                ? pesquisaDebounce
+                                : undefined,
+                        ...props.body,
+                    },
             urlParams:
-                props.method === 'GET' && props.utilizarURLSearch
+                props.method === ApiMethod.Get && props.utilizarURLSearch
                     ? `?${new URLSearchParams({
                         search: pesquisaDebounce,
                     }).toString()}`

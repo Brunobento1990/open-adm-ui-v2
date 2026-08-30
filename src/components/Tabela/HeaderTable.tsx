@@ -20,6 +20,7 @@ type HeaderTableProps = {
   childrenHeader?: ReactNode
   acoesExtras?: ReactNode
   reiniciarColunas?: () => Promise<unknown> | void
+  menuItems?: MenuAppItem[]
 }
 
 const HeaderTableIcon = {
@@ -46,6 +47,7 @@ export function HeaderTable({
   childrenHeader,
   desabilitarColunaAtivo,
   listarInativos,
+  menuItems: menuItemsProps,
   notBtnAdd,
   pesquisar,
   reiniciarColunas,
@@ -90,7 +92,7 @@ export function HeaderTable({
     </Stack>
   )
 
-  const menuItems: MenuAppItem[] = []
+  const menuItems: MenuAppItem[] = [...(menuItemsProps ?? [])]
 
   if (!desabilitarColunaAtivo) {
     menuItems.push({

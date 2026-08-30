@@ -5,7 +5,7 @@ import { ApiRoutePath, EstoquesApiRoutePath } from './apiRoutes'
 export function useApiMovimentoProduto() {
   const apiMovimentar = useApi({
     method: ApiMethod.Put,
-    url: `${ApiRoutePath.Estoques}${EstoquesApiRoutePath.Movimentar}`,
+    url: `${ApiRoutePath.Estoque}${EstoquesApiRoutePath.Movimentar}`,
   })
 
   return {

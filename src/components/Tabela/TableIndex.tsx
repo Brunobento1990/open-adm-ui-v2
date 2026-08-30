@@ -19,6 +19,7 @@ import {
 import { DefaultColuns } from './DefaultColuns'
 import { FooterTable } from './FooterTable'
 import { HeaderTable } from './HeaderTable'
+import type { MenuAppItem } from '../MenuApp/MenuApp'
 import { TabelaComDrag } from './TabelaComDrag'
 import {
   TableSortDirection,
@@ -43,7 +44,7 @@ export interface ITableIndexProps {
   notShowHeader?: boolean
   notBtnAdd?: boolean
   selecionarLinha?: (row: any, index: number) => void
-  refreshPai?: boolean
+  refreshPai?: boolean | number
   filtroComplementar?: any
   desabilitarColunaAtivo?: boolean
   metodo?: TypeMethod
@@ -58,6 +59,7 @@ export interface ITableIndexProps {
   pausarAutoRefresh?: boolean
   statusInicial?: StatusRequisicao
   headersReq?: any
+  menuItems?: MenuAppItem[]
 }
 
 export function TableIndex(props: ITableIndexProps) {
@@ -169,6 +171,7 @@ export function TableIndex(props: ITableIndexProps) {
       {!props.notShowHeader && (
         <HeaderTable
           listarInativos={listarInativos}
+          menuItems={props.menuItems}
           setListarInativos={setListarInativos}
           urlAdd={props.urlAdd}
           notBtnAdd={props.notBtnAdd}
