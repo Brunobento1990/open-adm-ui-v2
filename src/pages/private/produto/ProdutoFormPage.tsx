@@ -4,6 +4,7 @@ import { useApiProduto } from '../../../api/useApiProduto'
 import { CategoriaDropDown } from '../../../components/DropDown/CategoriaDropDown'
 import { InputApp } from '../../../components/InputApp/InputApp'
 import { InputAppType } from '../../../components/InputApp/inputAppTypes'
+import { ImageUploadApp } from '../../../components/ImageUploadApp/ImageUploadApp'
 import { FormRoot } from '../../../form'
 import { useFormikAdapter } from '../../../hook/useFormikAdapter'
 import { useNavigationApp } from '../../../hook/useNavigationApp'
@@ -14,7 +15,7 @@ import {
   ProdutoFormField,
   type Produto,
 } from '../../../types/ProdutoTypes'
-import { ProdutoFotoField } from './ProdutoFotoField'
+import { imagemBase64Valida } from '../../../utils/imageUtils'
 
 const produtoInitialValues: Partial<Produto> = {
   [ProdutoFormField.CategoriaId]: '',
@@ -32,19 +33,9 @@ function criarProdutoValidationSchema() {
     .build()
 }
 
-const ProdutoFotoSource = {
-  Base64Prefix: 'data:image/',
+const ProdutoFoto = {
   InvalidMessage: 'Não foi possível processar a imagem selecionada. Selecione outra imagem.',
 } as const
-
-function fotoValida(value?: string) {
-  if (!value) return true
-
-  if (!value.startsWith(ProdutoFotoSource.Base64Prefix)) return true
-
-  const base64SeparatorIndex = value.indexOf(',')
-  return value.includes(';base64,') && base64SeparatorIndex < value.length - 1
-}
 
 type ProdutoFormPageProps = {
   action: FormActionType
@@ -59,8 +50,8 @@ export function ProdutoFormPage({ action }: ProdutoFormPageProps) {
     initialValues: produtoInitialValues,
     validationSchema: criarProdutoValidationSchema(),
     onSubmit: async (values) => {
-      if (!fotoValida(values.urlFoto)) {
-        form.setError(ProdutoFormField.UrlFoto, ProdutoFotoSource.InvalidMessage)
+      if (!imagemBase64Valida(values.urlFoto)) {
+        form.setError(ProdutoFormField.UrlFoto, ProdutoFoto.InvalidMessage)
         return
       }
 
@@ -184,12 +175,13 @@ export function ProdutoFormPage({ action }: ProdutoFormPageProps) {
 
         </FormRoot.FormItemRow>
         <FormRoot.FormItemRow xs={12} md={4}>
-          <ProdutoFotoField
-            descricao={form.values.descricao}
-            disabled={readonly}
+          <ImageUploadApp
+            alt={form.values.descricao || 'Foto do produto'}
             error={form.error(ProdutoFormField.UrlFoto)}
             helperText={form.helperText(ProdutoFormField.UrlFoto)}
             onChange={(value) => form.onChange(ProdutoFormField.UrlFoto, value)}
+            previewLabel="Pré-visualização da foto"
+            readonly={readonly}
             value={form.values.urlFoto}
           />
         </FormRoot.FormItemRow>

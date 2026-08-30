@@ -1,30 +1,43 @@
 import { Icon } from '@iconify/react'
 import { Box, Button, FormHelperText, Stack } from '@mui/material'
-import type { ChangeEvent } from 'react'
-import { TextApp, TextAppColor } from '../../../components/TextApp/TextApp'
-import { useThemeApp } from '../../../hook/useThemeApp'
+import { useId, type ChangeEvent } from 'react'
+import { useThemeApp } from '../../hook/useThemeApp'
+import { TextApp, TextAppColor } from '../TextApp/TextApp'
 
-const EmpresaLogo = {
+const ImageUpload = {
   Accept: 'image/*',
+  ButtonLabel: 'Selecionar imagem',
+  EmptyLabel: 'Nenhuma imagem selecionada',
   Icon: 'solar:upload-linear',
-  InputId: 'empresa-logo-arquivo',
+  PreviewLabel: 'Pré-visualização da imagem',
 } as const
 
-type EmpresaLogoFieldProps = {
+type ImageUploadAppProps = {
+  accept?: string
+  alt: string
+  buttonLabel?: string
+  emptyLabel?: string
   error?: boolean
   helperText?: string
-  nomeFantasia?: string
   onChange: (value: string) => void | Promise<void>
+  previewLabel?: string
+  readonly?: boolean
   value?: string
 }
 
-export function EmpresaLogoField({
+export function ImageUploadApp({
+  accept = ImageUpload.Accept,
+  alt,
+  buttonLabel = ImageUpload.ButtonLabel,
+  emptyLabel = ImageUpload.EmptyLabel,
   error,
   helperText,
-  nomeFantasia,
   onChange,
+  previewLabel = ImageUpload.PreviewLabel,
+  readonly,
   value,
-}: EmpresaLogoFieldProps) {
+}: ImageUploadAppProps) {
+  const inputId = useId()
   const { borderRadius, cores } = useThemeApp()
 
   function selecionarArquivo(event: ChangeEvent<HTMLInputElement>) {
@@ -41,7 +54,7 @@ export function EmpresaLogoField({
 
   return (
     <Stack spacing={1}>
-      <TextApp color={TextAppColor.Secondary}>Pré-visualização da logo</TextApp>
+      <TextApp color={TextAppColor.Secondary}>{previewLabel}</TextApp>
       <Box
         sx={{
           alignItems: 'center',
@@ -57,25 +70,32 @@ export function EmpresaLogoField({
       >
         {value ? (
           <Box
-            alt={nomeFantasia ? `Logo da ${nomeFantasia}` : 'Logo da empresa'}
+            alt={alt}
             component="img"
             src={value}
             sx={{ height: '100%', objectFit: 'contain', width: '100%' }}
           />
         ) : (
-          <TextApp color={TextAppColor.Secondary}>Nenhuma logo selecionada</TextApp>
+          <TextApp color={TextAppColor.Secondary}>{emptyLabel}</TextApp>
         )}
       </Box>
-      <Button component="label" startIcon={<Icon icon={EmpresaLogo.Icon} />} variant="outlined">
-        Selecionar imagem
-        <input
-          accept={EmpresaLogo.Accept}
-          hidden
-          id={EmpresaLogo.InputId}
-          onChange={selecionarArquivo}
-          type="file"
-        />
-      </Button>
+      {!readonly && (
+        <Button
+          component="label"
+          htmlFor={inputId}
+          startIcon={<Icon icon={ImageUpload.Icon} />}
+          variant="outlined"
+        >
+          {buttonLabel}
+          <input
+            accept={accept}
+            hidden
+            id={inputId}
+            onChange={selecionarArquivo}
+            type="file"
+          />
+        </Button>
+      )}
       {error && <FormHelperText error>{helperText}</FormHelperText>}
     </Stack>
   )

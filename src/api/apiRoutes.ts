@@ -1,4 +1,5 @@
 export enum ApiRoutePath {
+  Banner = '/banners',
   Categoria = '/categoria',
   Chat = '/chat',
   Cliente = '/cliente',
@@ -17,6 +18,12 @@ export enum ApiRoutePath {
   MovimentacaoEstoque = '/estoque-movimentacao',
   Usuario = '/usuario',
   UltimosPedidos = '/ultimos-pedidos',
+}
+
+export enum BannerApiRoutePath {
+  Criar = '/create',
+  Obter = '/get-banner',
+  Atualizar = '/update',
 }
 
 export enum UsuarioApiRoutePath {

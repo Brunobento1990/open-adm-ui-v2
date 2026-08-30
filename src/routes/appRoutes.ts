@@ -13,6 +13,12 @@ export function getComandaPublicaPath(idPublico: string) {
 }
 
 export enum PrivateRoutePath {
+  Banner = '/banners',
+  BannerAdicionar = '/banners/adicionar',
+  BannerEditar = '/banners/editar',
+  BannerEditarId = '/banners/editar/:id',
+  BannerVisualizar = '/banners/visualizar',
+  BannerVisualizarId = '/banners/visualizar/:id',
   Empresa = '/cadastros/empresa',
   Usuario = '/cadastros/usuarios',
   UsuarioAdicionar = '/cadastros/usuarios/adicionar',

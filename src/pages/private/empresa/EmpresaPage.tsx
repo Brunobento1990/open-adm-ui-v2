@@ -2,13 +2,14 @@ import { useEffect } from 'react'
 import { useApiEmpresa } from '../../../api/useApiEmpresa'
 import { InputApp } from '../../../components/InputApp/InputApp'
 import { InputAppType } from '../../../components/InputApp/inputAppTypes'
+import { ImageUploadApp } from '../../../components/ImageUploadApp/ImageUploadApp'
 import { FormRoot } from '../../../form'
 import { useAuth } from '../../../hook/useAuth'
 import { useFormikAdapter } from '../../../hook/useFormikAdapter'
 import { YupAdapter } from '../../../lib/YupAdapter'
 import { EmpresaFormField, type Empresa } from '../../../types/EmpresaTypes'
 import { limparCnpj, limparTelefone } from '../../../utils/documentUtils'
-import { EmpresaLogoField } from './EmpresaLogoField'
+import { imagemBase64Valida } from '../../../utils/imageUtils'
 
 const empresaInitialValues: Partial<Empresa> = {
   [EmpresaFormField.RazaoSocial]: '',
@@ -24,17 +25,9 @@ const empresaValidationSchema = new YupAdapter()
   .string(EmpresaFormField.Cnpj)
   .build()
 
-const LogoSource = {
-  Base64Prefix: 'data:image/',
+const Logo = {
   InvalidMessage: 'Não foi possível processar a imagem selecionada. Selecione outra imagem.',
 } as const
-
-function logoValida(value?: string) {
-  if (!value || !value.startsWith(LogoSource.Base64Prefix)) return true
-
-  const base64SeparatorIndex = value.indexOf(',')
-  return value.includes(';base64,') && base64SeparatorIndex < value.length - 1
-}
 
 export function EmpresaPage() {
   const { atualizar, obter } = useApiEmpresa()
@@ -43,8 +36,8 @@ export function EmpresaPage() {
     initialValues: empresaInitialValues,
     validationSchema: empresaValidationSchema,
     onSubmit: async (values) => {
-      if (!logoValida(values.logo)) {
-        form.setError(EmpresaFormField.Logo, LogoSource.InvalidMessage)
+      if (!imagemBase64Valida(values.logo)) {
+        form.setError(EmpresaFormField.Logo, Logo.InvalidMessage)
         return
       }
 
@@ -160,11 +153,13 @@ export function EmpresaPage() {
           </FormRoot.FormRow>
         </FormRoot.FormItemRow>
         <FormRoot.FormItemRow xs={12} md={4}>
-          <EmpresaLogoField
+          <ImageUploadApp
+            alt={form.values.nomeFantasia ? `Logo da ${form.values.nomeFantasia}` : 'Logo da empresa'}
+            emptyLabel="Nenhuma logo selecionada"
             error={form.error(EmpresaFormField.Logo)}
             helperText={form.helperText(EmpresaFormField.Logo)}
-            nomeFantasia={form.values.nomeFantasia}
             onChange={(value) => form.onChange(EmpresaFormField.Logo, value)}
+            previewLabel="Pré-visualização da logo"
             value={form.values.logo}
           />
         </FormRoot.FormItemRow>

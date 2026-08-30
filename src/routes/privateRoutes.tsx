@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
 import { AtendimentoChatPage } from '../pages/private/atendimento/AtendimentoChatPage'
 import { AtendimentoNumeroPage } from '../pages/private/AtendimentoNumeroPage'
+import { BannerFormPage } from '../pages/private/banner/BannerFormPage'
+import { BannerPage } from '../pages/private/banner/BannerPage'
 import { CategoriaFormPage } from '../pages/private/categoria/CategoriaFormPage'
 import { CategoriaPage } from '../pages/private/categoria/CategoriaPage'
 import { ClienteFormPage } from '../pages/private/cliente/ClienteFormPage'
@@ -31,6 +33,26 @@ export type PrivateRouteConfig = {
 }
 
 export const privateRoutes: PrivateRouteConfig[] = [
+  {
+    title: 'Banners',
+    path: PrivateRoutePath.Banner,
+    component: <BannerPage />,
+  },
+  {
+    title: 'Banner',
+    path: PrivateRoutePath.BannerAdicionar,
+    component: <BannerFormPage action={FormAction.Create} />,
+  },
+  {
+    title: 'Banner',
+    path: PrivateRoutePath.BannerEditarId,
+    component: <BannerFormPage action={FormAction.Edit} />,
+  },
+  {
+    title: 'Visualizar banner',
+    path: PrivateRoutePath.BannerVisualizarId,
+    component: <BannerFormPage action={FormAction.View} />,
+  },
   {
     title: 'Home',
     path: PrivateRoutePath.Dashboard,

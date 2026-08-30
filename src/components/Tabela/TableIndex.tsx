@@ -28,7 +28,7 @@ import {
 } from './tabelaComDragTypes'
 
 type PaginacaoResponse = {
-  registros: any[]
+  values: any[]
   totalPaginas: number
   totalRegistros: number
 }
@@ -199,7 +199,7 @@ export function TableIndex(props: ITableIndexProps) {
           rowHeight={props.rowHeight}
           height="100%"
           columns={[...props.columns, ...defaultColumns]}
-          rows={paginacao?.registros ?? []}
+          rows={paginacao?.values ?? []}
           sorting={sorting}
           setSorting={setSorting}
           onContextMenu={props.onContextMenu}
@@ -215,7 +215,7 @@ export function TableIndex(props: ITableIndexProps) {
         pagina={pagina}
         setPagina={setPagina}
         quantidadePagina={paginacao?.totalPaginas ?? 0}
-        length={paginacao?.registros.length ?? 0}
+        length={paginacao?.values.length ?? 0}
         totalDeRegistros={paginacao?.totalRegistros ?? 0}
       />
     </BoxApp>

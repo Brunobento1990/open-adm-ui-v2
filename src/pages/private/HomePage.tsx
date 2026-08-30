@@ -9,8 +9,8 @@ import { ProgressApp as LinearProgress } from '../../components/ProgressApp/Prog
 import { SkeletonApp as Skeleton } from '../../components/SkeletonApp/SkeletonApp'
 import { StackApp as Stack } from '../../components/StackApp/StackApp'
 import { TextApp as Typography } from '../../components/TextApp/TextApp'
-import { useThemeApp } from '../../hook/useThemeApp'
 import { useNavigationApp } from '../../hook/useNavigationApp'
+import { useThemeApp } from '../../hook/useThemeApp'
 import { PrivateRoutePath } from '../../routes/appRoutes'
 import type {
   Dashboard,
@@ -281,7 +281,7 @@ export function HomePage() {
                     <Typography color="text.secondary" variant="caption">
                       {item.aDias} {item.aDias === 1 ? 'dia' : 'dias'} em aberto
                     </Typography>
-                    <Typography color="warning.main" variant="body2" sx={{ flexShrink: 0, fontVariantNumeric: 'tabular-nums', fontWeight: 700 }}>
+                    <Typography color="success.main" variant="body2" sx={{ flexShrink: 0, fontVariantNumeric: 'tabular-nums', fontWeight: 700 }}>
                       {formatMoney(item.valor)}
                     </Typography>
                   </Stack>
