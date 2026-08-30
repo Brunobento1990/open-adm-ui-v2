@@ -9,6 +9,7 @@ export enum BoxAppComponent {
   Header = 'header',
   Form = 'form',
   Span = 'span',
+  Img = 'img',
 }
 
 export enum BoxAppDisplay {
@@ -61,11 +62,13 @@ export enum BoxAppPlaceItems {
 }
 
 export type BoxAppProps = {
+  alt?: string
   children?: ReactNode
   component?: BoxAppComponent | BoxProps['component']
   sx?: BoxProps['sx']
   title?: string
   role?: string
+  src?: string
   display?: BoxAppDisplay
   flexDirection?: BoxAppFlexDirection
   alignItems?: BoxAppAlignItems
@@ -79,6 +82,7 @@ export type BoxAppProps = {
   height?: number | string
   minWidth?: number | string
   minHeight?: number | string
+  objectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down'
   p?: number | string
   padding?: number | string
   px?: number | string

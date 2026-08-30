@@ -1,7 +1,7 @@
 export enum ApiRoutePath {
   Banner = '/banners',
   LojaParceira = '/lojas-parceiras',
-  Categoria = '/categoria',
+  Categoria = '/categorias',
   Chat = '/chat',
   Cliente = '/cliente',
   Comanda = '/comanda',
@@ -47,6 +47,10 @@ export enum LoginApiRoutePath {
 }
 
 export enum CategoriaApiRoutePath {
+  Atualizar = '/update',
+  Criar = '/create',
+  Excluir = '/delete',
+  Obter = '/get-categoria',
   Paginacao = '/paginacao',
 }
 

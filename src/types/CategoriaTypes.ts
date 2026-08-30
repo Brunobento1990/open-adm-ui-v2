@@ -1,5 +1,8 @@
 export enum CategoriaFormField {
   Descricao = 'descricao',
+  Foto = 'foto',
+  InativoEcommerce = 'inativoEcommerce',
+  NovaFoto = 'novaFoto',
 }
 
 export enum CategoriaFiltroField {
@@ -11,8 +14,14 @@ export enum CategoriaFiltroField {
 
 export interface Categoria {
   id: string
-  dataDeCadastro: string
+  dataDeCriacao: string
   dataDeAtualizacao?: string
+  numero: number
   descricao: string
   ativo: boolean
+  foto?: string
+  novaFoto?: string
+  inativoEcommerce: boolean
 }
+
+export type CategoriaPayload = Partial<Categoria>

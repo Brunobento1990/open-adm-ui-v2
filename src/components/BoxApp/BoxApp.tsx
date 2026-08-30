@@ -3,6 +3,7 @@ import type { BoxAppProps } from './boxAppTypes'
 import { BoxAppComponent } from './boxAppTypes'
 
 export function BoxApp({
+  alt,
   children,
   component = BoxAppComponent.Div,
   display,
@@ -18,6 +19,7 @@ export function BoxApp({
   height,
   minWidth,
   minHeight,
+  objectFit,
   p,
   padding,
   px,
@@ -53,17 +55,20 @@ export function BoxApp({
   noValidate,
   onSubmit,
   role,
+  src,
   sx,
   title,
 }: BoxAppProps) {
 
   return (
     <Box
+      alt={alt}
       className={className}
       component={component}
       noValidate={noValidate}
       onSubmit={onSubmit}
       role={role}
+      src={src}
       title={title}
       sx={[{
         display,
@@ -79,6 +84,7 @@ export function BoxApp({
         height,
         minWidth,
         minHeight,
+        objectFit,
         p,
         padding,
         px,

@@ -1,17 +1,21 @@
 import { ApiMethod, useApi } from '../hook/useApi'
-import type {
-  Categoria,
-} from '../types/CategoriaTypes'
-import { ApiRoutePath } from './apiRoutes'
+import type { Categoria, CategoriaPayload } from '../types/CategoriaTypes'
+import { ApiRoutePath, CategoriaApiRoutePath } from './apiRoutes'
 
 export function useApiCategoria() {
-  const apiCriar = useApi({ method: ApiMethod.Post, url: ApiRoutePath.Categoria })
+  const apiCriar = useApi({
+    method: ApiMethod.Post,
+    url: `${ApiRoutePath.Categoria}${CategoriaApiRoutePath.Criar}`,
+  })
   const apiObter = useApi({
     method: ApiMethod.Get,
-    url: ApiRoutePath.Categoria,
+    url: `${ApiRoutePath.Categoria}${CategoriaApiRoutePath.Obter}`,
     naoRenderizarResposta: true,
   })
-  const apiAtualizar = useApi({ method: ApiMethod.Put, url: ApiRoutePath.Categoria })
+  const apiAtualizar = useApi({
+    method: ApiMethod.Put,
+    url: `${ApiRoutePath.Categoria}${CategoriaApiRoutePath.Atualizar}`,
+  })
 
   return {
     obter: {
@@ -21,15 +25,14 @@ export function useApiCategoria() {
       loading: apiObter.loading,
     },
     criar: {
-      fetch: (values: Partial<Categoria>) =>
+      fetch: (values: CategoriaPayload) =>
         apiCriar.action<Categoria>({ body: values, message: 'Categoria criada com sucesso' }),
       loading: apiCriar.loading,
     },
     atualizar: {
-      fetch: (id: string, values: Partial<Categoria>) =>
+      fetch: (values: CategoriaPayload) =>
         apiAtualizar.action<Categoria>({
           body: values,
-          urlParams: `?id=${encodeURIComponent(id)}`,
           message: 'Categoria atualizada com sucesso',
         }),
       loading: apiAtualizar.loading,
