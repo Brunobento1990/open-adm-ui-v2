@@ -227,7 +227,7 @@ export const menus: Menu[] = [
       {
         id: 33,
         nome: 'Transações',
-        caminho: '/financeiro/transacao-financeira',
+        caminho: PrivateRoutePath.TransacaoFinanceira,
         icone: 'grommet-icons:transaction',
         filhos: [],
       },

@@ -16,6 +16,7 @@ export enum ApiRoutePath {
   PublicoComanda = '/publico/comandas',
   TabelaDePreco = '/tabela-de-preco',
   Tamanho = '/tamanhos',
+  TransacaoFinanceira = '/transacao-financeira',
   MovimentoProduto = '/movimentacao-de-produto',
   Estoque = '/estoques',
   Bonificado = 'fatura/bonificado',
@@ -105,4 +106,8 @@ export enum EstoquesApiRoutePath {
   Movimentar = '/movimentar-estoque',
   Obter = '/get-estoque',
   ObterTodosDoProduto = '/posicao-estoque-produto',
+}
+
+export enum TransacaoFinanceiraApiRoutePath {
+  Periodo = '/periodo',
 }

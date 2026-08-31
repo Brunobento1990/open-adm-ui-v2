@@ -88,6 +88,7 @@ export enum PrivateRoutePath {
   Mensalidade = '/financeiro/mensalidades',
   MensalidadeVisualizar = '/financeiro/mensalidades/visualizar',
   MensalidadeVisualizarId = '/financeiro/mensalidades/visualizar/:id',
+  TransacaoFinanceira = '/financeiro/transacoes',
   Dashboard = '/dashboard',
 }
 

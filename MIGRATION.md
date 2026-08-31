@@ -22,3 +22,4 @@
 - [x] Migrar CRUD de produto.
 - [x] Migrar paginação de bonificados.
 - [x] Migrar paginação e visualização de mensalidades.
+- [x] Migrar extrato de transações financeiras.

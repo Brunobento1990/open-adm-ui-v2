@@ -16,6 +16,7 @@ import { EmpresaPage } from '../pages/private/empresa/EmpresaPage'
 import { BonificadosPage } from '../pages/private/financeiro/BonificadosPage'
 import { MensalidadePage } from '../pages/private/financeiro/MensalidadePage'
 import { MensalidadeVisualizarPage } from '../pages/private/financeiro/MensalidadeVisualizarPage'
+import { TransacaoFinanceiraPage } from '../pages/private/financeiro/TransacaoFinanceiraPage'
 import { HomePage } from '../pages/private/HomePage'
 import { LojaParceiraFormPage } from '../pages/private/lojaParceira/LojaParceiraFormPage'
 import { LojaParceiraPage } from '../pages/private/lojaParceira/LojaParceiraPage'
@@ -56,6 +57,11 @@ export const privateRoutes: PrivateRouteConfig[] = [
     title: 'Visualizar mensalidade',
     path: PrivateRoutePath.MensalidadeVisualizarId,
     component: <MensalidadeVisualizarPage />,
+  },
+  {
+    title: 'Extrato por período',
+    path: PrivateRoutePath.TransacaoFinanceira,
+    component: <TransacaoFinanceiraPage />,
   },
   {
     title: 'Movimentos de produto',
