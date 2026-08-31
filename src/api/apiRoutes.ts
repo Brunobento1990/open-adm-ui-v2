@@ -21,6 +21,7 @@ export enum ApiRoutePath {
   Estoque = '/estoques',
   Bonificado = 'fatura/bonificado',
   Mensalidade = '/parcela-cobranca',
+  Parcela = '/parcela',
   Empresa = '/empresa',
   Usuario = '/usuario',
   UltimosPedidos = '/ultimos-pedidos',
@@ -110,4 +111,8 @@ export enum EstoquesApiRoutePath {
 
 export enum TransacaoFinanceiraApiRoutePath {
   Periodo = '/periodo',
+}
+
+export enum ParcelaApiRoutePath {
+  Estornar = '/estornar',
 }

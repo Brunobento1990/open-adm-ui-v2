@@ -14,6 +14,7 @@ import { EstoqueMovimentacaoPage } from '../pages/private/estoque/EstoqueMovimen
 import { EstoquePage } from '../pages/private/estoque/EstoquePage'
 import { EmpresaPage } from '../pages/private/empresa/EmpresaPage'
 import { BonificadosPage } from '../pages/private/financeiro/BonificadosPage'
+import { FaturaPage } from '../pages/private/financeiro/FaturaPage'
 import { MensalidadePage } from '../pages/private/financeiro/MensalidadePage'
 import { MensalidadeVisualizarPage } from '../pages/private/financeiro/MensalidadeVisualizarPage'
 import { TransacaoFinanceiraPage } from '../pages/private/financeiro/TransacaoFinanceiraPage'
@@ -34,6 +35,7 @@ import { TamanhoPage } from '../pages/private/tamanho/TamanhoPage'
 import { UsuarioFormPage } from '../pages/private/usuario/UsuarioFormPage'
 import { UsuarioPage } from '../pages/private/usuario/UsuarioPage'
 import { FormAction } from '../types/Form'
+import { TipoFatura } from '../types/FaturaTypes'
 import { PrivateRoutePath } from './appRoutes'
 
 export type PrivateRouteConfig = {
@@ -43,6 +45,11 @@ export type PrivateRouteConfig = {
 }
 
 export const privateRoutes: PrivateRouteConfig[] = [
+  {
+    title: 'Contas a receber',
+    path: PrivateRoutePath.ContaAReceber,
+    component: <FaturaPage tipo={TipoFatura.AReceber} />,
+  },
   {
     title: 'Bonificados',
     path: PrivateRoutePath.Bonificados,

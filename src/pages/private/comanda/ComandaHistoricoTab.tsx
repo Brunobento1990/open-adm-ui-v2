@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useApiComanda } from '../../../api/useApiComanda'
 import { useThemeApp } from '../../../hook/useThemeApp'
 import type { ComandaHistorico } from '../../../types/ComandaTypes'
-import { formatarDataUtcLocal, formatarHoraUtcLocal } from '../../../utils/dateUtils'
+import { formatarDataHoraUtcLocal, formatarHoraUtcLocal } from '../../../utils/dateUtils'
 
 const HistoricoTermo = {
   Adicao: ['adicion', 'inclu', 'criad'],
@@ -42,7 +42,7 @@ export function ComandaHistoricoTab({ comandaId }: { comandaId: string }) {
   }, [comandaId])
 
   const historicosPorData = historicos.reduce<Record<string, ComandaHistorico[]>>((grupos, historico) => {
-    const data = formatarDataUtcLocal(historico.dataDeCadastro)
+    const data = formatarDataHoraUtcLocal(historico.dataDeCadastro)
     grupos[data] = [...(grupos[data] ?? []), historico]
     return grupos
   }, {})

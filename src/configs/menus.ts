@@ -206,7 +206,7 @@ export const menus: Menu[] = [
       {
         id: 30,
         nome: 'Contas a receber',
-        caminho: '/financeiro/contas-a-receber',
+        caminho: PrivateRoutePath.ContaAReceber,
         icone: 'game-icons:receive-money',
         filhos: [],
       },

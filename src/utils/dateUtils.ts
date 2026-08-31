@@ -20,23 +20,6 @@ export function formatarDataHoraUtcLocal(value?: string) {
   }).format(date)
 }
 
-export function formatarDataUtcLocal(value?: string) {
-  if (!value) return ''
-
-  const date = new Date(normalizarDataUtc(value))
-  if (Number.isNaN(date.getTime())) return ''
-
-  const parts = new Intl.DateTimeFormat(DateTimeLocale.PtBr, {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  }).formatToParts(date)
-  const part = (type: Intl.DateTimeFormatPartTypes) =>
-    parts.find((item) => item.type === type)?.value ?? ''
-
-  return `${part('day')} ${part('month').replace('.', '')} ${part('year')}`.toLocaleUpperCase(DateTimeLocale.PtBr)
-}
-
 export function formatarHoraUtcLocal(value?: string) {
   if (!value) return ''
 

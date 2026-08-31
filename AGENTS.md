@@ -28,6 +28,8 @@ Do not use hard-coded domain strings in logic or props. Define shared values wit
 
 Do not add barrel `index.ts` re-export files for components, pages, or themes. Import from the concrete file that owns the export instead.
 
+Pagination filters must be opened in a modal from a `menuItems` entry on `TableIndex`. Keep temporary filter values inside the modal and only refresh the pagination when the user applies or clears the filters; do not render pagination filters directly in the table header.
+
 ## Testing Guidelines
 
 No test runner is configured yet. For now, use `npm run lint` and `npm run build` as the required verification before submitting changes. If tests are added, prefer Vitest with React Testing Library, place tests next to the implementation as `*.test.ts` or `*.test.tsx`, and cover user-visible behavior rather than implementation details.
