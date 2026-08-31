@@ -86,6 +86,8 @@ export enum PrivateRoutePath {
   EstoqueMovimentacaoId = '/estoque/posicao-estoque/editar/:id',
   Bonificados = '/financeiro/bonificados',
   ContaAReceber = '/financeiro/contas-a-receber',
+  ContaAPagar = '/financeiro/contas-a-pagar',
+  PagarParcelaId = '/financeiro/fatura/baixar/:id',
   Mensalidade = '/financeiro/mensalidades',
   MensalidadeVisualizar = '/financeiro/mensalidades/visualizar',
   MensalidadeVisualizarId = '/financeiro/mensalidades/visualizar/:id',
@@ -95,4 +97,8 @@ export enum PrivateRoutePath {
 
 export enum AppRoutePath {
   Wildcard = '*',
+}
+
+export function getPagarParcelaPath(id: string) {
+  return PrivateRoutePath.PagarParcelaId.replace(':id', encodeURIComponent(id))
 }

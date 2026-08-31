@@ -115,4 +115,6 @@ export enum TransacaoFinanceiraApiRoutePath {
 
 export enum ParcelaApiRoutePath {
   Estornar = '/estornar',
+  Obter = '/get-by-id',
+  Pagar = '/pagar',
 }

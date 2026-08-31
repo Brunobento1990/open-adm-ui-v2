@@ -3,6 +3,14 @@ export enum TipoFatura {
   AReceber = 2,
 }
 
+export enum MeioDePagamento {
+  Dinheiro = 1,
+  Pix = 2,
+  CartaoDeDebito = 3,
+  CartaoDeCredito = 4,
+  Boleto = 5,
+}
+
 export enum StatusParcela {
   Pendente = 1,
   PagoParcial = 2,
@@ -49,3 +57,37 @@ export type FaturaFiltros = {
   dataVencimentoFinal?: string
   status: StatusParcela | StatusParcelaFiltro.Todos
 }
+
+export const PagarParcelaFormField = {
+  Valor: 'valor',
+  Desconto: 'desconto',
+  Juros: 'juros',
+  MeioDePagamento: 'meioDePagamento',
+  DataDePagamento: 'dataDePagamento',
+  Observacao: 'observacao',
+} as const
+
+export type Parcela = {
+  id: string
+  dataDeVencimento: string
+  numeroDaParcela: number
+  valorPagoRecebido: number
+  valorAPagarAReceber: number
+  fatura: {
+    numero: number
+    tipo: TipoFatura
+    usuario?: { nome?: string | null } | null
+    pedido?: { numero?: number | null } | null
+  }
+}
+
+export type PagarParcelaForm = {
+  valor: number
+  desconto?: number
+  juros?: number
+  meioDePagamento?: MeioDePagamento | string
+  dataDePagamento?: string
+  observacao?: string
+}
+
+export type PagarParcelaPayload = PagarParcelaForm & { id: string }

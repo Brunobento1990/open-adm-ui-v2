@@ -11,6 +11,7 @@ import {
   EstornoParcelaProvider,
 } from '../../../components/Fatura/EstornarParcelaButton'
 import { StatusParcelaBadge } from '../../../components/Fatura/StatusParcelaBadge'
+import { PagarParcelaButton } from '../../../components/Fatura/PagarParcelaButton'
 import { StackApp } from '../../../components/StackApp/StackApp'
 import { TableIndex } from '../../../components/Tabela/TableIndex'
 import type { TypeColumns } from '../../../components/Tabela/tabelaComDragTypes'
@@ -156,14 +157,14 @@ export function FaturaPage({ tipo }: FaturaPageProps) {
       width: 100,
       sortable: false,
       cellRenderer: ({ data }: ICellRendererParams<ParcelaPaginacao>) => {
-        if (
-          !data ||
-          (data.status !== StatusParcela.PagoParcial &&
-            data.status !== StatusParcela.Pago)
-        ) return null
+        if (!data) return null
+        const permiteEstorno = data.status === StatusParcela.PagoParcial || data.status === StatusParcela.Pago
 
         return (
-          <EstornarParcelaButton parcelaId={data.id} />
+          <StackApp direction="row" spacing={0.5}>
+            {!data.quitada && <PagarParcelaButton parcelaId={data.id} />}
+            {permiteEstorno && <EstornarParcelaButton parcelaId={data.id} />}
+          </StackApp>
         )
       },
     },
