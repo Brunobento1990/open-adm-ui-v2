@@ -13,6 +13,7 @@ import { ComandaPage } from '../pages/private/comanda/ComandaPage'
 import { EstoqueMovimentacaoPage } from '../pages/private/estoque/EstoqueMovimentacaoPage'
 import { EstoquePage } from '../pages/private/estoque/EstoquePage'
 import { EmpresaPage } from '../pages/private/empresa/EmpresaPage'
+import { BonificadosPage } from '../pages/private/financeiro/BonificadosPage'
 import { HomePage } from '../pages/private/HomePage'
 import { LojaParceiraFormPage } from '../pages/private/lojaParceira/LojaParceiraFormPage'
 import { LojaParceiraPage } from '../pages/private/lojaParceira/LojaParceiraPage'
@@ -39,6 +40,11 @@ export type PrivateRouteConfig = {
 }
 
 export const privateRoutes: PrivateRouteConfig[] = [
+  {
+    title: 'Bonificados',
+    path: PrivateRoutePath.Bonificados,
+    component: <BonificadosPage />,
+  },
   {
     title: 'Movimentos de produto',
     path: PrivateRoutePath.MovimentoProduto,

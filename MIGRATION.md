@@ -20,3 +20,4 @@
 - [x] Migrar de movimento de produto.
 - [x] Migrar posição de estoque.
 - [x] Migrar CRUD de produto.
+- [x] Migrar paginação de bonificados.

@@ -220,7 +220,7 @@ export const menus: Menu[] = [
       {
         id: 32,
         nome: 'Bonificados',
-        caminho: '/financeiro/bonificados',
+        caminho: PrivateRoutePath.Bonificados,
         icone: 'mdi:gift-outline',
         filhos: [],
       },

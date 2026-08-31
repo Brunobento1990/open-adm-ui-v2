@@ -84,6 +84,7 @@ export enum PrivateRoutePath {
   Estoque = '/estoque/posicao-estoque',
   EstoqueMovimentacao = '/estoque/posicao-estoque/editar',
   EstoqueMovimentacaoId = '/estoque/posicao-estoque/editar/:id',
+  Bonificados = '/financeiro/bonificados',
   Dashboard = '/dashboard',
 }
 
