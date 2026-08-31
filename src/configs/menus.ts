@@ -234,7 +234,7 @@ export const menus: Menu[] = [
       {
         id: 34,
         nome: 'Mensalidades',
-        caminho: '/financeiro/cobranca',
+        caminho: PrivateRoutePath.Mensalidade,
         icone: 'hugeicons:payment-02',
         filhos: [],
       },

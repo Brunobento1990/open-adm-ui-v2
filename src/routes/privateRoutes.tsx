@@ -14,6 +14,8 @@ import { EstoqueMovimentacaoPage } from '../pages/private/estoque/EstoqueMovimen
 import { EstoquePage } from '../pages/private/estoque/EstoquePage'
 import { EmpresaPage } from '../pages/private/empresa/EmpresaPage'
 import { BonificadosPage } from '../pages/private/financeiro/BonificadosPage'
+import { MensalidadePage } from '../pages/private/financeiro/MensalidadePage'
+import { MensalidadeVisualizarPage } from '../pages/private/financeiro/MensalidadeVisualizarPage'
 import { HomePage } from '../pages/private/HomePage'
 import { LojaParceiraFormPage } from '../pages/private/lojaParceira/LojaParceiraFormPage'
 import { LojaParceiraPage } from '../pages/private/lojaParceira/LojaParceiraPage'
@@ -44,6 +46,16 @@ export const privateRoutes: PrivateRouteConfig[] = [
     title: 'Bonificados',
     path: PrivateRoutePath.Bonificados,
     component: <BonificadosPage />,
+  },
+  {
+    title: 'Mensalidades',
+    path: PrivateRoutePath.Mensalidade,
+    component: <MensalidadePage />,
+  },
+  {
+    title: 'Visualizar mensalidade',
+    path: PrivateRoutePath.MensalidadeVisualizarId,
+    component: <MensalidadeVisualizarPage />,
   },
   {
     title: 'Movimentos de produto',

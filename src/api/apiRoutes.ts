@@ -19,6 +19,7 @@ export enum ApiRoutePath {
   MovimentoProduto = '/movimentacao-de-produto',
   Estoque = '/estoques',
   Bonificado = 'fatura/bonificado',
+  Mensalidade = '/parcela-cobranca',
   Empresa = '/empresa',
   Usuario = '/usuario',
   UltimosPedidos = '/ultimos-pedidos',
