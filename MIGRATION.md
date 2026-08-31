@@ -23,4 +23,4 @@
 - [x] Migrar paginação de bonificados.
 - [x] Migrar paginação e visualização de mensalidades.
 - [x] Migrar extrato de transações financeiras.
-- [ ] Migrar paginação de contas a receber.
+- [x] Migrar paginação de contas a receber.

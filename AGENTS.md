@@ -30,6 +30,18 @@ Do not add barrel `index.ts` re-export files for components, pages, or themes. I
 
 Pagination filters must be opened in a modal from a `menuItems` entry on `TableIndex`. Keep temporary filter values inside the modal and only refresh the pagination when the user applies or clears the filters; do not render pagination filters directly in the table header.
 
+## Migration Fidelity and Abstractions
+
+When migrating a legacy feature, preserve every user-visible field, action, validation, conditional rule, default value, calculation, rounding rule, navigation target, and API payload field. Compare the legacy implementation and API contract field by field before adapting the layout. Do not simplify, omit, postpone, or reinterpret behavior merely to deliver a faster first version. Visual adaptation is allowed only after behavioral parity is preserved.
+
+Forms must use the project's form abstractions, including `useFormikAdapter` and `YupAdapter` where validation applies. Do not manage an application form with ad hoc `useState` when the established Formik adapter can represent it.
+
+Pages and feature components must not call the generic `useApi` directly when the request belongs to a domain resource. Create or extend a resource hook such as `useApiFatura`, keeping endpoint construction, methods, loading state, payload typing, and success messages inside that hook.
+
+Do not use generic dropdown components directly from pages when the dropdown represents a known domain concept. Create or reuse a named wrapper such as `ClienteEcommerceDropDown` or `MeioDePagamentoDropDown`, centralizing its endpoint, labels, option mapping, and value typing.
+
+When repeated domain rows have their own fields or behavior, extract a named component such as `FaturaParcelaCard`. Extraction must preserve all fields and behavior from the legacy row; it is not authorization to reduce the feature. Keep these extracted components mobile-first and use existing shared visual abstractions.
+
 ## Testing Guidelines
 
 No test runner is configured yet. For now, use `npm run lint` and `npm run build` as the required verification before submitting changes. If tests are added, prefer Vitest with React Testing Library, place tests next to the implementation as `*.test.ts` or `*.test.tsx`, and cover user-visible behavior rather than implementation details.

@@ -19,6 +19,7 @@ export enum ApiRoutePath {
   TransacaoFinanceira = '/transacao-financeira',
   MovimentoProduto = '/movimentacao-de-produto',
   Estoque = '/estoques',
+  Fatura = '/fatura',
   Bonificado = 'fatura/bonificado',
   Mensalidade = '/parcela-cobranca',
   Parcela = '/parcela',
@@ -118,3 +119,5 @@ export enum ParcelaApiRoutePath {
   Obter = '/get-by-id',
   Pagar = '/pagar',
 }
+
+export enum FaturaApiRoutePath { Criar = '/criar' }

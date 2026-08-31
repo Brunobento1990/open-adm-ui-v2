@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useApiParcela } from '../../../api/useApiParcela'
 import { BoxApp } from '../../../components/BoxApp/BoxApp'
+import { MeioDePagamentoDropDown } from '../../../components/DropDown/MeioDePagamentoDropDown'
 import { InputApp } from '../../../components/InputApp/InputApp'
 import { InputAppType } from '../../../components/InputApp/inputAppTypes'
 import { ProgressApp } from '../../../components/ProgressApp/ProgressApp'
@@ -21,14 +22,6 @@ import {
 } from '../../../types/FaturaTypes'
 import { formatarDataHoraUtcLocal } from '../../../utils/dateUtils'
 import { formatMoney } from '../../../utils/moneyUtils'
-
-const meioDePagamentoOptions = [
-  { label: 'Dinheiro', value: MeioDePagamento.Dinheiro },
-  { label: 'Pix', value: MeioDePagamento.Pix },
-  { label: 'Cartão de débito', value: MeioDePagamento.CartaoDeDebito },
-  { label: 'Cartão de crédito', value: MeioDePagamento.CartaoDeCredito },
-  { label: 'Boleto', value: MeioDePagamento.Boleto },
-]
 
 function dataAtualInput() {
   const agora = new Date()
@@ -136,7 +129,14 @@ export function PagarParcelaPage() {
               <InputApp id={PagarParcelaFormField.DataDePagamento} label="Data do pagamento" onChange={form.onChange} type={InputAppType.Date} value={form.values.dataDePagamento ?? ''} />
             </FormRoot.FormItemRow>
             <FormRoot.FormItemRow xs={12}>
-              <InputApp id={PagarParcelaFormField.MeioDePagamento} label="Meio de pagamento" onChange={form.onChange} options={meioDePagamentoOptions} type={InputAppType.Select} value={form.values.meioDePagamento ?? ''} />
+              <MeioDePagamentoDropDown
+                id={PagarParcelaFormField.MeioDePagamento}
+                onChange={(value) => form.onChange(
+                  PagarParcelaFormField.MeioDePagamento,
+                  value,
+                )}
+                value={form.values.meioDePagamento}
+              />
             </FormRoot.FormItemRow>
           </FormRoot.FormRow>
 

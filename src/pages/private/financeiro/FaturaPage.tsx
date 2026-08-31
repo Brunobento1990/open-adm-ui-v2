@@ -2,16 +2,16 @@ import type { ICellRendererParams } from 'ag-grid-community'
 import { useState } from 'react'
 import { ApiRoutePath } from '../../../api/apiRoutes'
 import { ButtonApp, ButtonAppVariant } from '../../../components/ButtonApp/ButtonApp'
-import { InputApp } from '../../../components/InputApp/InputApp'
-import { InputAppType } from '../../../components/InputApp/inputAppTypes'
-import type { MenuAppItem } from '../../../components/MenuApp/MenuApp'
-import { ModalChildren } from '../../../components/Modal/ModalChildren'
 import {
   EstornarParcelaButton,
   EstornoParcelaProvider,
 } from '../../../components/Fatura/EstornarParcelaButton'
-import { StatusParcelaBadge } from '../../../components/Fatura/StatusParcelaBadge'
 import { PagarParcelaButton } from '../../../components/Fatura/PagarParcelaButton'
+import { StatusParcelaBadge } from '../../../components/Fatura/StatusParcelaBadge'
+import { InputApp } from '../../../components/InputApp/InputApp'
+import { InputAppType } from '../../../components/InputApp/inputAppTypes'
+import type { MenuAppItem } from '../../../components/MenuApp/MenuApp'
+import { ModalChildren } from '../../../components/Modal/ModalChildren'
 import { StackApp } from '../../../components/StackApp/StackApp'
 import { TableIndex } from '../../../components/Tabela/TableIndex'
 import type { TypeColumns } from '../../../components/Tabela/tabelaComDragTypes'
@@ -30,6 +30,7 @@ import { formatMoney } from '../../../utils/moneyUtils'
 
 type FaturaPageProps = {
   tipo: TipoFatura
+  urlAdd?: string
 }
 
 const situacaoOptions = [
@@ -40,7 +41,7 @@ const situacaoOptions = [
   { label: 'Vencida', value: StatusParcela.Vencida },
 ]
 
-export function FaturaPage({ tipo }: FaturaPageProps) {
+export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
   const { getPaletteColor } = useThemeApp()
   const [refresh, setRefresh] = useState(0)
   const [filtros, setFiltros] = useState<FaturaFiltros>({
@@ -240,7 +241,8 @@ export function FaturaPage({ tipo }: FaturaPageProps) {
         }}
         menuItems={menuItems}
         nomeDaTabela={`fatura-${tipo}`}
-        notBtnAdd
+        notBtnAdd={!urlAdd}
+        urlAdd={urlAdd}
         orderBy={FaturaColumnField.NumeroFatura}
         refreshPai={refresh}
         url={ApiRoutePath.Parcela}

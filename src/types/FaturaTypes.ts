@@ -91,3 +91,27 @@ export type PagarParcelaForm = {
 }
 
 export type PagarParcelaPayload = PagarParcelaForm & { id: string }
+
+export type ParcelaCriar = {
+  aVista: boolean
+  dataDeVencimento: string
+  numeroDaParcela: number
+  meioDePagamento?: MeioDePagamento | string
+  valor: number
+  desconto?: number
+  observacao?: string
+}
+export type FaturaCriarForm = {
+  usuarioId: string
+  usuario?: { id: string; nome: string }
+  quantidadeDeParcelas: number
+  total: number
+  parcelas: ParcelaCriar[]
+}
+export type FaturaCriarPayload = { usuarioId: string; tipo: TipoFatura; parcelas: ParcelaCriar[] }
+export const FaturaFormField = {
+  Parcelas: 'parcelas',
+  QuantidadeDeParcelas: 'quantidadeDeParcelas',
+  Total: 'total',
+  UsuarioId: 'usuarioId',
+} as const

@@ -17,6 +17,7 @@ import { BonificadosPage } from '../pages/private/financeiro/BonificadosPage'
 import { FaturaPage } from '../pages/private/financeiro/FaturaPage'
 import { MensalidadePage } from '../pages/private/financeiro/MensalidadePage'
 import { PagarParcelaPage } from '../pages/private/financeiro/PagarParcelaPage'
+import { FaturaFormPage } from '../pages/private/financeiro/FaturaFormPage'
 import { MensalidadeVisualizarPage } from '../pages/private/financeiro/MensalidadeVisualizarPage'
 import { TransacaoFinanceiraPage } from '../pages/private/financeiro/TransacaoFinanceiraPage'
 import { HomePage } from '../pages/private/HomePage'
@@ -49,7 +50,12 @@ export const privateRoutes: PrivateRouteConfig[] = [
   {
     title: 'Contas a receber',
     path: PrivateRoutePath.ContaAReceber,
-    component: <FaturaPage tipo={TipoFatura.AReceber} />,
+    component: <FaturaPage tipo={TipoFatura.AReceber} urlAdd={PrivateRoutePath.ContaAReceberAdicionar} />,
+  },
+  {
+    title: 'Nova conta a receber',
+    path: PrivateRoutePath.ContaAReceberAdicionar,
+    component: <FaturaFormPage tipo={TipoFatura.AReceber} urlVoltar={PrivateRoutePath.ContaAReceber} />,
   },
   {
     title: 'Baixar parcela',

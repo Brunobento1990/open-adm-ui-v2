@@ -86,6 +86,7 @@ export enum PrivateRoutePath {
   EstoqueMovimentacaoId = '/estoque/posicao-estoque/editar/:id',
   Bonificados = '/financeiro/bonificados',
   ContaAReceber = '/financeiro/contas-a-receber',
+  ContaAReceberAdicionar = '/financeiro/contas-a-receber/adicionar',
   ContaAPagar = '/financeiro/contas-a-pagar',
   PagarParcelaId = '/financeiro/fatura/baixar/:id',
   Mensalidade = '/financeiro/mensalidades',
