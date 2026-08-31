@@ -64,6 +64,13 @@ export function DropDownMultiSelectApp<T extends MultiSelectItem>({
           size="small"
         />
       )}
+      slotProps={{
+        chip: {
+          size: 'small',
+          variant: 'outlined',
+          color: 'primary'
+        },
+      }}
       value={values}
     />
   )

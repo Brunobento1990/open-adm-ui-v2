@@ -92,3 +92,11 @@ export interface EstoqueFiltro {
   tamanhoId?: string
   tamanho?: Tamanho
 }
+
+export interface EstoquesDoProduto {
+  dados: Estoque[]
+}
+
+export interface AtualizarEstoquesPayload {
+  dados: Array<Pick<Estoque, 'id' | 'quantidade'>>
+}

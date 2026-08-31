@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ApiRoutePath } from '../../../api/apiRoutes'
 import { useApiProduto } from '../../../api/useApiProduto'
+import { BoxApp } from '../../../components/BoxApp/BoxApp'
 import { CategoriaDropDown } from '../../../components/DropDown/CategoriaDropDown'
 import { DropDownMultiSelectApp } from '../../../components/DropDown/DropDownMultiSelectApp'
 import { ImageUploadApp } from '../../../components/ImageUploadApp/ImageUploadApp'
@@ -21,6 +22,7 @@ import type { Peso } from '../../../types/PesoTypes'
 import { ProdutoFormField, type Produto, type ProdutoPayload, type ProdutoTabelaDePrecoItem } from '../../../types/ProdutoTypes'
 import type { Tamanho } from '../../../types/TamanhoTypes'
 import { imagemBase64Valida, removerPrefixoBase64 } from '../../../utils/imageUtils'
+import { ProdutoEstoqueModal } from './ProdutoEstoqueModal'
 
 const ProdutoField = { MaxLength: 255 } as const
 const ProdutoTab = {
@@ -198,7 +200,28 @@ export function ProdutoFormPage({ action }: ProdutoFormPageProps) {
   const loading = obter.loading || criar.loading || atualizar.loading || obterTabelaDePreco.loading
 
   return (
-    <FormRoot.Form action={action} loading={loading} submit={form.onSubmit} textoButton="Salvar" urlVoltar={PrivateRoutePath.Produto}>
+    <FormRoot.Form
+      action={action}
+      footer={{
+        children: (
+          <BoxApp>
+            <InputApp
+              checked={Boolean(form.values.vendaSomenteComEstoqueDisponivel)}
+              disabled={readonly}
+              id={ProdutoFormField.VendaSomenteComEstoqueDisponivel}
+              label="Venda com estoque"
+              onChange={form.onChange}
+              type={InputAppType.Checkbox}
+            />
+            {action === FormAction.Edit && id && <ProdutoEstoqueModal produtoId={id} />}
+          </BoxApp>
+        ),
+      }}
+      loading={loading}
+      submit={form.onSubmit}
+      textoButton="Salvar"
+      urlVoltar={PrivateRoutePath.Produto}
+    >
       <TabsApp
         ariaLabel="Seções do cadastro de produto"
         items={produtoTabs}
@@ -208,108 +231,96 @@ export function ProdutoFormPage({ action }: ProdutoFormPageProps) {
 
       {tab === ProdutoTab.Produto && (
         <StackApp spacing={2}>
-        <FormRoot.FormRow>
-          <FormRoot.FormItemRow xs={12} md={6}>
-            <InputApp
-              disabled={readonly}
-              error={form.error(ProdutoFormField.Descricao)}
-              helperText={form.helperText(ProdutoFormField.Descricao)}
-              id={ProdutoFormField.Descricao}
-              label="Descrição"
-              maxLength={ProdutoField.MaxLength}
-              onBlur={form.onBlur}
-              onChange={form.onChange}
-              required
-              value={form.values.descricao}
-            />
-          </FormRoot.FormItemRow>
-          <FormRoot.FormItemRow xs={12} md={6}>
-            <InputApp disabled={readonly} id={ProdutoFormField.EspecificacaoTecnica} label="Especificação técnica" maxLength={ProdutoField.MaxLength} onChange={form.onChange} value={form.values.especificacaoTecnica} />
-          </FormRoot.FormItemRow>
-        </FormRoot.FormRow>
-        <FormRoot.FormRow>
-          <FormRoot.FormItemRow xs={12} md={6}>
-            <InputApp disabled={readonly} id={ProdutoFormField.Referencia} label="Referência" maxLength={ProdutoField.MaxLength} onChange={form.onChange} value={form.values.referencia} />
-          </FormRoot.FormItemRow>
-          <FormRoot.FormItemRow xs={12} md={6}>
-            <CategoriaDropDown
-              error={form.error(ProdutoFormField.CategoriaId)}
-              helperText={form.helperText(ProdutoFormField.CategoriaId)}
-              onChange={(_, categoria) => form.setValue({ categoria, categoriaId: categoria?.id })}
-              readonly={readonly}
-              required
-              value={form.values.categoria}
-            />
-          </FormRoot.FormItemRow>
-        </FormRoot.FormRow>
-        <FormRoot.FormRow>
-          <FormRoot.FormItemRow xs={12} md={6}>
-            <DropDownMultiSelectApp
-              id={ProdutoFormField.Pesos}
-              label="Pesos"
-              onChange={(pesos) => { form.setValue({ pesos }); atualizarVariacoes('pesoId', pesos) }}
-              readonly={readonly}
-              url={`${ApiRoutePath.Peso}/list`}
-              values={form.values.pesos ?? []}
-            />
-          </FormRoot.FormItemRow>
-          <FormRoot.FormItemRow xs={12} md={6}>
-            <DropDownMultiSelectApp
-              id={ProdutoFormField.Tamanhos}
-              label="Tamanhos"
-              onChange={(tamanhos) => { form.setValue({ tamanhos }); atualizarVariacoes('tamanhoId', tamanhos) }}
-              readonly={readonly}
-              url={`${ApiRoutePath.Tamanho}/list`}
-              values={form.values.tamanhos ?? []}
-            />
-          </FormRoot.FormItemRow>
-        </FormRoot.FormRow>
-        <FormRoot.FormRow>
-          <FormRoot.FormItemRow xs={12} md={6}>
-            <InputApp
-              checked={Boolean(form.values.vendaSomenteComEstoqueDisponivel)}
-              disabled={readonly}
-              id={ProdutoFormField.VendaSomenteComEstoqueDisponivel}
-              label="Venda somente com estoque disponível"
-              onChange={form.onChange}
-              type={InputAppType.Checkbox}
-            />
-          </FormRoot.FormItemRow>
-        </FormRoot.FormRow>
-        <FormRoot.FormRow>
-          <FormRoot.FormItemRow xs={12} md={6}>
-            <ImageUploadApp
-              alt={form.values.descricao || 'Foto do produto'}
-              error={form.error(ProdutoFormField.NovaFoto)}
-              helperText={form.helperText(ProdutoFormField.NovaFoto)}
-              onChange={(value) => form.onChange(ProdutoFormField.NovaFoto, value)}
-              previewLabel="Pré-visualização da foto"
-              readonly={readonly}
-              value={form.values.novaFoto || form.values.foto}
-            />
-          </FormRoot.FormItemRow>
-        </FormRoot.FormRow>
+          <FormRoot.FormRow>
+            <FormRoot.FormItemRow xs={12} md={6}>
+              <InputApp
+                disabled={readonly}
+                error={form.error(ProdutoFormField.Descricao)}
+                helperText={form.helperText(ProdutoFormField.Descricao)}
+                id={ProdutoFormField.Descricao}
+                label="Descrição"
+                maxLength={ProdutoField.MaxLength}
+                onBlur={form.onBlur}
+                onChange={form.onChange}
+                required
+                value={form.values.descricao}
+              />
+            </FormRoot.FormItemRow>
+            <FormRoot.FormItemRow xs={12} md={6}>
+              <InputApp disabled={readonly} id={ProdutoFormField.EspecificacaoTecnica} label="Especificação técnica" maxLength={ProdutoField.MaxLength} onChange={form.onChange} value={form.values.especificacaoTecnica} />
+            </FormRoot.FormItemRow>
+          </FormRoot.FormRow>
+          <FormRoot.FormRow>
+            <FormRoot.FormItemRow xs={12} md={6}>
+              <InputApp disabled={readonly} id={ProdutoFormField.Referencia} label="Referência" maxLength={ProdutoField.MaxLength} onChange={form.onChange} value={form.values.referencia} />
+            </FormRoot.FormItemRow>
+            <FormRoot.FormItemRow xs={12} md={6}>
+              <CategoriaDropDown
+                error={form.error(ProdutoFormField.CategoriaId)}
+                helperText={form.helperText(ProdutoFormField.CategoriaId)}
+                onChange={(_, categoria) => form.setValue({ categoria, categoriaId: categoria?.id })}
+                readonly={readonly}
+                required
+                value={form.values.categoria}
+              />
+            </FormRoot.FormItemRow>
+          </FormRoot.FormRow>
+          <FormRoot.FormRow>
+            <FormRoot.FormItemRow xs={12} md={6}>
+              <DropDownMultiSelectApp
+                id={ProdutoFormField.Pesos}
+                label="Pesos"
+                onChange={(pesos) => { form.setValue({ pesos }); atualizarVariacoes('pesoId', pesos) }}
+                readonly={readonly}
+                url={`${ApiRoutePath.Peso}/list`}
+                values={form.values.pesos ?? []}
+              />
+            </FormRoot.FormItemRow>
+            <FormRoot.FormItemRow xs={12} md={6}>
+              <DropDownMultiSelectApp
+                id={ProdutoFormField.Tamanhos}
+                label="Tamanhos"
+                onChange={(tamanhos) => { form.setValue({ tamanhos }); atualizarVariacoes('tamanhoId', tamanhos) }}
+                readonly={readonly}
+                url={`${ApiRoutePath.Tamanho}/list`}
+                values={form.values.tamanhos ?? []}
+              />
+            </FormRoot.FormItemRow>
+          </FormRoot.FormRow>
+          <FormRoot.FormRow>
+            <FormRoot.FormItemRow xs={12} md={6}>
+              <ImageUploadApp
+                alt={form.values.descricao || 'Foto do produto'}
+                error={form.error(ProdutoFormField.NovaFoto)}
+                helperText={form.helperText(ProdutoFormField.NovaFoto)}
+                onChange={(value) => form.onChange(ProdutoFormField.NovaFoto, value)}
+                previewLabel="Pré-visualização da foto"
+                readonly={readonly}
+                value={form.values.novaFoto || form.values.foto}
+              />
+            </FormRoot.FormItemRow>
+          </FormRoot.FormRow>
         </StackApp>
       )}
 
       {tab === ProdutoTab.Precos && (
         <StackApp spacing={2}>
-        {tabelaDePrecoId ? (
-          <>
-            <TextApp color={TextAppColor.Primary} weight={TextAppWeight.SemiBold}>Tabela ativa: {tabelaDePrecoDescricao}</TextApp>
-            {(form.values.pesos ?? []).map((peso) => {
-              const item = itensTabelaDePreco.find((current) => current.pesoId === peso.id)
-              return item && <PrecoVariacao descricao={`Peso: ${peso.descricao}`} item={item} key={`peso-${peso.id}`} onChange={(values) => atualizarItem('pesoId', peso.id, values)} readonly={readonly} />
-            })}
-            {(form.values.tamanhos ?? []).map((tamanho) => {
-              const item = itensTabelaDePreco.find((current) => current.tamanhoId === tamanho.id)
-              return item && <PrecoVariacao descricao={`Tamanho: ${tamanho.descricao}`} item={item} key={`tamanho-${tamanho.id}`} onChange={(values) => atualizarItem('tamanhoId', tamanho.id, values)} readonly={readonly} />
-            })}
-            {(form.values.pesos?.length ?? 0) === 0 && (form.values.tamanhos?.length ?? 0) === 0 && (
-              <TextApp color={TextAppColor.Secondary}>Selecione pesos ou tamanhos para informar os preços.</TextApp>
-            )}
-          </>
-        ) : <TextApp color={TextAppColor.Secondary}>Não há uma tabela de preço ativa.</TextApp>}
+          {tabelaDePrecoId ? (
+            <>
+              <TextApp color={TextAppColor.Primary} weight={TextAppWeight.SemiBold}>Tabela ativa: {tabelaDePrecoDescricao}</TextApp>
+              {(form.values.pesos ?? []).map((peso) => {
+                const item = itensTabelaDePreco.find((current) => current.pesoId === peso.id)
+                return item && <PrecoVariacao descricao={`Peso: ${peso.descricao}`} item={item} key={`peso-${peso.id}`} onChange={(values) => atualizarItem('pesoId', peso.id, values)} readonly={readonly} />
+              })}
+              {(form.values.tamanhos ?? []).map((tamanho) => {
+                const item = itensTabelaDePreco.find((current) => current.tamanhoId === tamanho.id)
+                return item && <PrecoVariacao descricao={`Tamanho: ${tamanho.descricao}`} item={item} key={`tamanho-${tamanho.id}`} onChange={(values) => atualizarItem('tamanhoId', tamanho.id, values)} readonly={readonly} />
+              })}
+              {(form.values.pesos?.length ?? 0) === 0 && (form.values.tamanhos?.length ?? 0) === 0 && (
+                <TextApp color={TextAppColor.Secondary}>Selecione pesos ou tamanhos para informar os preços.</TextApp>
+              )}
+            </>
+          ) : <TextApp color={TextAppColor.Secondary}>Não há uma tabela de preço ativa.</TextApp>}
         </StackApp>
       )}
     </FormRoot.Form>

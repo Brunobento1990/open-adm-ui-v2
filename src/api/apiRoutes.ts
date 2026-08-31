@@ -100,6 +100,8 @@ export enum ApiResourceRoutePath {
 
 export enum EstoquesApiRoutePath {
   Atualizar = '/update',
+  AtualizarTodos = '/update-estoques',
   Movimentar = '/movimentar-estoque',
   Obter = '/get-estoque',
+  ObterTodosDoProduto = '/posicao-estoque-produto',
 }
