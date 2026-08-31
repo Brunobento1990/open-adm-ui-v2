@@ -26,7 +26,7 @@ type HeaderTableProps = {
 const HeaderTableIcon = {
   Add: 'ic:round-plus',
   Checked: 'solar:check-square-linear',
-  Menu: 'carbon:overflow-menu-vertical',
+  Menu: 'charm:menu-kebab',
   Refresh: 'solar:refresh-linear',
   Unchecked: 'solar:stop-linear',
 } as const

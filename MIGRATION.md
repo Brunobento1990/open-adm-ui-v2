@@ -19,3 +19,4 @@
 - [x] Migrar CRUD de tamanho.
 - [x] Migrar de movimento de produto.
 - [x] Migrar posição de estoque.
+- [x] Migrar CRUD de produto.

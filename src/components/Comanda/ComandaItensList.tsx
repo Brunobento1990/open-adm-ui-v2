@@ -42,7 +42,7 @@ export function ComandaItensList({
       {itens.map((item, itemIndex) => (
         <Paper key={item.id || `${item.produtoId}-${itemIndex}`} variant="outlined" sx={{ p: { xs: 1.25, md: 1.5 } }}>
           <Box sx={{ alignItems: 'center', display: 'grid', gap: { xs: '4px 10px', md: '4px 16px' }, gridTemplateColumns: { xs: '44px minmax(0, 1fr) auto', md: '48px minmax(0, 1fr) auto' }, minWidth: 0 }}>
-            <Avatar alt={item.produto.descricao} src={item.produto.urlFoto} variant="rounded" sx={{ gridRow: '1 / span 2', height: { xs: 44, md: 48 }, width: { xs: 44, md: 48 } }} />
+            <Avatar alt={item.produto.descricao} src={item.produto.foto} variant="rounded" sx={{ gridRow: '1 / span 2', height: { xs: 44, md: 48 }, width: { xs: 44, md: 48 } }} />
             <Box sx={{ gridColumn: 2, minWidth: 0 }}>
               <Typography noWrap sx={{ fontWeight: 600 }}>{item.produto.descricao}</Typography>
             </Box>

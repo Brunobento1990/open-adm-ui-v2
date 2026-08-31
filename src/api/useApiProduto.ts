@@ -1,15 +1,30 @@
 import { ApiMethod, useApi } from '../hook/useApi'
-import type { Produto } from '../types/ProdutoTypes'
-import { ApiRoutePath } from './apiRoutes'
+import type { Produto, ProdutoPayload, ProdutoTabelaDePreco } from '../types/ProdutoTypes'
+import {
+  ApiRoutePath,
+  ProdutoApiRoutePath,
+  TabelaDePrecoLegacyApiRoutePath,
+} from './apiRoutes'
 
 export function useApiProduto() {
-  const apiCriar = useApi({ method: ApiMethod.Post, url: ApiRoutePath.Produto })
+  const apiCriar = useApi({
+    method: ApiMethod.Post,
+    url: `${ApiRoutePath.Produto}${ProdutoApiRoutePath.Criar}`,
+  })
   const apiObter = useApi({
     method: ApiMethod.Get,
-    url: ApiRoutePath.Produto,
+    url: `${ApiRoutePath.Produto}${ProdutoApiRoutePath.Obter}`,
     naoRenderizarResposta: true,
   })
-  const apiAtualizar = useApi({ method: ApiMethod.Put, url: ApiRoutePath.Produto })
+  const apiAtualizar = useApi({
+    method: ApiMethod.Put,
+    url: `${ApiRoutePath.Produto}${ProdutoApiRoutePath.Atualizar}`,
+  })
+  const apiObterTabelaDePreco = useApi({
+    method: ApiMethod.Get,
+    url: `/tabelas-de-precos${TabelaDePrecoLegacyApiRoutePath.ObterAtivaPorProduto}`,
+    naoRenderizarResposta: true,
+  })
 
   return {
     obter: {
@@ -19,19 +34,24 @@ export function useApiProduto() {
       loading: apiObter.loading,
     },
     criar: {
-      fetch: (values: Partial<Produto>) => apiCriar.action<Produto>({
+      fetch: (values: ProdutoPayload) => apiCriar.action<Produto>({
         body: values,
         message: 'Produto criado com sucesso',
       }),
       loading: apiCriar.loading,
     },
     atualizar: {
-      fetch: (id: string, values: Partial<Produto>) => apiAtualizar.action<Produto>({
+      fetch: (values: ProdutoPayload) => apiAtualizar.action<Produto>({
         body: values,
-        urlParams: `?id=${encodeURIComponent(id)}`,
         message: 'Produto atualizado com sucesso',
       }),
       loading: apiAtualizar.loading,
+    },
+    obterTabelaDePreco: {
+      fetch: (produtoId?: string) => apiObterTabelaDePreco.action<ProdutoTabelaDePreco>({
+        urlParams: produtoId ? `?produtoId=${encodeURIComponent(produtoId)}` : undefined,
+      }),
+      loading: apiObterTabelaDePreco.loading,
     },
   }
 }

@@ -22,6 +22,8 @@ The project uses ESLint flat config with `@eslint/js`, `typescript-eslint`, `esl
 
 Use `useThemeApp` from `src/hook/useThemeApp.ts` whenever a component needs theme colors. Avoid hard-coded color values in components; add missing tokens to the hook or theme files instead.
 
+Do not import visual components directly from `@mui/material` in pages or domain/feature components. Before adding a MUI import, check whether an equivalent abstraction already exists under `src/components/` and use it. If no abstraction exists, create a reusable shared abstraction under `src/components/` and keep the direct MUI import inside that abstraction. Imports used only for TypeScript types are allowed when an existing abstraction needs to expose compatible props.
+
 Do not use hard-coded domain strings in logic or props. Define shared values with `const`, `enum`, or `type` aliases. When creating a union such as `'success' | 'error'`, also expose an enum or constant map and use it at call sites, for example `Status.Success` instead of `'success'`.
 
 Do not add barrel `index.ts` re-export files for components, pages, or themes. Import from the concrete file that owns the export instead.

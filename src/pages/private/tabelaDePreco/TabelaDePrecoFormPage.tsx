@@ -153,7 +153,7 @@ export function TabelaDePrecoFormPage({ action }: TabelaDePrecoFormPageProps) {
           <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center', height: '100%' }}>
             <Avatar
               alt={data.produto.descricao}
-              src={data.produto.urlFoto}
+              src={data.produto.foto}
               variant="rounded"
               sx={{ height: 38, width: 38 }}
             />

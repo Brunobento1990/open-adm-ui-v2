@@ -31,7 +31,8 @@ import {
 type PaginacaoResponse = {
   values: any[]
   totalPaginas: number
-  totalRegistros: number
+  totalDeRegistros?: number
+  totalRegistros?: number
 }
 
 export interface ITableIndexProps {
@@ -216,7 +217,7 @@ export function TableIndex(props: ITableIndexProps) {
         setPagina={setPagina}
         quantidadePagina={paginacao?.totalPaginas ?? 0}
         length={paginacao?.values.length ?? 0}
-        totalDeRegistros={paginacao?.totalRegistros ?? 0}
+        totalDeRegistros={paginacao?.totalDeRegistros ?? paginacao?.totalRegistros ?? 0}
       />
     </BoxApp>
   )

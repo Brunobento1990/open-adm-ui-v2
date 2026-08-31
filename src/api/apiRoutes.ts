@@ -68,6 +68,18 @@ export enum CategoriaApiRoutePath {
   Paginacao = '/paginacao',
 }
 
+export enum ProdutoApiRoutePath {
+  Atualizar = '/update',
+  Criar = '/create',
+  Excluir = '/delete',
+  InativarAtivar = '/inativar-ativar',
+  Obter = '/get-produto',
+}
+
+export enum TabelaDePrecoLegacyApiRoutePath {
+  ObterAtivaPorProduto = '/get-tabela-by-produtoId',
+}
+
 export enum TabelaDePrecoApiRoutePath {
   Item = '/item',
 }

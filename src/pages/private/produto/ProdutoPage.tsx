@@ -1,8 +1,15 @@
-import { Avatar } from '@mui/material'
 import type { ICellRendererParams } from 'ag-grid-community'
 import { ApiRoutePath } from '../../../api/apiRoutes'
+import { AvatarApp } from '../../../components/AvatarApp/AvatarApp'
+import { BoxApp } from '../../../components/BoxApp/BoxApp'
+import {
+  BoxAppAlignItems,
+  BoxAppDisplay,
+  BoxAppJustifyContent,
+} from '../../../components/BoxApp/boxAppTypes'
 import { TableIndex } from '../../../components/Tabela/TableIndex'
 import type { TypeColumns } from '../../../components/Tabela/tabelaComDragTypes'
+import { TextApp } from '../../../components/TextApp/TextApp'
 import { PrivateRoutePath } from '../../../routes/appRoutes'
 import type { Produto } from '../../../types/ProdutoTypes'
 
@@ -13,27 +20,36 @@ const ProdutoTable = {
 const ProdutoColumnField = {
   Categoria: 'categoria.descricao',
   Descricao: 'descricao',
-  Foto: 'urlFoto',
   Referencia: 'referencia',
 } as const
 
 export function ProdutoPage() {
   const columns: TypeColumns[] = [
     {
-      field: ProdutoColumnField.Foto,
-      headerName: 'Foto',
-      width: 80,
-      sortable: false,
-      cellRenderer: ({ data }: ICellRendererParams<Produto>) => data?.urlFoto && (
-        <Avatar alt={data.descricao} src={data.urlFoto} sx={{ height: 30, width: 30 }} />
-      ),
-    },
-    {
       field: ProdutoColumnField.Descricao,
-      headerName: 'Descrição',
+      headerName: 'Produto',
       flex: 1,
-      minWidth: 200,
+      minWidth: 240,
       sortable: true,
+      cellRenderer: ({ data }: ICellRendererParams<Produto>) => data && (
+        <BoxApp
+          alignItems={BoxAppAlignItems.Center}
+          display={BoxAppDisplay.Flex}
+          gap="1rem"
+          height="100%"
+          justifyContent={BoxAppJustifyContent.Center}
+        >
+          <AvatarApp
+            alt={`Produto ${data.descricao}`}
+            src={data.foto}
+            sx={{ height: 30, width: 30 }}
+            variant="rounded"
+          >
+            {data.descricao.charAt(0).toUpperCase()}
+          </AvatarApp>
+          <TextApp noWrap>{data.descricao}</TextApp>
+        </BoxApp>
+      ),
     },
     {
       field: ProdutoColumnField.Referencia,
@@ -54,6 +70,7 @@ export function ProdutoPage() {
       columns={columns}
       nomeDaTabela={ProdutoTable.Name}
       orderBy={ProdutoColumnField.Descricao}
+      rowHeight={66}
       url={ApiRoutePath.Produto}
       urlAdd={PrivateRoutePath.ProdutoAdicionar}
       urlEdit={PrivateRoutePath.ProdutoEditar}

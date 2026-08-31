@@ -1,3 +1,4 @@
+import { PrivateRoutePath } from '../routes/appRoutes'
 import type { Menu } from '../types/MenuTypes'
 
 export const menus: Menu[] = [
@@ -44,7 +45,7 @@ export const menus: Menu[] = [
       {
         id: 7,
         nome: 'Produto',
-        caminho: '/estoque/produto',
+        caminho: PrivateRoutePath.Produto,
         icone: 'fluent-mdl2:product-variant',
         filhos: [],
       },
