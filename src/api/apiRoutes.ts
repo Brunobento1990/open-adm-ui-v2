@@ -145,4 +145,5 @@ export enum ConfiguracaoPedidoApiRoutePath {
 export enum PedidoApiRoutePath {
   Download = '/download-pedido',
   Excluir = '/delete',
+  Obter = '/get',
 }

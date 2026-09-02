@@ -57,6 +57,38 @@ export interface PedidoPaginacao {
   temEstoqueDisponivel: boolean
 }
 
+export enum PedidoItemColumnField {
+  Estoque = 'estoqueDisponivel',
+  PesoTamanho = 'pesoTamanho',
+  Produto = 'produto',
+  Quantidade = 'quantidade',
+  ValorUnitario = 'valorUnitario',
+}
+
+type PedidoItemDescricao = {
+  descricao?: string
+}
+
+export interface PedidoItem {
+  id: string
+  produtoId: string
+  produto?: PedidoItemDescricao
+  pesoId?: string
+  peso?: PedidoItemDescricao
+  tamanhoId?: string
+  tamanho?: PedidoItemDescricao
+  pedidoId: string
+  valorUnitario: number
+  quantidade: number
+  valorTotal: number
+  estoqueDisponivel: number
+  temEstoqueDisponivel: boolean
+}
+
+export interface Pedido extends PedidoPaginacao {
+  itensPedido: PedidoItem[]
+}
+
 export type PedidoFiltros = {
   statusPedido: PedidoStatus | PedidoStatusFiltro
 }
