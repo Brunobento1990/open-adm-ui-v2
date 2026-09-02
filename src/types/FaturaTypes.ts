@@ -109,6 +109,15 @@ export type FaturaCriarForm = {
   parcelas: ParcelaCriar[]
 }
 export type FaturaCriarPayload = { usuarioId: string; tipo: TipoFatura; parcelas: ParcelaCriar[] }
+
+export type FaturaBaixaAutomaticaPayload = {
+  pedidoId: string
+  desconto?: number
+}
+
+export type ResultadoPadrao = {
+  resultado: boolean
+}
 export const FaturaFormField = {
   Parcelas: 'parcelas',
   QuantidadeDeParcelas: 'quantidadeDeParcelas',

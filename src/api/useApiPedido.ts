@@ -1,5 +1,5 @@
 import { ApiMethod, useApi } from '../hook/useApi'
-import type { Pedido } from '../types/PedidoTypes'
+import type { Pedido, PedidoAtualizarStatusPayload } from '../types/PedidoTypes'
 import { ApiRoutePath, PedidoApiRoutePath } from './apiRoutes'
 
 export function useApiPedido() {
@@ -16,6 +16,10 @@ export function useApiPedido() {
   const apiExcluir = useApi({
     method: ApiMethod.Delete,
     url: `${ApiRoutePath.Pedido}${PedidoApiRoutePath.Excluir}`,
+  })
+  const apiAtualizarStatus = useApi({
+    method: ApiMethod.Put,
+    url: `${ApiRoutePath.Pedido}${PedidoApiRoutePath.AtualizarStatus}`,
   })
 
   return {
@@ -41,6 +45,14 @@ export function useApiPedido() {
         return response?.resultado ?? false
       },
       loading: apiExcluir.loading,
+    },
+    atualizarStatus: {
+      fetch: ({ id, statusPedido }: PedidoAtualizarStatusPayload) =>
+        apiAtualizarStatus.action({
+          body: { pedidoId: id, statusPedido },
+          message: 'Status atualizado com sucesso',
+        }),
+      loading: apiAtualizarStatus.loading,
     },
   }
 }

@@ -30,6 +30,7 @@ import { MovimentoProdutoFormPage } from '../pages/private/movimentoProduto/Movi
 import { MovimentoProdutoPage } from '../pages/private/movimentoProduto/MovimentoProdutoPage'
 import { PedidoPage } from '../pages/private/pedido/PedidoPage'
 import { PedidoVisualizarPage } from '../pages/private/pedido/PedidoVisualizarPage'
+import { PedidoModificarStatusPage } from '../pages/private/pedido/PedidoModificarStatusPage'
 import { PesoFormPage } from '../pages/private/peso/PesoFormPage'
 import { PesoPage } from '../pages/private/peso/PesoPage'
 import { ProdutoFormPage } from '../pages/private/produto/ProdutoFormPage'
@@ -60,6 +61,11 @@ export const privateRoutes: PrivateRouteConfig[] = [
     title: 'Visualizar pedido',
     path: PrivateRoutePath.PedidoVisualizarId,
     component: <PedidoVisualizarPage />,
+  },
+  {
+    title: 'Status do pedido',
+    path: PrivateRoutePath.PedidoModificarStatusId,
+    component: <PedidoModificarStatusPage />,
   },
   {
     title: 'Contas a receber',

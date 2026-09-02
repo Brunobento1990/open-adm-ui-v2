@@ -89,6 +89,8 @@ export interface Pedido extends PedidoPaginacao {
   itensPedido: PedidoItem[]
 }
 
+export type PedidoAtualizarStatusPayload = Pick<Pedido, 'id' | 'statusPedido'>
+
 export type PedidoFiltros = {
   statusPedido: PedidoStatus | PedidoStatusFiltro
 }

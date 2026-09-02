@@ -124,7 +124,11 @@ export enum ParcelaApiRoutePath {
   Pagar = '/pagar',
 }
 
-export enum FaturaApiRoutePath { Criar = '/criar' }
+export enum FaturaApiRoutePath {
+  BaixaAutomatica = '/baixa-automatica',
+  Bonificar = '/bonificar',
+  Criar = '/criar',
+}
 
 export enum ParceiroApiRoutePath {
   Editar = '/editar',
@@ -146,4 +150,5 @@ export enum PedidoApiRoutePath {
   Download = '/download-pedido',
   Excluir = '/delete',
   Obter = '/get',
+  AtualizarStatus = '/update-status',
 }

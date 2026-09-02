@@ -167,8 +167,14 @@ export function PedidoPage() {
       headerName: 'Baixar',
       width: 100,
       sortable: false,
-      cellRenderer: ({ data }: ICellRendererParams<PedidoPaginacao>) =>
-        data && (
+      cellRenderer: ({ data }: ICellRendererParams<PedidoPaginacao>) => {
+        if (
+          !data ||
+          data.statusPedido === PedidoStatus.Entregue ||
+          data.statusPedido === PedidoStatus.Cancelado
+        ) return null
+
+        return (
           <IconButtonComTolltip
             aria-label="Modificar status do pedido"
             onClick={(event) => {
@@ -179,7 +185,8 @@ export function PedidoPage() {
           >
             <IconApp color={cores.primary} icon="fe:app-menu" />
           </IconButtonComTolltip>
-        ),
+        )
+      },
     },
     {
       field: PedidoColumnField.Financeiro,

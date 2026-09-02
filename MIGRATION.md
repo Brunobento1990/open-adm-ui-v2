@@ -12,6 +12,7 @@
 ## Próximos passos
 
 - [ ] Adicionar o redirecionamento do card **Cobranças mais antigas** da Home para `/financeiro/fatura/negociar-cobranca/:faturaId`, usando o identificador da fatura selecionada.
+- [ ] Migrar a tela de negociação de cobrança em `/financeiro/fatura/negociar-cobranca/:pedidoId`. A ação **Parcelar** da tela de modificação de status do pedido já redireciona para essa rota, mas a tela de destino ainda não foi implementada.
 - [x] Migrar CRUD de banner.
 - [x] Migrar CRUD de lojas parceiras.
 - [x] Migrar CRUD de categoria.
