@@ -10,6 +10,7 @@ import { ClientePage } from '../pages/private/cliente/ClientePage'
 import { ClienteUltimosPedidosPage } from '../pages/private/cliente/ClienteUltimosPedidosPage'
 import { ComandaFormPage } from '../pages/private/comanda/ComandaFormPage'
 import { ComandaPage } from '../pages/private/comanda/ComandaPage'
+import { ConfiguracaoPedidoPage } from '../pages/private/configuracaoPedido/ConfiguracaoPedidoPage'
 import { EstoqueMovimentacaoPage } from '../pages/private/estoque/EstoqueMovimentacaoPage'
 import { EstoquePage } from '../pages/private/estoque/EstoquePage'
 import { EmpresaPage } from '../pages/private/empresa/EmpresaPage'
@@ -192,6 +193,11 @@ export const privateRoutes: PrivateRouteConfig[] = [
     title: 'Minha empresa',
     path: PrivateRoutePath.MinhaEmpresa,
     component: <MinhaEmpresaPage />,
+  },
+  {
+    title: 'Configuração de pedido',
+    path: PrivateRoutePath.ConfiguracaoPedido,
+    component: <ConfiguracaoPedidoPage />,
   },
   {
     title: 'Usuários',

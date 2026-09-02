@@ -27,6 +27,7 @@ export enum PrivateRoutePath {
   LojaParceiraVisualizarId = '/lojas-parceiras/visualizar/:id',
   Empresa = '/cadastros/empresa',
   MinhaEmpresa = '/configuracao/minha-empresa',
+  ConfiguracaoPedido = '/configuracao/pedido',
   Usuario = '/cadastros/usuarios',
   UsuarioAdicionar = '/cadastros/usuarios/adicionar',
   UsuarioEditar = '/cadastros/usuarios/editar',
