@@ -48,6 +48,7 @@ export interface ITableIndexProps {
   refreshPai?: boolean | number
   filtroComplementar?: any
   desabilitarColunaAtivo?: boolean
+  desabilitarColunaAcoes?: boolean
   metodo?: TypeMethod
   childrenHeader?: ReactNode
   orderBy?: string
@@ -149,7 +150,7 @@ export function TableIndex(props: ITableIndexProps) {
     if (response !== undefined) await refresh()
   }
 
-  const defaultColumns = DefaultColuns({
+  const defaultColumns = props.desabilitarColunaAcoes ? [] : DefaultColuns({
     alterarStatus: props.desabilitarColunaAtivo ? undefined : alterarStatus,
     editar: props.urlEdit ? onDoubleClick : undefined,
     loadingAlterarStatus: alterarStatusApi.loading,

@@ -23,3 +23,40 @@ export const PedidoStatusLabel: Record<PedidoStatus, string> = {
   [PedidoStatus.Entregue]: 'Entregue',
   [PedidoStatus.Cancelado]: 'Cancelado',
 }
+
+export const PedidoStatusOptions = Object.values(PedidoStatus)
+  .filter((status): status is PedidoStatus => typeof status === 'number')
+  .map((status) => ({ label: PedidoStatusLabel[status], value: status }))
+
+export enum PedidoStatusFiltro {
+  Todos = -1,
+}
+
+export enum PedidoColumnField {
+  Acoes = 'acoes',
+  Baixar = 'baixar',
+  Cadastro = 'dataDeCriacao',
+  Cliente = 'usuario',
+  Estoque = 'temEstoqueDisponivel',
+  Financeiro = 'financeiro',
+  Numero = 'numero',
+  Status = 'statusPedido',
+}
+
+export interface PedidoPaginacao {
+  id: string
+  dataDeCriacao: string
+  dataDeAtualizacao: string
+  numero: number
+  statusPedido: PedidoStatus
+  valorTotal: number
+  totalItens: number
+  totalAReceber: number
+  porcentagemEstoqueAtendido: number
+  usuario?: string
+  temEstoqueDisponivel: boolean
+}
+
+export type PedidoFiltros = {
+  statusPedido: PedidoStatus | PedidoStatusFiltro
+}

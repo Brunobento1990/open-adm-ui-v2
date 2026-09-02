@@ -115,7 +115,7 @@ export const menus: Menu[] = [
       {
         id: 17,
         nome: 'Pedidos',
-        caminho: '/pedidos',
+        caminho: PrivateRoutePath.Pedido,
         icone: 'material-symbols:order-approve-outline',
         filhos: [],
       },

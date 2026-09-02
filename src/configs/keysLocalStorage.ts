@@ -4,6 +4,7 @@ export const keysLocalStorage = {
     refreshToken: 'refreshToken',
     listarInativos: 'listarInativos',
     quantidadePorPagina: 'quantidadePorPagina',
+    pedidoStatusFiltro: 'pedidos-filtro-status',
     tema: 'tema',
     usuario: 'usuario',
 }

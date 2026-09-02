@@ -13,6 +13,7 @@ export enum ApiRoutePath {
   Login = '/login/funcionario',
   Menu = '/menu',
   Peso = '/pesos',
+  Pedido = '/pedidos',
   Produto = '/produtos',
   PublicoComanda = '/publico/comandas',
   TabelaDePreco = '/tabela-de-preco',
@@ -139,4 +140,9 @@ export enum CepApiRoutePath {
 export enum ConfiguracaoPedidoApiRoutePath {
   Atualizar = '/update',
   Obter = '/get-configuracoes',
+}
+
+export enum PedidoApiRoutePath {
+  Download = '/download-pedido',
+  Excluir = '/delete',
 }

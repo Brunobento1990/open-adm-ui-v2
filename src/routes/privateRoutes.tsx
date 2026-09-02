@@ -28,6 +28,7 @@ import { MinhaContaPage } from '../pages/private/MinhaContaPage'
 import { MinhaEmpresaPage } from '../pages/private/minhaEmpresa/MinhaEmpresaPage'
 import { MovimentoProdutoFormPage } from '../pages/private/movimentoProduto/MovimentoProdutoFormPage'
 import { MovimentoProdutoPage } from '../pages/private/movimentoProduto/MovimentoProdutoPage'
+import { PedidoPage } from '../pages/private/pedido/PedidoPage'
 import { PesoFormPage } from '../pages/private/peso/PesoFormPage'
 import { PesoPage } from '../pages/private/peso/PesoPage'
 import { ProdutoFormPage } from '../pages/private/produto/ProdutoFormPage'
@@ -49,6 +50,11 @@ export type PrivateRouteConfig = {
 }
 
 export const privateRoutes: PrivateRouteConfig[] = [
+  {
+    title: 'Pedidos',
+    path: PrivateRoutePath.Pedido,
+    component: <PedidoPage />,
+  },
   {
     title: 'Contas a receber',
     path: PrivateRoutePath.ContaAReceber,

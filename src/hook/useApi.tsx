@@ -1,4 +1,4 @@
-import axios, { type GenericAbortSignal } from 'axios';
+import axios, { type GenericAbortSignal, type ResponseType } from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { useSnackbarApp } from '../components/Snackbar/useSnackbar';
 import { keysLocalStorage } from '../configs/keysLocalStorage';
@@ -34,6 +34,7 @@ export interface propsFecth {
     desativarSignal?: boolean;
     onSuccess?: () => void;
     onError?: (error: unknown) => void;
+    responseType?: ResponseType;
 }
 
 export const URL_API = import.meta.env.VITE_API_URL;
@@ -162,6 +163,7 @@ export function useApi(props: propsUseApi) {
                 method: props.method,
                 headers,
                 signal: !propsFecth?.desativarSignal ? signal : undefined,
+                responseType: propsFecth?.responseType,
             });
             const message = propsFecth?.message ?? getMessage(props.method);
             if (
