@@ -23,6 +23,8 @@ export enum ApiRoutePath {
   Bonificado = 'fatura/bonificado',
   Mensalidade = '/parcela-cobranca',
   Parcela = '/parcela',
+  Parceiro = '/parceiro',
+  Cep = '/cep',
   Empresa = '/empresa',
   Usuario = '/usuario',
   UltimosPedidos = '/ultimos-pedidos',
@@ -121,3 +123,14 @@ export enum ParcelaApiRoutePath {
 }
 
 export enum FaturaApiRoutePath { Criar = '/criar' }
+
+export enum ParceiroApiRoutePath {
+  Editar = '/editar',
+  Obter = '/obter',
+  RedeSocial = '/rede-social',
+  Telefone = '/telefone',
+}
+
+export enum CepApiRoutePath {
+  Consultar = '/consultar',
+}

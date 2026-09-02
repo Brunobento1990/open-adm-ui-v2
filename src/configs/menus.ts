@@ -171,7 +171,7 @@ export const menus: Menu[] = [
       {
         id: 25,
         nome: 'Minha empresa',
-        caminho: '/configuracao/minha-empresa',
+        caminho: PrivateRoutePath.MinhaEmpresa,
         icone: 'mdi:company',
         filhos: [],
       },

@@ -24,3 +24,4 @@
 - [x] Migrar paginação e visualização de mensalidades.
 - [x] Migrar extrato de transações financeiras.
 - [x] Migrar paginação de contas a receber.
+- [x] Migrar configuração de Minha empresa.

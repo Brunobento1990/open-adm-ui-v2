@@ -24,6 +24,7 @@ import { HomePage } from '../pages/private/HomePage'
 import { LojaParceiraFormPage } from '../pages/private/lojaParceira/LojaParceiraFormPage'
 import { LojaParceiraPage } from '../pages/private/lojaParceira/LojaParceiraPage'
 import { MinhaContaPage } from '../pages/private/MinhaContaPage'
+import { MinhaEmpresaPage } from '../pages/private/minhaEmpresa/MinhaEmpresaPage'
 import { MovimentoProdutoFormPage } from '../pages/private/movimentoProduto/MovimentoProdutoFormPage'
 import { MovimentoProdutoPage } from '../pages/private/movimentoProduto/MovimentoProdutoPage'
 import { PesoFormPage } from '../pages/private/peso/PesoFormPage'
@@ -186,6 +187,11 @@ export const privateRoutes: PrivateRouteConfig[] = [
     title: 'Empresa',
     path: PrivateRoutePath.Empresa,
     component: <EmpresaPage />,
+  },
+  {
+    title: 'Minha empresa',
+    path: PrivateRoutePath.MinhaEmpresa,
+    component: <MinhaEmpresaPage />,
   },
   {
     title: 'Usuários',
