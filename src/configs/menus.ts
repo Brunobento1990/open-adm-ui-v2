@@ -185,7 +185,7 @@ export const menus: Menu[] = [
       {
         id: 27,
         nome: 'Mercado Pago',
-        caminho: '/configuracao/mercado-pago',
+        caminho: PrivateRoutePath.ConfiguracaoMercadoPago,
         icone: 'simple-icons:mercadopago',
         filhos: [],
       },

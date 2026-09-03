@@ -28,6 +28,7 @@ export enum PrivateRoutePath {
   Empresa = '/cadastros/empresa',
   MinhaEmpresa = '/configuracao/minha-empresa',
   ConfiguracaoPedido = '/configuracao/pedido',
+  ConfiguracaoMercadoPago = '/configuracao/mercado-pago',
   Pedido = '/pedidos',
   PedidoAdicionar = '/pedidos/create',
   PedidoVisualizar = '/pedidos/view',

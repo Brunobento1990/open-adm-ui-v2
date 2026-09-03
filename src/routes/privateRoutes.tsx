@@ -14,6 +14,7 @@ import { ClienteVendaPage } from '../pages/private/cliente/ClienteVendaPage'
 import { ComandaFormPage } from '../pages/private/comanda/ComandaFormPage'
 import { ComandaPage } from '../pages/private/comanda/ComandaPage'
 import { ConfiguracaoPedidoPage } from '../pages/private/configuracaoPedido/ConfiguracaoPedidoPage'
+import { ConfiguracaoMercadoPagoPage } from '../pages/private/configuracaoMercadoPago/ConfiguracaoMercadoPagoPage'
 import { EstoqueMovimentacaoPage } from '../pages/private/estoque/EstoqueMovimentacaoPage'
 import { EstoquePage } from '../pages/private/estoque/EstoquePage'
 import { EmpresaPage } from '../pages/private/empresa/EmpresaPage'
@@ -225,6 +226,11 @@ export const privateRoutes: PrivateRouteConfig[] = [
     title: 'Configuração de pedido',
     path: PrivateRoutePath.ConfiguracaoPedido,
     component: <ConfiguracaoPedidoPage />,
+  },
+  {
+    title: 'Configurações do Mercado Pago',
+    path: PrivateRoutePath.ConfiguracaoMercadoPago,
+    component: <ConfiguracaoMercadoPagoPage />,
   },
   {
     title: 'Usuários',
