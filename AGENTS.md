@@ -44,7 +44,47 @@ When repeated domain rows have their own fields or behavior, extract a named com
 
 ## Testing Guidelines
 
-No test runner is configured yet. For now, use `npm run lint` and `npm run build` as the required verification before submitting changes. If tests are added, prefer Vitest with React Testing Library, place tests next to the implementation as `*.test.ts` or `*.test.tsx`, and cover user-visible behavior rather than implementation details.
+No test runner is configured yet. Always run `npm run lint` and `npm run build` as minimum static checks before submitting changes, but do not treat them as proof of user-visible behavior. If tests are added, prefer Vitest with React Testing Library, place tests next to the implementation as `*.test.ts` or `*.test.tsx`, and cover user-visible behavior rather than implementation details.
+
+## Behavioral Verification
+
+Lint and production build are minimum static checks and do not prove user-visible behavior.
+
+For bug fixes and behavior changes, add and run a targeted regression test whenever the behavior can reasonably be exercised automatically. This includes routing, query-string propagation, conditional rendering, form validation, API payload construction, calculations, and state transitions.
+
+Do not use terms such as **fixed**, **working**, **validated**, or **completed** unless the corresponding behavior was exercised successfully. Use precise language:
+
+- **Implemented:** source code was changed.
+- **Statically validated:** lint and TypeScript or production build passed.
+- **Automatically tested:** a behavioral test passed.
+- **Integration tested:** interaction with the real service passed.
+- **Manually validated:** the complete user-interface flow was exercised.
+
+If only static checks were possible, describe the change as implemented and statically validated, not as fixed or working. State prominently which behavioral or integration verification remains and whether the user still needs to perform a manual acceptance test.
+
+The absence of a configured test runner does not make lint and build sufficient behavioral verification. For critical functionality, configure an appropriate test, use an existing executable verification method, or explicitly describe the required manual acceptance test and why it could not be automated from the agent environment.
+
+Before completing a critical migration, define and verify its acceptance path, including navigation, route and query parameters, API payload, API response handling, conditional behavior, and final visible state. Do not mark a critical item as complete in `MIGRATION.md` without recording or reporting its actual verification level.
+
+## Evidence, Inferences, and Environment
+
+Do not turn failures observed in the agent environment into claims about the user's environment. Always distinguish clearly between:
+
+- **Observed fact:** the exact result of a command, test, response, or source inspection.
+- **Inference:** a likely explanation based on the available evidence.
+- **Not verified:** a condition that could not be proved from the agent environment.
+
+A failure to access `localhost`, a port, database, Docker container, API, or other service means only that the resource was not accessible from the agent's execution environment. Do not claim that the service is stopped, unavailable, or misconfigured without additional evidence. Absence of evidence is not evidence of absence.
+
+Do not describe an integration as tested or working merely because lint, TypeScript, or the production build passed. Report verification levels separately when relevant:
+
+- static validation or lint;
+- TypeScript compilation and production build;
+- automated tests;
+- integration test against the real service;
+- manual user-interface test.
+
+When an integration test cannot be executed, state exactly what was not verified and why, without inferring the state of the external service. For critical migrations, compare the legacy implementation, API contract, and new implementation explicitly. Present any unresolved divergence before choosing behavior.
 
 ## Commit & Pull Request Guidelines
 

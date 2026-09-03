@@ -1,6 +1,6 @@
 import { ApiMethod, useApi } from '../hook/useApi'
-import type { Pedido, PedidoAtualizarStatusPayload } from '../types/PedidoTypes'
-import { ApiRoutePath, PedidoApiRoutePath } from './apiRoutes'
+import type { Pedido, PedidoAtualizarStatusPayload, PedidoCobranca } from '../types/PedidoTypes'
+import { ApiRoutePath, PedidoApiRoutePath, PedidoCobrancaApiRoutePath } from './apiRoutes'
 
 export function useApiPedido() {
   const apiObter = useApi({
@@ -20,6 +20,11 @@ export function useApiPedido() {
   const apiAtualizarStatus = useApi({
     method: ApiMethod.Put,
     url: `${ApiRoutePath.Pedido}${PedidoApiRoutePath.AtualizarStatus}`,
+  })
+  const apiCobranca = useApi({
+    method: ApiMethod.Get,
+    url: `${ApiRoutePath.PedidoCobranca}${PedidoCobrancaApiRoutePath.Cobranca}`,
+    naoRenderizarResposta: true,
   })
 
   return {
@@ -53,6 +58,12 @@ export function useApiPedido() {
           message: 'Status atualizado com sucesso',
         }),
       loading: apiAtualizarStatus.loading,
+    },
+    cobranca: {
+      fetch: (pedidoId: string) => apiCobranca.action<PedidoCobranca>({
+        urlParams: `?pedidoId=${encodeURIComponent(pedidoId)}`,
+      }),
+      loading: apiCobranca.loading,
     },
   }
 }

@@ -16,6 +16,7 @@ import { EstoquePage } from '../pages/private/estoque/EstoquePage'
 import { EmpresaPage } from '../pages/private/empresa/EmpresaPage'
 import { BonificadosPage } from '../pages/private/financeiro/BonificadosPage'
 import { FaturaPage } from '../pages/private/financeiro/FaturaPage'
+import { NegociarCobrancaPage } from '../pages/private/financeiro/NegociarCobrancaPage'
 import { MensalidadePage } from '../pages/private/financeiro/MensalidadePage'
 import { PagarParcelaPage } from '../pages/private/financeiro/PagarParcelaPage'
 import { FaturaFormPage } from '../pages/private/financeiro/FaturaFormPage'
@@ -71,6 +72,11 @@ export const privateRoutes: PrivateRouteConfig[] = [
     title: 'Contas a receber',
     path: PrivateRoutePath.ContaAReceber,
     component: <FaturaPage tipo={TipoFatura.AReceber} urlAdd={PrivateRoutePath.ContaAReceberAdicionar} />,
+  },
+  {
+    title: 'Negociar cobrança',
+    path: PrivateRoutePath.FaturaNegociarCobrancaId,
+    component: <NegociarCobrancaPage />,
   },
   {
     title: 'Nova conta a receber',

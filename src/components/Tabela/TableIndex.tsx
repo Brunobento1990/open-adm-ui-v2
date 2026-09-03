@@ -45,7 +45,7 @@ export interface ITableIndexProps {
   notShowHeader?: boolean
   notBtnAdd?: boolean
   selecionarLinha?: (row: any, index: number) => void
-  refreshPai?: boolean | number
+  refreshPai?: boolean | number | string
   filtroComplementar?: any
   desabilitarColunaAtivo?: boolean
   desabilitarColunaAcoes?: boolean

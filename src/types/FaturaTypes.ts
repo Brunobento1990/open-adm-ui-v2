@@ -118,6 +118,11 @@ export type FaturaBaixaAutomaticaPayload = {
 export type ResultadoPadrao = {
   resultado: boolean
 }
+
+export type FaturaNegociarPayload = {
+  pedidoId: string
+  parcelas: ParcelaCriar[]
+}
 export const FaturaFormField = {
   Parcelas: 'parcelas',
   QuantidadeDeParcelas: 'quantidadeDeParcelas',

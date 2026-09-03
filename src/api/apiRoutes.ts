@@ -14,6 +14,7 @@ export enum ApiRoutePath {
   Menu = '/menu',
   Peso = '/pesos',
   Pedido = '/pedidos',
+  PedidoCobranca = '/pedido',
   Produto = '/produtos',
   PublicoComanda = '/publico/comandas',
   TabelaDePreco = '/tabela-de-preco',
@@ -128,6 +129,7 @@ export enum FaturaApiRoutePath {
   BaixaAutomatica = '/baixa-automatica',
   Bonificar = '/bonificar',
   Criar = '/criar',
+  Negociar = '/negociar',
 }
 
 export enum ParceiroApiRoutePath {
@@ -151,4 +153,8 @@ export enum PedidoApiRoutePath {
   Excluir = '/delete',
   Obter = '/get',
   AtualizarStatus = '/update-status',
+}
+
+export enum PedidoCobrancaApiRoutePath {
+  Cobranca = '/cobranca',
 }

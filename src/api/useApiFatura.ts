@@ -2,6 +2,7 @@ import { ApiMethod, useApi } from '../hook/useApi'
 import type {
   FaturaBaixaAutomaticaPayload,
   FaturaCriarPayload,
+  FaturaNegociarPayload,
   ResultadoPadrao,
 } from '../types/FaturaTypes'
 import { ApiRoutePath, FaturaApiRoutePath } from './apiRoutes'
@@ -18,6 +19,10 @@ export function useApiFatura() {
   const apiBonificar = useApi({
     method: ApiMethod.Post,
     url: `${ApiRoutePath.Fatura}${FaturaApiRoutePath.Bonificar}`,
+  })
+  const apiNegociar = useApi({
+    method: ApiMethod.Post,
+    url: `${ApiRoutePath.Fatura}${FaturaApiRoutePath.Negociar}`,
   })
 
   return {
@@ -44,6 +49,14 @@ export function useApiFatura() {
           message: 'Pedido bonificado com sucesso',
         }),
       loading: apiBonificar.loading,
+    },
+    negociar: {
+      fetch: (body: FaturaNegociarPayload) =>
+        apiNegociar.action<ResultadoPadrao>({
+          body,
+          message: 'Cobrança parcelada com sucesso',
+        }),
+      loading: apiNegociar.loading,
     },
   }
 }

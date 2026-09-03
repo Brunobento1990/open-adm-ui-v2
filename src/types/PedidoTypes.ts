@@ -91,6 +91,14 @@ export interface Pedido extends PedidoPaginacao {
 
 export type PedidoAtualizarStatusPayload = Pick<Pedido, 'id' | 'statusPedido'>
 
+export type PedidoCobranca = {
+  id: string
+  numero: number
+  pedidoId: string
+  total: number
+  status: number
+}
+
 export type PedidoFiltros = {
   statusPedido: PedidoStatus | PedidoStatusFiltro
 }

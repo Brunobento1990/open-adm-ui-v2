@@ -1,5 +1,6 @@
 import type { ICellRendererParams } from 'ag-grid-community'
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { ApiRoutePath } from '../../../api/apiRoutes'
 import { ButtonApp, ButtonAppVariant } from '../../../components/ButtonApp/ButtonApp'
 import {
@@ -43,6 +44,8 @@ const situacaoOptions = [
 
 export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
   const { getPaletteColor } = useThemeApp()
+  const [searchParams] = useSearchParams()
+  const pedidoId = searchParams.get('pedidoId') || undefined
   const [refresh, setRefresh] = useState(0)
   const [filtros, setFiltros] = useState<FaturaFiltros>({
     status: StatusParcelaFiltro.Todos,
@@ -238,13 +241,14 @@ export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
           dataVencimentoInicial: filtros.dataVencimentoInicial || undefined,
           dataVencimentoFinal: filtros.dataVencimentoFinal || undefined,
           status: filtros.status || undefined,
+          pedidoId,
         }}
         menuItems={menuItems}
         nomeDaTabela={`fatura-${tipo}`}
         notBtnAdd={!urlAdd}
         urlAdd={urlAdd}
         orderBy={FaturaColumnField.NumeroFatura}
-        refreshPai={refresh}
+        refreshPai={`${refresh}-${pedidoId ?? ''}`}
         url={ApiRoutePath.Parcela}
       />
       {filtrosModal}
