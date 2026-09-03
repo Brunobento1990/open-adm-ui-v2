@@ -157,7 +157,7 @@ export const menus: Menu[] = [
       {
         id: 23,
         nome: 'Clientes',
-        caminho: '/vendas/cliente',
+        caminho: PrivateRoutePath.ClienteVenda,
         icone: 'solar:user-id-linear',
         filhos: [],
       },

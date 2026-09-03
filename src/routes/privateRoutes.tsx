@@ -8,6 +8,9 @@ import { CategoriaPage } from '../pages/private/categoria/CategoriaPage'
 import { ClienteFormPage } from '../pages/private/cliente/ClienteFormPage'
 import { ClientePage } from '../pages/private/cliente/ClientePage'
 import { ClienteUltimosPedidosPage } from '../pages/private/cliente/ClienteUltimosPedidosPage'
+import { ClienteVendaAtualizarSenhaPage } from '../pages/private/cliente/ClienteVendaAtualizarSenhaPage'
+import { ClienteVendaFormPage } from '../pages/private/cliente/ClienteVendaFormPage'
+import { ClienteVendaPage } from '../pages/private/cliente/ClienteVendaPage'
 import { ComandaFormPage } from '../pages/private/comanda/ComandaFormPage'
 import { ComandaPage } from '../pages/private/comanda/ComandaPage'
 import { ConfiguracaoPedidoPage } from '../pages/private/configuracaoPedido/ConfiguracaoPedidoPage'
@@ -272,6 +275,26 @@ export const privateRoutes: PrivateRouteConfig[] = [
     title: 'Clientes',
     path: PrivateRoutePath.Cliente,
     component: <ClientePage />,
+  },
+  {
+    title: 'Clientes de vendas',
+    path: PrivateRoutePath.ClienteVenda,
+    component: <ClienteVendaPage />,
+  },
+  {
+    title: 'Novo cliente',
+    path: PrivateRoutePath.ClienteVendaAdicionar,
+    component: <ClienteVendaFormPage action={FormAction.Create} />,
+  },
+  {
+    title: 'Visualizar cliente',
+    path: PrivateRoutePath.ClienteVendaVisualizarId,
+    component: <ClienteVendaFormPage action={FormAction.View} />,
+  },
+  {
+    title: 'Atualizar senha do cliente',
+    path: PrivateRoutePath.ClienteVendaAtualizarSenhaId,
+    component: <ClienteVendaAtualizarSenhaPage />,
   },
   {
     title: 'Últimos pedidos de clientes CPF',

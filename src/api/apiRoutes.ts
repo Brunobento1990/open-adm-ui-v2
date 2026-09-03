@@ -30,6 +30,8 @@ export enum ApiRoutePath {
   Cep = '/cep',
   Empresa = '/empresa',
   Usuario = '/usuario',
+  ClienteVenda = '/usuarios',
+  Cnpj = '/cnpj',
   UltimosPedidos = '/ultimos-pedidos',
 }
 
@@ -63,6 +65,17 @@ export enum UsuarioApiRoutePath {
   MinhaConta = '/minha-conta',
   Sessoes = '/sessoes',
   TrocarSenha = '/trocar-senha',
+}
+
+export enum ClienteVendaApiRoutePath {
+  AtivarInativar = '/ativar-inativar',
+  AtualizarSenha = '/atualizar-senha-adm',
+  Criar = '/create-admin',
+  Obter = '/get-conta-adm',
+}
+
+export enum CnpjApiRoutePath {
+  Consultar = '/consulta',
 }
 
 export enum LoginApiRoutePath {

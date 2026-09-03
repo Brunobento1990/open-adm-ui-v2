@@ -1,22 +1,22 @@
+import { useThemeApp } from '../../hook/useThemeApp'
 import { IconApp } from '../Icon/IconApp'
 import { IconButtonComTolltip } from '../IconButtonComTolltip/IconButtonComTolltip'
-import { useThemeApp } from '../../hook/useThemeApp'
 
-type CepConsultaButtonProps = {
+type CnpjConsultaButtonProps = {
   disabled?: boolean
   loading?: boolean
   onClick: () => void | Promise<void>
 }
 
-export function CepConsultaButton({ disabled, loading, onClick }: CepConsultaButtonProps) {
+export function CnpjConsultaButton({ disabled, loading, onClick }: CnpjConsultaButtonProps) {
   const { cores } = useThemeApp()
 
   return (
     <IconButtonComTolltip
-      aria-label="Consultar CEP"
+      aria-label="Consultar CNPJ"
       disabled={disabled || loading}
       onClick={onClick}
-      tooltip="Consultar CEP"
+      tooltip="Consultar CNPJ"
     >
       <IconApp
         color={cores.primary}
