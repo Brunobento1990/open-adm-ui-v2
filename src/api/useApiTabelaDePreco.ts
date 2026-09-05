@@ -25,8 +25,17 @@ export function useApiTabelaDePreco() {
     url: `${ApiRoutePath.TabelaDePreco}${TabelaDePrecoApiRoutePath.Item}`,
     naoRenderizarResposta: true,
   })
+  const apiObterAtiva = useApi({
+    method: ApiMethod.Get,
+    url: `${ApiRoutePath.TabelaDePreco}${TabelaDePrecoApiRoutePath.ObterAtiva}`,
+    naoRenderizarResposta: true,
+  })
 
   return {
+    obterAtiva: {
+      fetch: () => apiObterAtiva.action<TabelaDePreco>(),
+      loading: apiObterAtiva.loading,
+    },
     listarItens: {
       fetch: (tabelaDePrecoId: string) => apiListarItens.action<TabelaDePrecoItemPedido[]>({
         urlParams: `?tabelaDePrecoId=${encodeURIComponent(tabelaDePrecoId)}`,

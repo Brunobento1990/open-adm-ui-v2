@@ -129,14 +129,14 @@ export const menus: Menu[] = [
       {
         id: 19,
         nome: 'Preço por peso',
-        caminho: '/vendas/preco-por-peso',
+        caminho: PrivateRoutePath.PrecoPorPeso,
         icone: 'material-symbols-light:price-change-outline-rounded',
         filhos: [],
       },
       {
         id: 20,
         nome: 'Preço por tamanho',
-        caminho: '/vendas/preco-por-tamanho',
+        caminho: PrivateRoutePath.PrecoPorTamanho,
         icone: 'solar:tag-price-outline',
         filhos: [],
       },

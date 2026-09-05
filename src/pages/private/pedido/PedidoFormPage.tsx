@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useApiCep } from '../../../api/useApiCep'
 import { useApiClienteVenda } from '../../../api/useApiClienteVenda'
 import { useApiPedido } from '../../../api/useApiPedido'
@@ -70,8 +70,8 @@ function encontrarPreco(
   const preco = itens?.find(
     (current) =>
       current.produtoId === item.produtoId &&
-      current.pesoId === item.pesoId &&
-      current.tamanhoId === item.tamanhoId,
+      (current.pesoId ?? undefined) === item.pesoId &&
+      (current.tamanhoId ?? undefined) === item.tamanhoId,
   )
 
   return preco ? (isAtacado ? preco.valorUnitarioAtacado : preco.valorUnitarioVarejo) : undefined
@@ -83,7 +83,7 @@ export function PedidoFormPage() {
   const { consultar: consultarCepApi } = useApiCep()
   const { obter: obterCliente } = useApiClienteVenda()
   const { criar } = useApiPedido()
-  const { listarItens } = useApiTabelaDePreco()
+  const { listarItens, obterAtiva } = useApiTabelaDePreco()
   const [tab, setTab] = useState<number>(PedidoTab.Geral)
   const [itemPedido, setItemPedido] = useState<PedidoItemForm>({})
   const [itemError, setItemError] = useState('')
@@ -113,6 +113,21 @@ export function PedidoFormPage() {
     },
   })
 
+  useEffect(() => {
+    async function carregarTabelaDePrecoPadrao() {
+      const tabelaDePreco = await obterAtiva.fetch()
+      if (!tabelaDePreco?.id) return
+      form.setValue({
+        tabelaDePreco,
+        tabelaDePrecoId: tabelaDePreco.id,
+      })
+    }
+
+    carregarTabelaDePrecoPadrao()
+    // O carregamento da tabela padrão ocorre somente na abertura da página.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   async function selecionarCliente(cliente?: { id: string; nome: string }) {
     if (!cliente) {
       form.setValue({ enderecoEntrega: {}, usuario: undefined, usuarioId: '' })
@@ -135,22 +150,21 @@ export function PedidoFormPage() {
     }
     const itens = await listarItens.fetch(tabelaDePreco.id)
     form.setValue({
-      tabelaDePreco: { ...tabelaDePreco, itensPedido: itens ?? [] },
+      tabelaDePreco: { ...tabelaDePreco, itensTabelaDePreco: itens ?? [] },
       tabelaDePrecoId: tabelaDePreco.id,
     })
   }
 
   function atualizarSelecaoItem(values: Partial<PedidoItemForm>) {
     setItemPedido((current) => {
-      const atualizado = { ...current, ...values }
-      return {
-        ...atualizado,
-        valorUnitario: encontrarPreco(
-          form.values.tabelaDePreco?.itensPedido,
-          atualizado,
-          form.values.usuario?.isAtacado,
-        ),
-      }
+      const itemComVariacaoAtualizada = { ...current, ...values }
+      const valorUnitario = encontrarPreco(
+        form.values.tabelaDePreco?.itensTabelaDePreco,
+        itemComVariacaoAtualizada,
+        form.values.usuario?.isAtacado,
+      )
+
+      return { ...itemComVariacaoAtualizada, valorUnitario }
     })
     setItemError('')
   }
@@ -222,7 +236,7 @@ export function PedidoFormPage() {
 
   const endereco = form.values.enderecoEntrega ?? {}
   const loading =
-    criar.loading || obterCliente.loading || listarItens.loading || consultarCepApi.loading
+    criar.loading || obterCliente.loading || listarItens.loading || obterAtiva.loading || consultarCepApi.loading
   const tabelaDePrecoPendente = !form.values.tabelaDePrecoId
   const pedidoTabs = [
     { label: 'Geral', value: PedidoTab.Geral },

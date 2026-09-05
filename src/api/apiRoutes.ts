@@ -24,6 +24,7 @@ export enum ApiRoutePath {
   TransacaoFinanceira = '/transacao-financeira',
   MovimentoProduto = '/movimentacao-de-produto',
   Estoque = '/estoques',
+  ItemTabelaDePreco = '/item-tabela-de-preco',
   Fatura = '/fatura',
   Bonificado = 'fatura/bonificado',
   Mensalidade = '/parcela-cobranca',
@@ -106,7 +107,13 @@ export enum TabelaDePrecoLegacyApiRoutePath {
 }
 
 export enum TabelaDePrecoApiRoutePath {
+  ObterAtiva = '/get-tabela-ativa',
   Item = '/item',
+}
+
+export enum ItemTabelaDePrecoApiRoutePath {
+  AtualizarPorPeso = '/atualizar-por-peso',
+  AtualizarPorTamanho = '/atualizar-por-tamanho',
 }
 
 export enum ComandaApiRoutePath {

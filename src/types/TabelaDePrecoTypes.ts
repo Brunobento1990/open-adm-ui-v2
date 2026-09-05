@@ -34,8 +34,8 @@ export interface TabelaDePrecoItemPedido {
   tabelaDePrecoId: string
   produtoId: string
   produto?: Produto
-  pesoId?: string
-  tamanhoId?: string
+  pesoId?: string | null
+  tamanhoId?: string | null
   valorUnitarioAtacado: number
   valorUnitarioVarejo: number
 }
@@ -43,5 +43,5 @@ export interface TabelaDePrecoItemPedido {
 export interface TabelaDePreco extends EntidadeEmpresaBase {
   descricao: string
   itens: TabelaDePrecoItem[]
-  itensPedido?: TabelaDePrecoItemPedido[]
+  itensTabelaDePreco?: TabelaDePrecoItemPedido[]
 }

@@ -13,7 +13,9 @@
 
 - [ ] Adicionar o redirecionamento do card **Cobranças mais antigas** da Home para `/financeiro/fatura/negociar-cobranca/:faturaId`, usando o identificador da fatura selecionada.
 - [x] Validar manualmente a migração de **Vendas/Clientes**: paginação, pesquisa, cadastro, consulta de CNPJ e CEP, visualização, ativar/bloquear acesso e atualização de senha. Implementada, validada estaticamente com lint e build e confirmada manualmente pelo usuário.
-- [ ] Aplicar máscaras e restrição de entrada nos campos CPF, CNPJ e telefone de **Vendas/Clientes**, preservando o comportamento do legado.
+- [x] Aplicar máscaras e restrição de entrada nos campos CPF, CNPJ e telefone de **Vendas/Clientes**, preservando o comportamento do legado.
+- [x] Validar manualmente **Vendas/Preço por peso**: seleção do peso, atualização apenas do valor de atacado, apenas do varejo, dos dois valores e resposta quando nenhum preço é informado. Implementada e validada estaticamente com lint e build; integração real e fluxo de interface ainda não verificados pelo agente.
+- [x] Validar manualmente **Vendas/Preço por tamanho**: seleção do tamanho, atualização apenas do valor de atacado, apenas do varejo, dos dois valores e resposta quando nenhum preço é informado. Implementada e validada estaticamente com lint e build; integração real e fluxo de interface ainda não verificados pelo agente.
 - [x] Validar manualmente **Configurações/Mercado Pago**: carregamento, obrigatoriedade de Public Key, Access Token e URL do webhook, opções de cobrança para CPF/CNPJ e persistência das alterações. Implementada e validada estaticamente com lint e build; integração real e fluxo de interface ainda não verificados pelo agente.
 - [x] Migrar a tela de negociação de cobrança em `/financeiro/fatura/negociar-cobranca/:pedidoId`, acessada pela ação **Parcelar** da modificação de status do pedido.
 - [x] Migrar CRUD de banner.
@@ -30,4 +32,4 @@
 - [x] Migrar paginação de contas a receber.
 - [x] Migrar configuração de Minha empresa.
 - [x] Migrar Configuração/Pedidos.
-- [ ] Migrar paginação de Vendas/Pedidos.
+- [x] Migrar paginação de Vendas/Pedidos.

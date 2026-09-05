@@ -37,6 +37,8 @@ import { PedidoPage } from '../pages/private/pedido/PedidoPage'
 import { PedidoFormPage } from '../pages/private/pedido/PedidoFormPage'
 import { PedidoVisualizarPage } from '../pages/private/pedido/PedidoVisualizarPage'
 import { PedidoModificarStatusPage } from '../pages/private/pedido/PedidoModificarStatusPage'
+import { PrecoPorPesoPage } from '../pages/private/precoPorPeso/PrecoPorPesoPage'
+import { PrecoPorTamanhoPage } from '../pages/private/precoPorTamanho/PrecoPorTamanhoPage'
 import { PesoFormPage } from '../pages/private/peso/PesoFormPage'
 import { PesoPage } from '../pages/private/peso/PesoPage'
 import { ProdutoFormPage } from '../pages/private/produto/ProdutoFormPage'
@@ -377,6 +379,16 @@ export const privateRoutes: PrivateRouteConfig[] = [
     title: 'Tabelas de preço',
     path: PrivateRoutePath.TabelaDePreco,
     component: <TabelaDePrecoPage />,
+  },
+  {
+    title: 'Preço por peso',
+    path: PrivateRoutePath.PrecoPorPeso,
+    component: <PrecoPorPesoPage />,
+  },
+  {
+    title: 'Preço por tamanho',
+    path: PrivateRoutePath.PrecoPorTamanho,
+    component: <PrecoPorTamanhoPage />,
   },
   {
     title: 'Tabela de preço',
