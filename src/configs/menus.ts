@@ -143,7 +143,7 @@ export const menus: Menu[] = [
       {
         id: 21,
         nome: 'Relatório por período',
-        caminho: '/vendas/relatorio-por-periodo',
+        caminho: PrivateRoutePath.RelatorioPedidoPeriodo,
         icone: 'tabler:report-search',
         filhos: [],
       },

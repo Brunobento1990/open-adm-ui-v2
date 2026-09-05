@@ -15,6 +15,19 @@ export class YupAdapter {
         return this;
     }
 
+    stringRequiredWhenEmpty(
+        fieldName: string,
+        dependencyFieldName: string,
+        message?: string,
+    ) {
+        this.shape[fieldName] = yup.string().when(dependencyFieldName, {
+            is: (value?: string) => !value,
+            then: (schema) => schema.required(message ?? this.message),
+            otherwise: (schema) => schema.notRequired(),
+        });
+        return this;
+    }
+
     stringWithTests(
         fieldName: string,
         tests: Array<{

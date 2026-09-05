@@ -180,6 +180,8 @@ export enum PedidoApiRoutePath {
   Download = '/download-pedido',
   Excluir = '/delete',
   Obter = '/get',
+  RelatorioPorPeriodo = '/relatorio-por-periodo',
+  RelatorioPorPeriodoImprimir = '/relatorio-por-periodo/imprimir',
   AtualizarStatus = '/update-status',
 }
 

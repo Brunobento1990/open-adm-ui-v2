@@ -154,3 +154,50 @@ export type PedidoCobranca = {
 export type PedidoFiltros = {
   statusPedido: PedidoStatus | PedidoStatusFiltro
 }
+
+export enum RelatorioPedidoFormField {
+  DataFinal = 'dataFinal',
+  DataInicial = 'dataInicial',
+  UsuarioId = 'usuarioId',
+}
+
+export type RelatorioPedidoFormValues = {
+  dataInicial?: string
+  dataFinal?: string
+  usuarioId?: string
+  usuario?: Pick<ClienteVenda, 'id' | 'nome'>
+}
+
+export type RelatorioPedidoPayload = {
+  dataInicial?: string
+  dataFinal?: string
+  usuarioId?: string
+}
+
+export type RelatorioPedidoItem = {
+  pedidoId: string
+  numero: number
+  usuarioId: string
+  usuario: string
+  quantidadeItens: number
+  valorTotal: number
+  dataDeCriacao: string
+}
+
+export type RelatorioPedidoTotais = {
+  quantidadePedidos: number
+  quantidadeItens: number
+  valorTotal: number
+}
+
+export type RelatorioPedidoTotaisUsuario = RelatorioPedidoTotais & {
+  usuarioId: string
+  usuario: string
+}
+
+export type RelatorioPedidoListagem = {
+  values: RelatorioPedidoItem[]
+  totalDeRegistros: number
+  totais: RelatorioPedidoTotais
+  totaisPorUsuario: RelatorioPedidoTotaisUsuario[]
+}

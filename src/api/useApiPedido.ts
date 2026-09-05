@@ -1,5 +1,12 @@
 import { ApiMethod, useApi } from '../hook/useApi'
-import type { Pedido, PedidoAtualizarStatusPayload, PedidoCobranca, PedidoCriarPayload } from '../types/PedidoTypes'
+import type {
+  Pedido,
+  PedidoAtualizarStatusPayload,
+  PedidoCobranca,
+  PedidoCriarPayload,
+  RelatorioPedidoListagem,
+  RelatorioPedidoPayload,
+} from '../types/PedidoTypes'
 import { ApiRoutePath, PedidoApiRoutePath, PedidoCobrancaApiRoutePath } from './apiRoutes'
 
 export function useApiPedido() {
@@ -30,8 +37,28 @@ export function useApiPedido() {
     url: `${ApiRoutePath.PedidoCobranca}${PedidoCobrancaApiRoutePath.Cobranca}`,
     naoRenderizarResposta: true,
   })
+  const apiRelatorioPorPeriodo = useApi({
+    method: ApiMethod.Post,
+    url: `${ApiRoutePath.Pedido}${PedidoApiRoutePath.RelatorioPorPeriodo}`,
+    naoRenderizarResposta: true,
+  })
+  const apiImprimirRelatorioPorPeriodo = useApi({
+    method: ApiMethod.Post,
+    url: `${ApiRoutePath.Pedido}${PedidoApiRoutePath.RelatorioPorPeriodoImprimir}`,
+    naoRenderizarResposta: true,
+  })
 
   return {
+    relatorioPorPeriodo: {
+      fetch: (body: RelatorioPedidoPayload) =>
+        apiRelatorioPorPeriodo.action<RelatorioPedidoListagem>({ body }),
+      loading: apiRelatorioPorPeriodo.loading,
+    },
+    imprimirRelatorioPorPeriodo: {
+      fetch: (body: RelatorioPedidoPayload) =>
+        apiImprimirRelatorioPorPeriodo.action<Blob>({ body, responseType: 'blob' }),
+      loading: apiImprimirRelatorioPorPeriodo.loading,
+    },
     criar: {
       fetch: (body: PedidoCriarPayload) => apiCriar.action<{ result: boolean }>({
         body,
