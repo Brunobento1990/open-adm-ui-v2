@@ -29,7 +29,19 @@ export interface TabelaDePrecoItem {
   preco: number
 }
 
+export interface TabelaDePrecoItemPedido {
+  id: string
+  tabelaDePrecoId: string
+  produtoId: string
+  produto?: Produto
+  pesoId?: string
+  tamanhoId?: string
+  valorUnitarioAtacado: number
+  valorUnitarioVarejo: number
+}
+
 export interface TabelaDePreco extends EntidadeEmpresaBase {
   descricao: string
   itens: TabelaDePrecoItem[]
+  itensPedido?: TabelaDePrecoItemPedido[]
 }

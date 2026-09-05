@@ -1,4 +1,56 @@
 import { TipoPaletaCorEnum } from './TipoPaletaCorEnum'
+import type { ClienteVenda, EnderecoClienteVenda } from './ClienteVendaTypes'
+import type { Peso } from './PesoTypes'
+import type { Produto } from './ProdutoTypes'
+import type { TabelaDePreco } from './TabelaDePrecoTypes'
+import type { Tamanho } from './TamanhoTypes'
+
+export enum PedidoFormField {
+  EnderecoEntrega = 'enderecoEntrega',
+  ItensPedido = 'itensPedido',
+  TabelaDePrecoId = 'tabelaDePrecoId',
+  UsuarioId = 'usuarioId',
+}
+
+export enum PedidoItemFormField {
+  PesoId = 'pesoId',
+  ProdutoId = 'produtoId',
+  Quantidade = 'quantidade',
+  TamanhoId = 'tamanhoId',
+  ValorUnitario = 'valorUnitario',
+}
+
+export interface PedidoItemForm {
+  produtoId?: string
+  produto?: Produto
+  pesoId?: string
+  peso?: Peso
+  tamanhoId?: string
+  tamanho?: Tamanho
+  quantidade?: number
+  valorUnitario?: number
+}
+
+export interface PedidoFormValues {
+  usuarioId?: string
+  usuario?: ClienteVenda
+  tabelaDePrecoId?: string
+  tabelaDePreco?: TabelaDePreco
+  itensPedido: PedidoItemForm[]
+  enderecoEntrega?: EnderecoClienteVenda
+}
+
+export interface PedidoCriarPayload {
+  usuarioId: string
+  itensPedido: Array<{
+    produtoId: string
+    pesoId?: string
+    tamanhoId?: string
+    quantidade: number
+    valorUnitario: number
+  }>
+  enderecoEntrega?: EnderecoClienteVenda
+}
 
 export enum PedidoStatus {
   EmAberto = 0,

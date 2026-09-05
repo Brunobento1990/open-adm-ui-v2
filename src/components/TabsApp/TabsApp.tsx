@@ -1,8 +1,11 @@
-import { Tab, Tabs } from '@mui/material'
+import { Box, Tab, Tabs, Tooltip } from '@mui/material'
+import { IconApp } from '../Icon/IconApp'
 
 type TabsAppItem = {
   label: string
   value: number
+  warning?: boolean
+  warningMessage?: string
 }
 
 type TabsAppProps = {
@@ -21,7 +24,22 @@ export function TabsApp({ ariaLabel, items, onChange, value }: TabsAppProps) {
       value={value}
     >
       {items.map((item) => (
-        <Tab key={item.value} label={item.label} value={item.value} />
+        <Tab
+          key={item.value}
+          label={(
+            <Box sx={{ alignItems: 'center', display: 'flex', gap: 0.75 }}>
+              {item.label}
+              {item.warning && (
+                <Tooltip title={item.warningMessage ?? 'Há uma pendência nesta seção'}>
+                  <Box component="span" sx={{ color: 'warning.main', display: 'inline-flex' }}>
+                    <IconApp icon="solar:danger-triangle-bold" width="1rem" />
+                  </Box>
+                </Tooltip>
+              )}
+            </Box>
+          )}
+          value={item.value}
+        />
       ))}
     </Tabs>
   )

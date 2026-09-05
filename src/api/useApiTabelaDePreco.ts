@@ -1,12 +1,18 @@
 import { ApiMethod, useApi } from '../hook/useApi'
 import type {
   TabelaDePreco,
+  TabelaDePrecoItemPedido,
 } from '../types/TabelaDePrecoTypes'
 import { ApiRoutePath, TabelaDePrecoApiRoutePath } from './apiRoutes'
 
 type TabelaDePrecoPrecoResponse = number | { preco: number }
 
 export function useApiTabelaDePreco() {
+  const apiListarItens = useApi({
+    method: ApiMethod.Get,
+    url: '/item-tabela-de-preco/obter-itens',
+    naoRenderizarResposta: true,
+  })
   const apiCriar = useApi({ method: ApiMethod.Post, url: ApiRoutePath.TabelaDePreco })
   const apiObter = useApi({
     method: ApiMethod.Get,
@@ -21,6 +27,12 @@ export function useApiTabelaDePreco() {
   })
 
   return {
+    listarItens: {
+      fetch: (tabelaDePrecoId: string) => apiListarItens.action<TabelaDePrecoItemPedido[]>({
+        urlParams: `?tabelaDePrecoId=${encodeURIComponent(tabelaDePrecoId)}`,
+      }),
+      loading: apiListarItens.loading,
+    },
     obter: {
       fetch: (id: string) => apiObter.action<TabelaDePreco>({
         urlParams: `?id=${encodeURIComponent(id)}`,

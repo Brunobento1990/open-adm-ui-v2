@@ -1,8 +1,12 @@
 import { ApiMethod, useApi } from '../hook/useApi'
-import type { Pedido, PedidoAtualizarStatusPayload, PedidoCobranca } from '../types/PedidoTypes'
+import type { Pedido, PedidoAtualizarStatusPayload, PedidoCobranca, PedidoCriarPayload } from '../types/PedidoTypes'
 import { ApiRoutePath, PedidoApiRoutePath, PedidoCobrancaApiRoutePath } from './apiRoutes'
 
 export function useApiPedido() {
+  const apiCriar = useApi({
+    method: ApiMethod.Post,
+    url: `${ApiRoutePath.PedidoAdm}${PedidoApiRoutePath.Criar}`,
+  })
   const apiObter = useApi({
     method: ApiMethod.Get,
     url: `${ApiRoutePath.Pedido}${PedidoApiRoutePath.Obter}`,
@@ -28,6 +32,13 @@ export function useApiPedido() {
   })
 
   return {
+    criar: {
+      fetch: (body: PedidoCriarPayload) => apiCriar.action<{ result: boolean }>({
+        body,
+        message: 'Pedido criado com sucesso',
+      }),
+      loading: apiCriar.loading,
+    },
     obter: {
       fetch: (pedidoId: string) => apiObter.action<Pedido>({
         urlParams: `?pedidoId=${encodeURIComponent(pedidoId)}`,

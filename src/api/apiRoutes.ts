@@ -15,10 +15,11 @@ export enum ApiRoutePath {
   Menu = '/menu',
   Peso = '/pesos',
   Pedido = '/pedidos',
+  PedidoAdm = '/pedidos-adm',
   PedidoCobranca = '/pedido',
   Produto = '/produtos',
   PublicoComanda = '/publico/comandas',
-  TabelaDePreco = '/tabela-de-preco',
+  TabelaDePreco = '/tabelas-de-precos',
   Tamanho = '/tamanhos',
   TransacaoFinanceira = '/transacao-financeira',
   MovimentoProduto = '/movimentacao-de-produto',
@@ -168,6 +169,7 @@ export enum ConfiguracaoMercadoPagoApiRoutePath {
 }
 
 export enum PedidoApiRoutePath {
+  Criar = '/create',
   Download = '/download-pedido',
   Excluir = '/delete',
   Obter = '/get',

@@ -34,6 +34,7 @@ import { MinhaEmpresaPage } from '../pages/private/minhaEmpresa/MinhaEmpresaPage
 import { MovimentoProdutoFormPage } from '../pages/private/movimentoProduto/MovimentoProdutoFormPage'
 import { MovimentoProdutoPage } from '../pages/private/movimentoProduto/MovimentoProdutoPage'
 import { PedidoPage } from '../pages/private/pedido/PedidoPage'
+import { PedidoFormPage } from '../pages/private/pedido/PedidoFormPage'
 import { PedidoVisualizarPage } from '../pages/private/pedido/PedidoVisualizarPage'
 import { PedidoModificarStatusPage } from '../pages/private/pedido/PedidoModificarStatusPage'
 import { PesoFormPage } from '../pages/private/peso/PesoFormPage'
@@ -61,6 +62,11 @@ export const privateRoutes: PrivateRouteConfig[] = [
     title: 'Pedidos',
     path: PrivateRoutePath.Pedido,
     component: <PedidoPage />,
+  },
+  {
+    title: 'Novo pedido',
+    path: PrivateRoutePath.PedidoAdicionar,
+    component: <PedidoFormPage />,
   },
   {
     title: 'Visualizar pedido',
