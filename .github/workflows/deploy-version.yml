@@ -3,7 +3,7 @@ name: Docker Image CI
 on:
   push:
     tags:
-      - "*.*.*"
+      - '*.*.*'
 
 jobs:
   build:
@@ -28,8 +28,8 @@ jobs:
 
       - name: Build Image
         run: |
-          docker build . -t brunobentocaina/micro-erp-ui:$TAG
+          docker build . -t brunobentocaina/open-adm-ui:$TAG
 
       - name: Push
         run: |
-          docker push brunobentocaina/micro-erp-ui:$TAG
+          docker push brunobentocaina/open-adm-ui:$TAG
