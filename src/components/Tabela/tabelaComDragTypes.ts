@@ -1,6 +1,7 @@
 import type {
   CellRendererSelectorFunc,
   ColDef,
+  ICellRendererParams,
   SuppressKeyboardEventParams,
 } from 'ag-grid-community'
 import type { MouseEvent } from 'react'
@@ -23,6 +24,8 @@ export interface TypeColumns extends ColDef {
   cellRenderer?: ColDef['cellRenderer'] | CellRendererSelectorFunc
   suppressKeyboardEvent?: (params: SuppressKeyboardEventParams) => boolean
 }
+
+export type TableCellRendererParams<TData = unknown> = ICellRendererParams<TData>
 
 export interface TabelaComDragProps {
   columns: TypeColumns[]
@@ -51,9 +54,7 @@ export function mergeTabelaComDragColumns(
   originalColumns: TypeColumns[],
 ): TypeColumns[] {
   const mergedColumns = storedColumns.map((storedColumn) => {
-    const originalColumn = originalColumns.find(
-      (column) => column.field === storedColumn.field,
-    )
+    const originalColumn = originalColumns.find((column) => column.field === storedColumn.field)
 
     return {
       ...storedColumn,

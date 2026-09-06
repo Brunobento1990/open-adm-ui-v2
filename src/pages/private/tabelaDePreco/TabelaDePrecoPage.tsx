@@ -1,8 +1,13 @@
 import { ApiRoutePath } from '../../../api/apiRoutes'
+import { InputApp } from '../../../components/InputApp/InputApp'
+import { InputAppType } from '../../../components/InputApp/inputAppTypes'
 import { TableIndex } from '../../../components/Tabela/TableIndex'
-import type { TypeColumns } from '../../../components/Tabela/tabelaComDragTypes'
+import type {
+  TableCellRendererParams,
+  TypeColumns,
+} from '../../../components/Tabela/tabelaComDragTypes'
 import { PrivateRoutePath } from '../../../routes/appRoutes'
-import { TabelaDePrecoFormField } from '../../../types/TabelaDePrecoTypes'
+import { TabelaDePrecoFormField, type TabelaDePreco } from '../../../types/TabelaDePrecoTypes'
 
 const TabelaDePrecoTable = {
   Name: 'tabelas-de-preco',
@@ -17,11 +22,27 @@ export function TabelaDePrecoPage() {
       minWidth: 220,
       sortable: true,
     },
+    {
+      field: TabelaDePrecoFormField.AtivaEcommerce,
+      headerName: 'Ativa ecommerce',
+      width: 160,
+      sortable: true,
+      cellRenderer: ({ data }: TableCellRendererParams<TabelaDePreco>) => (
+        <InputApp
+          checked={Boolean(data?.ativaEcommerce)}
+          disabled
+          id={`ativa-${data?.id}`}
+          label=""
+          type={InputAppType.Checkbox}
+        />
+      ),
+    },
   ]
 
   return (
     <TableIndex
       columns={columns}
+      desabilitarColunaAtivo
       nomeDaTabela={TabelaDePrecoTable.Name}
       orderBy={TabelaDePrecoFormField.Descricao}
       url={ApiRoutePath.TabelaDePreco}

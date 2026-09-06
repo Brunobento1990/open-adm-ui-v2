@@ -63,7 +63,14 @@ const validationSchema = new YupAdapter()
   .build()
 
 function encontrarPreco(
-  itens: TabelaDePrecoItemPedido[] | undefined,
+  itens:
+    | Array<
+        Pick<
+          TabelaDePrecoItemPedido,
+          'pesoId' | 'produtoId' | 'tamanhoId' | 'valorUnitarioAtacado' | 'valorUnitarioVarejo'
+        >
+      >
+    | undefined,
   item: PedidoItemForm,
   isAtacado?: boolean,
 ) {
@@ -236,7 +243,11 @@ export function PedidoFormPage() {
 
   const endereco = form.values.enderecoEntrega ?? {}
   const loading =
-    criar.loading || obterCliente.loading || listarItens.loading || obterAtiva.loading || consultarCepApi.loading
+    criar.loading ||
+    obterCliente.loading ||
+    listarItens.loading ||
+    obterAtiva.loading ||
+    consultarCepApi.loading
   const tabelaDePrecoPendente = !form.values.tabelaDePrecoId
   const pedidoTabs = [
     { label: 'Geral', value: PedidoTab.Geral },

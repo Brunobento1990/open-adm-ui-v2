@@ -108,13 +108,19 @@ export enum TabelaDePrecoLegacyApiRoutePath {
 }
 
 export enum TabelaDePrecoApiRoutePath {
+  Atualizar = '/update',
+  Criar = '/create',
+  Obter = '/get-tabela',
   ObterAtiva = '/get-tabela-ativa',
   Item = '/item',
 }
 
 export enum ItemTabelaDePrecoApiRoutePath {
+  Atualizar = '/update',
   AtualizarPorPeso = '/atualizar-por-peso',
   AtualizarPorTamanho = '/atualizar-por-tamanho',
+  Criar = '/create',
+  Excluir = '/delete',
 }
 
 export enum ComandaApiRoutePath {

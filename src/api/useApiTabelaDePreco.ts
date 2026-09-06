@@ -1,5 +1,7 @@
 import { ApiMethod, useApi } from '../hook/useApi'
 import type {
+  AtualizarTabelaDePrecoPayload,
+  CriarTabelaDePrecoPayload,
   TabelaDePreco,
   TabelaDePrecoItemPedido,
 } from '../types/TabelaDePrecoTypes'
@@ -13,13 +15,19 @@ export function useApiTabelaDePreco() {
     url: '/item-tabela-de-preco/obter-itens',
     naoRenderizarResposta: true,
   })
-  const apiCriar = useApi({ method: ApiMethod.Post, url: ApiRoutePath.TabelaDePreco })
+  const apiCriar = useApi({
+    method: ApiMethod.Post,
+    url: `${ApiRoutePath.TabelaDePreco}${TabelaDePrecoApiRoutePath.Criar}`,
+  })
   const apiObter = useApi({
     method: ApiMethod.Get,
-    url: ApiRoutePath.TabelaDePreco,
+    url: `${ApiRoutePath.TabelaDePreco}${TabelaDePrecoApiRoutePath.Obter}`,
     naoRenderizarResposta: true,
   })
-  const apiAtualizar = useApi({ method: ApiMethod.Put, url: ApiRoutePath.TabelaDePreco })
+  const apiAtualizar = useApi({
+    method: ApiMethod.Put,
+    url: `${ApiRoutePath.TabelaDePreco}${TabelaDePrecoApiRoutePath.Atualizar}`,
+  })
   const apiObterPreco = useApi({
     method: ApiMethod.Get,
     url: `${ApiRoutePath.TabelaDePreco}${TabelaDePrecoApiRoutePath.Item}`,
@@ -37,29 +45,31 @@ export function useApiTabelaDePreco() {
       loading: apiObterAtiva.loading,
     },
     listarItens: {
-      fetch: (tabelaDePrecoId: string) => apiListarItens.action<TabelaDePrecoItemPedido[]>({
-        urlParams: `?tabelaDePrecoId=${encodeURIComponent(tabelaDePrecoId)}`,
-      }),
+      fetch: (tabelaDePrecoId: string) =>
+        apiListarItens.action<TabelaDePrecoItemPedido[]>({
+          urlParams: `?tabelaDePrecoId=${encodeURIComponent(tabelaDePrecoId)}`,
+        }),
       loading: apiListarItens.loading,
     },
     obter: {
-      fetch: (id: string) => apiObter.action<TabelaDePreco>({
-        urlParams: `?id=${encodeURIComponent(id)}`,
-      }),
+      fetch: (id: string) =>
+        apiObter.action<TabelaDePreco>({
+          urlParams: `?id=${encodeURIComponent(id)}`,
+        }),
       loading: apiObter.loading,
     },
     criar: {
-      fetch: (values: Partial<TabelaDePreco>) => apiCriar.action<TabelaDePreco>({
-        body: values,
-        message: 'Tabela de preço criada com sucesso',
-      }),
+      fetch: (values: CriarTabelaDePrecoPayload) =>
+        apiCriar.action<TabelaDePreco>({
+          body: values,
+          message: 'Tabela de preço criada com sucesso',
+        }),
       loading: apiCriar.loading,
     },
     atualizar: {
-      fetch: (id: string, values: Partial<TabelaDePreco>) =>
+      fetch: (values: AtualizarTabelaDePrecoPayload) =>
         apiAtualizar.action<TabelaDePreco>({
           body: values,
-          urlParams: `?id=${encodeURIComponent(id)}`,
           message: 'Tabela de preço atualizada com sucesso',
         }),
       loading: apiAtualizar.loading,

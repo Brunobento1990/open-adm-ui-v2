@@ -11,6 +11,7 @@
 
 ## Próximos passos
 
+- [ ] Migrar **Vendas/Tabela de preço** separando criação e edição: criação envia cabeçalho e itens em um único payload; edição salva somente o cabeçalho no submit principal e persiste adição, alteração e exclusão de itens imediatamente após confirmação. O endpoint provisório de atualização individual é `PUT /item-tabela-de-preco/update`.
 - [x] Migrar **Vendas/Relatório venda produto**: filtros por data e períodos rápidos, ordenação, totalizadores, paginação, visualização responsiva e download do PDF.
 - [ ] Adicionar o redirecionamento do card **Cobranças mais antigas** da Home para `/financeiro/fatura/negociar-cobranca/:faturaId`, usando o identificador da fatura selecionada.
 - [x] Validar manualmente a migração de **Vendas/Clientes**: paginação, pesquisa, cadastro, consulta de CNPJ e CEP, visualização, ativar/bloquear acesso e atualização de senha. Implementada, validada estaticamente com lint e build e confirmada manualmente pelo usuário.

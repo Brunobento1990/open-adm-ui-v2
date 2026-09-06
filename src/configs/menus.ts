@@ -122,7 +122,7 @@ export const menus: Menu[] = [
       {
         id: 18,
         nome: 'Tabela de preço',
-        caminho: '/vendas/tabeladepreco',
+        caminho: PrivateRoutePath.TabelaDePreco,
         icone: 'solar:tag-price-bold',
         filhos: [],
       },

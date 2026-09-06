@@ -1,360 +1,356 @@
-import { Icon } from '@iconify/react'
-import {
-  Avatar,
-  Box,
-  Chip,
-  IconButton,
-  Stack,
-  Tooltip,
-  Typography,
-} from '@mui/material'
-import type { ICellRendererParams } from 'ag-grid-community'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useApiItemTabelaDePreco } from '../../../api/useApiItemTabelaDePreco'
 import { useApiTabelaDePreco } from '../../../api/useApiTabelaDePreco'
+import { BoxApp } from '../../../components/BoxApp/BoxApp'
+import { BoxAppDisplay, BoxAppFlexDirection } from '../../../components/BoxApp/boxAppTypes'
 import { ButtonApp } from '../../../components/ButtonApp/ButtonApp'
-import { DividerApp } from '../../../components/DividerApp/DividerApp'
-import { ProdutoDropDown } from '../../../components/DropDown/ProdutoDropDown'
+import { IconApp } from '../../../components/Icon/IconApp'
 import { InputApp } from '../../../components/InputApp/InputApp'
 import { InputAppType } from '../../../components/InputApp/inputAppTypes'
+import { ModalChildren } from '../../../components/Modal/ModalChildren'
 import { useSnackbarApp } from '../../../components/Snackbar/useSnackbar'
-import { TabelaComDrag, type TypeColumns } from '../../../components/Tabela/TabelaComDrag'
+import { TextApp, TextAppColor, TextAppWeight } from '../../../components/TextApp/TextApp'
 import { FormRoot } from '../../../form'
 import { useFormikAdapter } from '../../../hook/useFormikAdapter'
 import { useNavigationApp } from '../../../hook/useNavigationApp'
-import { useThemeApp } from '../../../hook/useThemeApp'
 import { YupAdapter } from '../../../lib/YupAdapter'
 import { PrivateRoutePath } from '../../../routes/appRoutes'
 import { FormAction, type FormAction as FormActionType } from '../../../types/Form'
-import type { Produto } from '../../../types/ProdutoTypes'
 import {
   TabelaDePrecoFormField,
-  TabelaDePrecoItemFormField,
+  type CriarTabelaDePrecoPayload,
   type TabelaDePreco,
+  type TabelaDePrecoCabecalhoValues,
   type TabelaDePrecoItem,
 } from '../../../types/TabelaDePrecoTypes'
+import { TabelaDePrecoCabecalhoFields } from './TabelaDePrecoCabecalhoFields'
+import { TabelaDePrecoItemCard } from './TabelaDePrecoItemCard'
+import { TabelaDePrecoItemEditor } from './TabelaDePrecoItemEditor'
 
-const TabelaDePrecoFormIcon = {
-  Add: 'ic:round-plus',
-  Remove: 'solar:trash-bin-trash-linear',
-  Search: 'solar:magnifer-linear',
-} as const
+const cabecalhoInitialValues: TabelaDePrecoCabecalhoValues = {
+  ativaEcommerce: false,
+  descricao: '',
+}
+const validationSchema = new YupAdapter()
+  .string(TabelaDePrecoFormField.Descricao, 'Informe a descrição')
+  .build()
+const PesquisaItemField = 'pesquisaItemTabelaDePreco'
 
-const tabelaDePrecoInitialValues: Partial<TabelaDePreco> = {
-  [TabelaDePrecoFormField.Descricao]: '',
-  [TabelaDePrecoFormField.Itens]: [],
+function chaveItem(item: TabelaDePrecoItem) {
+  return `${item.produtoId}-${item.pesoId ?? ''}-${item.tamanhoId ?? ''}`
 }
 
-const tabelaDePrecoValidationSchema = new YupAdapter()
-  .string(TabelaDePrecoFormField.Descricao)
-  .build()
-
-function criarItem(): Partial<TabelaDePrecoItem> {
+function itemPayload(item: TabelaDePrecoItem) {
   return {
-    [TabelaDePrecoItemFormField.Preco]: 0,
-    [TabelaDePrecoItemFormField.Produto]: undefined,
-    [TabelaDePrecoItemFormField.ProdutoId]: '',
+    pesoId: item.pesoId ?? null,
+    produtoId: item.produtoId,
+    tamanhoId: item.tamanhoId ?? null,
+    valorUnitarioAtacado: item.valorUnitarioAtacado,
+    valorUnitarioVarejo: item.valorUnitarioVarejo,
   }
 }
 
-type TabelaDePrecoFormPageProps = {
-  action: FormActionType
+export function TabelaDePrecoFormPage({ action }: { action: FormActionType }) {
+  if (action === FormAction.Create) return <TabelaDePrecoCreatePage />
+  return <TabelaDePrecoEditPage readonly={action === FormAction.View} />
 }
 
-export function TabelaDePrecoFormPage({ action }: TabelaDePrecoFormPageProps) {
-  const { id } = useParams<{ id: string }>()
-  const { atualizar, criar, obter } = useApiTabelaDePreco()
-  const { navigate } = useNavigationApp()
-  const { cores } = useThemeApp()
-  const snack = useSnackbarApp()
-  const readonly = action === FormAction.View
-  const [produtoSelecionado, setProdutoSelecionado] = useState<Produto>()
-  const [precoSelecionado, setPrecoSelecionado] = useState<number | ''>('')
-  const [pesquisa, setPesquisa] = useState('')
-  const form = useFormikAdapter<Partial<TabelaDePreco>>({
-    initialValues: tabelaDePrecoInitialValues,
-    validationSchema: tabelaDePrecoValidationSchema,
-    onSubmit: async (values) => {
-      const tabelaDePreco = {
-        descricao: values.descricao,
-        itens: values.itens?.map((item: TabelaDePrecoItem) => ({
-          ...(item.id && { id: item.id }),
-          preco: Number(item.preco),
-          produtoId: item.produtoId,
-        })) as TabelaDePrecoItem[],
-      }
-      const response = action === FormAction.Edit && id
-        ? await atualizar.fetch(id, tabelaDePreco)
-        : await criar.fetch(tabelaDePreco)
+type CreateValues = TabelaDePrecoCabecalhoValues & { itensTabelaDePreco: TabelaDePrecoItem[] }
 
-      if (response) navigate(PrivateRoutePath.TabelaDePreco)
+function TabelaDePrecoCreatePage() {
+  const { criar } = useApiTabelaDePreco()
+  const { navigate } = useNavigationApp()
+  const snack = useSnackbarApp()
+  const [itemEdicao, setItemEdicao] = useState<TabelaDePrecoItem>()
+  const form = useFormikAdapter<CreateValues>({
+    initialValues: { ...cabecalhoInitialValues, itensTabelaDePreco: [] },
+    validationSchema,
+    onSubmit: async (values) => {
+      const payload: CriarTabelaDePrecoPayload = {
+        ativaEcommerce: values.ativaEcommerce,
+        descricao: values.descricao,
+        itensTabelaDePreco: values.itensTabelaDePreco.map(itemPayload),
+      }
+      if (await criar.fetch(payload)) navigate(PrivateRoutePath.TabelaDePreco)
     },
   })
-  const itens = useMemo(() => form.values.itens ?? [], [form.values.itens])
-  const formRef = useRef(form)
-  const itensRef = useRef(itens)
-  useEffect(() => {
-    formRef.current = form
-    itensRef.current = itens
-  }, [form, itens])
-  const itensFiltrados = useMemo(() => {
-    const termo = pesquisa.trim().toLocaleLowerCase()
-    if (!termo) return itens
 
-    return itens.filter((item) =>
-      item.produto?.descricao?.toLocaleLowerCase().includes(termo),
-    )
-  }, [itens, pesquisa])
-
-  useEffect(() => {
-    if (action === FormAction.Create || !id) return
-
-    async function buscarTabelaDePreco() {
-      const response = await obter.fetch(id as string)
-      if (!response) return
-
-      form.setValue({
-        descricao: response.descricao,
-        itens: response.itens,
-      })
+  function adicionarItem(item: TabelaDePrecoItem) {
+    if (form.values.itensTabelaDePreco.some((atual) => chaveItem(atual) === chaveItem(item))) {
+      snack.show('Este produto e variação já foram adicionados', 'error')
+      return false
     }
+    form.setValue({ itensTabelaDePreco: [...form.values.itensTabelaDePreco, item] })
+    return true
+  }
 
-    buscarTabelaDePreco()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [action, id])
-
-  const colunasItens = useMemo<TypeColumns[]>(() => {
-    function obterIndiceItem(item: TabelaDePrecoItem) {
-      return itensRef.current.findIndex((itemAtual) =>
-        (item.id && itemAtual.id === item.id) || itemAtual.produtoId === item.produtoId,
+  function editarItem(item: TabelaDePrecoItem) {
+    if (
+      form.values.itensTabelaDePreco.some(
+        (atual) => atual !== itemEdicao && chaveItem(atual) === chaveItem(item),
       )
+    ) {
+      snack.show('Este produto e variação já foram adicionados', 'error')
+      return false
     }
-
-    function alterarItem(index: number, values: Partial<TabelaDePrecoItem>) {
-      const itensAtuais = [...itensRef.current]
-      itensAtuais[index] = { ...itensAtuais[index], ...values } as TabelaDePrecoItem
-      formRef.current.setValue({ itens: itensAtuais })
-    }
-
-    function removerItem(index: number) {
-      formRef.current.setValue({
-        itens: itensRef.current.filter((_, itemIndex) => itemIndex !== index),
-      })
-    }
-
-    return [
-      {
-        field: TabelaDePrecoItemFormField.Produto,
-        headerName: 'Produto',
-        sortable: false,
-        flex: 1,
-        minWidth: 220,
-        cellRenderer: ({ data }: ICellRendererParams<TabelaDePrecoItem>) => data?.produto && (
-          <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center', height: '100%' }}>
-            <Avatar
-              alt={data.produto.descricao}
-              src={data.produto.foto}
-              variant="rounded"
-              sx={{ height: 38, width: 38 }}
-            />
-            <Box sx={{ minWidth: 0 }}>
-              <Typography noWrap variant="body2" sx={{ fontWeight: 600, fontSize: '1rem' }}>
-                {data.produto.descricao}
-              </Typography>
-              <Typography
-                color="text.primary"
-                noWrap
-                variant="body2"
-                sx={{ mt: 0.25, opacity: 0.72 }}
-              >
-                {data.produto.categoria?.descricao}
-              </Typography>
-            </Box>
-          </Stack>
-        ),
-      },
-      {
-        field: TabelaDePrecoItemFormField.Preco,
-        headerName: 'Preço',
-        sortable: false,
-        width: 180,
-        cellRenderer: ({ data }: ICellRendererParams<TabelaDePrecoItem>) => {
-          if (!data) return null
-          const index = obterIndiceItem(data)
-
-          return (
-            <Box sx={{ maxWidth: 150 }}>
-              <InputApp
-                disabled={readonly}
-                id={`${TabelaDePrecoFormField.Itens}.${index}.${TabelaDePrecoItemFormField.Preco}`}
-                onChange={(_, value) => alterarItem(index, { preco: Number(value) })}
-                required
-                startAdornment="R$"
-                type={InputAppType.Currency}
-                value={data.preco}
-              />
-            </Box>
-          )
-        },
-      },
-      {
-        field: 'acoes',
-        headerName: 'Ações',
-        sortable: false,
-        width: 78,
-        maxWidth: 78,
-        resizable: false,
-        cellRenderer: ({ data }: ICellRendererParams<TabelaDePrecoItem>) => data && !readonly && (
-          <Tooltip title="Remover produto">
-            <IconButton
-              aria-label="Remover produto"
-              onClick={() => removerItem(obterIndiceItem(data))}
-              size="small"
-              sx={{
-                color: cores.error,
-              }}
-            >
-              <Icon icon={TabelaDePrecoFormIcon.Remove} />
-            </IconButton>
-          </Tooltip>
-        ),
-      },
-    ]
-  }, [cores.error, readonly])
-
-  function adicionarItem() {
-    if (!produtoSelecionado || precoSelecionado === '') return
-
-    const itens = form.values.itens ?? []
-    if (itens.some((item) => item.produtoId === produtoSelecionado.id)) return
-
     form.setValue({
-      itens: [
-        ...itens,
-        {
-          ...criarItem(),
-          preco: Number(precoSelecionado),
-          produto: produtoSelecionado,
-          produtoId: produtoSelecionado.id,
-        } as TabelaDePrecoItem,
-      ],
+      itensTabelaDePreco: form.values.itensTabelaDePreco.map((atual) =>
+        chaveItem(atual) === chaveItem(itemEdicao as TabelaDePrecoItem) ? item : atual,
+      ),
     })
-    setProdutoSelecionado(undefined)
-    setPrecoSelecionado('')
+    setItemEdicao(undefined)
+    return true
   }
 
   return (
     <FormRoot.Form
-      action={action}
-      loading={obter.loading || criar.loading || atualizar.loading}
+      loading={criar.loading}
       submit={form.onSubmit}
       textoButton="Salvar"
       urlVoltar={PrivateRoutePath.TabelaDePreco}
     >
-      <FormRoot.FormRow>
-        <FormRoot.FormItemRow xs={12} md={6}>
-          <InputApp
-            disabled={readonly}
-            error={form.error(TabelaDePrecoFormField.Descricao)}
-            helperText={form.helperText(TabelaDePrecoFormField.Descricao)}
-            id={TabelaDePrecoFormField.Descricao}
-            label="Descrição"
-            maxLength={150}
-            name={TabelaDePrecoFormField.Descricao}
-            onBlur={form.onBlur}
-            onChange={form.onChange}
-            placeholder="Informe a descrição"
-            required
-            type={InputAppType.Text}
-            value={form.values.descricao}
+      <TabelaDePrecoCabecalhoFields form={form} />
+      <SecaoTitulo>Adicionar item</SecaoTitulo>
+      <TabelaDePrecoItemEditor onConfirmar={adicionarItem} textoButton="Adicionar item" />
+      <ListaItens
+        itens={form.values.itensTabelaDePreco}
+        onEditar={setItemEdicao}
+        onExcluir={(item) => {
+          form.setValue({
+            itensTabelaDePreco: form.values.itensTabelaDePreco.filter(
+              (atual) => chaveItem(atual) !== chaveItem(item),
+            ),
+          })
+          return true
+        }}
+      />
+      <ModalChildren
+        close={() => setItemEdicao(undefined)}
+        fullWidth
+        maxWidth="lg"
+        open={Boolean(itemEdicao)}
+        retirarFooter
+        titulo="Editar item"
+      >
+        {itemEdicao && (
+          <TabelaDePrecoItemEditor
+            initialItem={itemEdicao}
+            onConfirmar={editarItem}
+            textoButton="Confirmar alteração"
           />
-        </FormRoot.FormItemRow>
-      </FormRoot.FormRow>
-
-      <Stack spacing={1.5}>
-        <DividerApp>
-          <Chip color="primary" label="Adicionar item" size="small" variant="outlined" />
-        </DividerApp>
-
-        {!readonly && (
-          <FormRoot.FormRow>
-            <FormRoot.FormItemRow xs={12} md={6}>
-              <ProdutoDropDown
-                id={TabelaDePrecoItemFormField.ProdutoId}
-                label="Produto"
-                onChange={(_, produto) => {
-                  if (
-                    produto &&
-                    (form.values.itens ?? []).some(
-                      (item) => item.produtoId === produto.id,
-                    )
-                  ) {
-                    snack.show('Este produto já foi adicionado à tabela de preço', 'error')
-                    setProdutoSelecionado(undefined)
-                    return
-                  }
-
-                  setProdutoSelecionado(produto)
-                }}
-                value={produtoSelecionado}
-              />
-            </FormRoot.FormItemRow>
-            <FormRoot.FormItemRow xs={12} md={3}>
-              <InputApp
-                id={TabelaDePrecoItemFormField.Preco}
-                label="Preço"
-                onChange={(_, value) => setPrecoSelecionado(value === '' ? '' : Number(value))}
-                placeholder="Informe o preço"
-                startAdornment="R$"
-                type={InputAppType.Currency}
-                value={precoSelecionado}
-              />
-            </FormRoot.FormItemRow>
-            <FormRoot.FormItemRow xs={12} md={3}>
-              <ButtonApp
-                disabled={!produtoSelecionado || precoSelecionado === '' ||
-                  (form.values.itens ?? []).some(
-                    (item) => item.produtoId === produtoSelecionado?.id,
-                  )}
-                fullWidth
-                startIcon={<Icon icon={TabelaDePrecoFormIcon.Add} />}
-                onClick={adicionarItem}
-              >
-                Adicionar
-              </ButtonApp>
-            </FormRoot.FormItemRow>
-          </FormRoot.FormRow>
         )}
-
-        {(form.values.itens?.length ?? 0) > 0 && (
-          <DividerApp>
-            <Chip color="primary" label="Produtos adicionados" size="small" />
-          </DividerApp>
-        )}
-
-        {(form.values.itens?.length ?? 0) > 0 && (
-          <Stack spacing={1.25}>
-            <Box sx={{ maxWidth: 360 }}>
-              <InputApp
-                id="pesquisa-produto-tabela-preco"
-                onChange={(_, value) => setPesquisa(String(value ?? ''))}
-                placeholder="Pesquisar produto..."
-                startAdornment={<Icon icon={TabelaDePrecoFormIcon.Search} />}
-                type={InputAppType.Search}
-                value={pesquisa}
-              />
-            </Box>
-
-            <TabelaComDrag
-              columns={colunasItens}
-              headerHeight={38}
-              height={'calc(100vh - 420px)'}
-              rowHeight={60}
-              rows={itensFiltrados}
-            />
-          </Stack>
-        )}
-      </Stack>
+      </ModalChildren>
     </FormRoot.Form>
+  )
+}
+
+function TabelaDePrecoEditPage({ readonly }: { readonly: boolean }) {
+  const { id } = useParams<{ id: string }>()
+  const { atualizar, obter } = useApiTabelaDePreco()
+  const itemApi = useApiItemTabelaDePreco()
+  const { navigate } = useNavigationApp()
+  const snack = useSnackbarApp()
+  const [tabela, setTabela] = useState<TabelaDePreco>()
+  const [itemModal, setItemModal] = useState<TabelaDePrecoItem | null>()
+  const form = useFormikAdapter<TabelaDePrecoCabecalhoValues>({
+    initialValues: cabecalhoInitialValues,
+    validationSchema,
+    onSubmit: async (values) => {
+      if (!id) return
+      if (await atualizar.fetch({ id, ...values })) navigate(PrivateRoutePath.TabelaDePreco)
+    },
+  })
+
+  async function carregar() {
+    if (!id) return
+    const response = await obter.fetch(id)
+    if (!response) return
+    setTabela(response)
+    form.setValue({ ativaEcommerce: response.ativaEcommerce, descricao: response.descricao })
+  }
+
+  useEffect(() => {
+    // O carregamento remoto inicializa o formulário e a lista de itens.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void carregar()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id])
+
+  async function salvarItem(item: TabelaDePrecoItem) {
+    if (!id) return false
+    if (
+      !item.id &&
+      tabela?.itensTabelaDePreco.some((atual) => chaveItem(atual) === chaveItem(item))
+    ) {
+      snack.show('Este produto e variação já existem na tabela de preço', 'error')
+      return false
+    }
+    const payload = {
+      ...itemPayload(item),
+      ...(item.id ? { id: item.id } : {}),
+      tabelaDePrecoId: id,
+    }
+    const itemAtualizado = item.id
+      ? await itemApi.atualizar.fetch(payload)
+      : await itemApi.criar.fetch(payload)
+    if (itemAtualizado) {
+      setTabela((atual) =>
+        atual
+          ? {
+              ...atual,
+              itensTabelaDePreco: item.id
+                ? atual.itensTabelaDePreco.map((itemAtual) =>
+                    itemAtual.id === item.id
+                      ? {
+                          ...itemAtual,
+                          valorUnitarioAtacado: itemAtualizado.valorUnitarioAtacado,
+                          valorUnitarioVarejo: itemAtualizado.valorUnitarioVarejo,
+                        }
+                      : itemAtual,
+                  )
+                : [...atual.itensTabelaDePreco, itemAtualizado],
+            }
+          : atual,
+      )
+      setItemModal(undefined)
+    }
+    return Boolean(itemAtualizado)
+  }
+
+  async function excluirItem(item: TabelaDePrecoItem) {
+    if (!item.id) return false
+    const sucesso = await itemApi.excluir.fetch(item.id)
+    if (sucesso) {
+      setTabela((atual) =>
+        atual
+          ? {
+              ...atual,
+              itensTabelaDePreco: atual.itensTabelaDePreco.filter(
+                (itemAtual) => itemAtual.id !== item.id,
+              ),
+            }
+          : atual,
+      )
+    }
+    return sucesso
+  }
+
+  const loadingItem = itemApi.criar.loading || itemApi.atualizar.loading || itemApi.excluir.loading
+
+  return (
+    <>
+      <FormRoot.Form
+        action={readonly ? FormAction.View : FormAction.Edit}
+        loading={obter.loading || atualizar.loading}
+        submit={form.onSubmit}
+        textoButton="Salvar"
+        urlVoltar={PrivateRoutePath.TabelaDePreco}
+      >
+        <TabelaDePrecoCabecalhoFields form={form} readonly={readonly} />
+        <SecaoTitulo>Itens da tabela de preço</SecaoTitulo>
+        {!readonly && (
+          <BoxApp mb={2}>
+            <TextApp color={TextAppColor.Secondary}>
+              Adições, alterações e exclusões de itens são salvas imediatamente após a confirmação.
+            </TextApp>
+          </BoxApp>
+        )}
+        {!readonly && (
+          <BoxApp mb={2}>
+            <ButtonApp onClick={() => setItemModal(null)}>Adicionar novo item</ButtonApp>
+          </BoxApp>
+        )}
+        <ListaItens
+          itens={tabela?.itensTabelaDePreco ?? []}
+          loading={loadingItem}
+          onEditar={readonly ? undefined : setItemModal}
+          onExcluir={readonly ? undefined : excluirItem}
+        />
+      </FormRoot.Form>
+      <ModalChildren
+        close={() => setItemModal(undefined)}
+        fullWidth
+        maxWidth="lg"
+        open={itemModal !== undefined}
+        retirarFooter
+        titulo={itemModal ? 'Editar item' : 'Adicionar item'}
+      >
+        <TabelaDePrecoItemEditor
+          bloquearIdentificacao={Boolean(itemModal)}
+          key={itemModal?.id ?? 'novo-item'}
+          initialItem={itemModal ?? undefined}
+          loading={loadingItem}
+          onConfirmar={salvarItem}
+          textoButton={itemModal ? 'Confirmar alteração' : 'Confirmar adição'}
+        />
+      </ModalChildren>
+    </>
+  )
+}
+
+function ListaItens({
+  itens,
+  loading,
+  onEditar,
+  onExcluir,
+}: {
+  itens: TabelaDePrecoItem[]
+  loading?: boolean
+  onEditar?: (item: TabelaDePrecoItem) => void
+  onExcluir?: (item: TabelaDePrecoItem) => Promise<boolean> | boolean
+}) {
+  const [pesquisa, setPesquisa] = useState('')
+  if (itens.length === 0)
+    return <TextApp color={TextAppColor.Secondary}>Nenhum item adicionado.</TextApp>
+
+  const termo = pesquisa.trim().toLocaleLowerCase()
+  const itensFiltrados = termo
+    ? itens.filter((item) =>
+        [
+          item.produto?.descricao,
+          item.produto?.categoria?.descricao,
+          item.peso?.descricao,
+          item.tamanho?.descricao,
+        ].some((value) => value?.toLocaleLowerCase().includes(termo)),
+      )
+    : itens
+
+  return (
+    <BoxApp display={BoxAppDisplay.Flex} flexDirection={BoxAppFlexDirection.Column} gap={1}>
+      <BoxApp maxWidth={420}>
+        <InputApp
+          id={PesquisaItemField}
+          onChange={(_, value) => setPesquisa(String(value ?? ''))}
+          placeholder="Pesquisar por produto, categoria, peso ou tamanho..."
+          startAdornment={<IconApp icon="solar:magnifer-linear" />}
+          type={InputAppType.Search}
+          value={pesquisa}
+        />
+      </BoxApp>
+      {itensFiltrados.length === 0 ? (
+        <TextApp color={TextAppColor.Secondary}>Nenhum item corresponde à pesquisa.</TextApp>
+      ) : (
+        itensFiltrados.map((item) => (
+          <TabelaDePrecoItemCard
+            item={item}
+            key={item.id ?? chaveItem(item)}
+            loading={loading}
+            onEditar={onEditar ? () => onEditar(item) : undefined}
+            onExcluir={onExcluir ? () => onExcluir(item) : undefined}
+          />
+        ))
+      )}
+    </BoxApp>
+  )
+}
+
+function SecaoTitulo({ children }: { children: string }) {
+  return (
+    <BoxApp mb={1.5} mt={1}>
+      <TextApp fontSize="1.1rem" weight={TextAppWeight.SemiBold}>
+        {children}
+      </TextApp>
+    </BoxApp>
   )
 }

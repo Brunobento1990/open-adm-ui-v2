@@ -6,7 +6,12 @@ import { useEffect, useMemo, useRef } from 'react'
 import { TextApp } from '../TextApp/TextApp'
 import { TableSortDirection, type TabelaComDragProps, type TypeColumns } from './tabelaComDragTypes'
 
-export type { ISort, ISortingTable, TypeColumns } from './tabelaComDragTypes'
+export type {
+  ISort,
+  ISortingTable,
+  TableCellRendererParams,
+  TypeColumns,
+} from './tabelaComDragTypes'
 
 function EmptyTableOverlay() {
   return <TextApp>Não há registros</TextApp>
