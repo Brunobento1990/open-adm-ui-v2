@@ -150,7 +150,7 @@ export const menus: Menu[] = [
       {
         id: 22,
         nome: 'Relatório venda produto',
-        caminho: '/vendas/relatorio-venda-produto',
+        caminho: PrivateRoutePath.RelatorioVendaProduto,
         icone: 'fluent-mdl2:product-variant',
         filhos: [],
       },

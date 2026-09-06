@@ -6,10 +6,7 @@ export enum PublicRoutePath {
 }
 
 export function getComandaPublicaPath(idPublico: string) {
-  return PublicRoutePath.ComandaPublica.replace(
-    ':idPublico',
-    encodeURIComponent(idPublico),
-  )
+  return PublicRoutePath.ComandaPublica.replace(':idPublico', encodeURIComponent(idPublico))
 }
 
 export enum PrivateRoutePath {
@@ -101,6 +98,7 @@ export enum PrivateRoutePath {
   PrecoPorPeso = '/vendas/preco-por-peso',
   PrecoPorTamanho = '/vendas/preco-por-tamanho',
   RelatorioPedidoPeriodo = '/vendas/relatorio-por-periodo',
+  RelatorioVendaProduto = '/vendas/relatorio-venda-produto',
   Estoque = '/estoque/posicao-estoque',
   EstoqueMovimentacao = '/estoque/posicao-estoque/editar',
   EstoqueMovimentacaoId = '/estoque/posicao-estoque/editar/:id',

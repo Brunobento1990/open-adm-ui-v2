@@ -40,6 +40,7 @@ import { PedidoModificarStatusPage } from '../pages/private/pedido/PedidoModific
 import { PrecoPorPesoPage } from '../pages/private/precoPorPeso/PrecoPorPesoPage'
 import { PrecoPorTamanhoPage } from '../pages/private/precoPorTamanho/PrecoPorTamanhoPage'
 import { RelatorioPedidoPeriodoPage } from '../pages/private/relatorioPedido/RelatorioPedidoPeriodoPage'
+import { RelatorioVendaProdutoPage } from '../pages/private/relatorioVendaProduto/RelatorioVendaProdutoPage'
 import { PesoFormPage } from '../pages/private/peso/PesoFormPage'
 import { PesoPage } from '../pages/private/peso/PesoPage'
 import { ProdutoFormPage } from '../pages/private/produto/ProdutoFormPage'
@@ -84,7 +85,9 @@ export const privateRoutes: PrivateRouteConfig[] = [
   {
     title: 'Contas a receber',
     path: PrivateRoutePath.ContaAReceber,
-    component: <FaturaPage tipo={TipoFatura.AReceber} urlAdd={PrivateRoutePath.ContaAReceberAdicionar} />,
+    component: (
+      <FaturaPage tipo={TipoFatura.AReceber} urlAdd={PrivateRoutePath.ContaAReceberAdicionar} />
+    ),
   },
   {
     title: 'Negociar cobrança',
@@ -94,7 +97,9 @@ export const privateRoutes: PrivateRouteConfig[] = [
   {
     title: 'Nova conta a receber',
     path: PrivateRoutePath.ContaAReceberAdicionar,
-    component: <FaturaFormPage tipo={TipoFatura.AReceber} urlVoltar={PrivateRoutePath.ContaAReceber} />,
+    component: (
+      <FaturaFormPage tipo={TipoFatura.AReceber} urlVoltar={PrivateRoutePath.ContaAReceber} />
+    ),
   },
   {
     title: 'Baixar parcela',
@@ -395,6 +400,11 @@ export const privateRoutes: PrivateRouteConfig[] = [
     title: 'Relatório por período',
     path: PrivateRoutePath.RelatorioPedidoPeriodo,
     component: <RelatorioPedidoPeriodoPage />,
+  },
+  {
+    title: 'Relatório venda produto',
+    path: PrivateRoutePath.RelatorioVendaProduto,
+    component: <RelatorioVendaProdutoPage />,
   },
   {
     title: 'Tabela de preço',

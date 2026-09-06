@@ -42,6 +42,20 @@ export function ClienteVendaPage() {
       sortable: true,
     },
     {
+      field: ClienteVendaFormField.Telefone,
+      headerName: 'Telefone',
+      minWidth: 175,
+      cellRenderer: ({ data }: ICellRendererParams<ClienteVenda>) =>
+        formatarTelefone(data?.telefone),
+    },
+    {
+      field: ClienteVendaFormField.Cpf,
+      headerName: 'CPF/CNPJ',
+      minWidth: 180,
+      cellRenderer: ({ data }: ICellRendererParams<ClienteVenda>) =>
+        data?.cpf ? formatarCpf(data.cpf) : formatarCnpj(data?.cnpj),
+    },
+    {
       field: ClienteVendaFormField.Senha,
       headerName: 'Atualizar senha',
       width: 150,
@@ -75,20 +89,6 @@ export function ClienteVendaPage() {
             />
           </IconButtonComTolltip>
         ),
-    },
-    {
-      field: ClienteVendaFormField.Telefone,
-      headerName: 'Telefone',
-      minWidth: 175,
-      cellRenderer: ({ data }: ICellRendererParams<ClienteVenda>) =>
-        formatarTelefone(data?.telefone),
-    },
-    {
-      field: ClienteVendaFormField.Cpf,
-      headerName: 'CPF/CNPJ',
-      minWidth: 180,
-      cellRenderer: ({ data }: ICellRendererParams<ClienteVenda>) =>
-        data?.cpf ? formatarCpf(data.cpf) : formatarCnpj(data?.cnpj),
     },
   ]
 

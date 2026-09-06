@@ -190,9 +190,18 @@ export type RelatorioPedidoTotais = {
   valorTotal: number
 }
 
+export type RelatorioPedidoTopProduto = {
+  produtoId: string
+  produto: string
+  quantidade: number
+  valorTotal: number
+}
+
 export type RelatorioPedidoTotaisUsuario = RelatorioPedidoTotais & {
   usuarioId: string
   usuario: string
+  topProdutosPorQuantidade: RelatorioPedidoTopProduto[]
+  topProdutosPorValor: RelatorioPedidoTopProduto[]
 }
 
 export type RelatorioPedidoListagem = {

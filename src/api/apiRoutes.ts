@@ -18,6 +18,7 @@ export enum ApiRoutePath {
   PedidoAdm = '/pedidos-adm',
   PedidoCobranca = '/pedido',
   Produto = '/produtos',
+  RelatorioVendaProduto = '/relatorio-venda-produto',
   PublicoComanda = '/publico/comandas',
   TabelaDePreco = '/tabelas-de-precos',
   Tamanho = '/tamanhos',
@@ -187,4 +188,8 @@ export enum PedidoApiRoutePath {
 
 export enum PedidoCobrancaApiRoutePath {
   Cobranca = '/cobranca',
+}
+
+export enum RelatorioVendaProdutoApiRoutePath {
+  Imprimir = '/imprimir',
 }

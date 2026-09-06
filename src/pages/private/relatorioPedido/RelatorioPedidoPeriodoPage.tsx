@@ -22,6 +22,7 @@ import { formatMoney, formatNumber } from '../../../utils/moneyUtils'
 import { baixarPdf } from '../../../utils/pdfUtils'
 import { RelatorioPedidoItemCard } from './RelatorioPedidoItemCard'
 import { RelatorioPedidoItensTable } from './RelatorioPedidoItensTable'
+import { RelatorioPedidoTopProdutosCharts } from './RelatorioPedidoTopProdutosCharts'
 
 const RelatorioTab = { Graficos: 1, Itens: 0 } as const
 const relatorioTabs = [
@@ -118,6 +119,9 @@ export function RelatorioPedidoPeriodoPage() {
                 <TextApp fontSize="1.1rem" weight={TextAppWeight.SemiBold}>Pedidos e itens por cliente</TextApp>
                 <BarChartApp labels={totaisPorUsuario.map((item) => item.usuario)} series={[{ data: totaisPorUsuario.map((item) => item.quantidadePedidos), label: 'Pedidos' }, { color: TipoPaletaCorEnum.Info, data: totaisPorUsuario.map((item) => item.quantidadeItens), label: 'Itens' }]} valueFormatter={formatNumber} />
               </PaperApp>
+              {totaisPorUsuario.map((totaisUsuario) => (
+                <RelatorioPedidoTopProdutosCharts key={totaisUsuario.usuarioId} totaisUsuario={totaisUsuario} />
+              ))}
             </BoxApp>
           )}
         </>
