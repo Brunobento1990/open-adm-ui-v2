@@ -4,6 +4,7 @@ export enum InputAppType {
   Password = 'password',
   Number = 'number',
   Currency = 'currency',
+  Color = 'color',
   Date = 'date',
   Search = 'search',
   Tel = 'tel',

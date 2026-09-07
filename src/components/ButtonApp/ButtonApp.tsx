@@ -18,7 +18,8 @@ export function ButtonApp({
   startIcon,
   type = 'button',
   variant = ButtonAppVariant.Contained,
-  onClick
+  onClick,
+  sx,
 }: ButtonAppProps) {
   return (
     <Button
@@ -35,7 +36,7 @@ export function ButtonApp({
       startIcon={startIcon}
       type={type}
       variant={variant}
-      sx={{ py: size === ButtonAppSize.Large ? 1.2 : undefined, textTransform: 'none' }}
+      sx={[{ py: size === ButtonAppSize.Large ? 1.2 : undefined, textTransform: 'none' }, ...(Array.isArray(sx) ? sx : [sx])]}
     >
       {loading ? 'Carregando...' : children}
     </Button>

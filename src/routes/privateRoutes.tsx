@@ -29,6 +29,8 @@ import { TransacaoFinanceiraPage } from '../pages/private/financeiro/TransacaoFi
 import { HomePage } from '../pages/private/HomePage'
 import { LojaParceiraFormPage } from '../pages/private/lojaParceira/LojaParceiraFormPage'
 import { LojaParceiraPage } from '../pages/private/lojaParceira/LojaParceiraPage'
+import { LinkBioEventosPage } from '../pages/private/linkBio/LinkBioEventosPage'
+import { LinkBioPage } from '../pages/private/linkBio/LinkBioPage'
 import { MinhaContaPage } from '../pages/private/MinhaContaPage'
 import { MinhaEmpresaPage } from '../pages/private/minhaEmpresa/MinhaEmpresaPage'
 import { MovimentoProdutoFormPage } from '../pages/private/movimentoProduto/MovimentoProdutoFormPage'
@@ -62,6 +64,16 @@ export type PrivateRouteConfig = {
 }
 
 export const privateRoutes: PrivateRouteConfig[] = [
+  {
+    title: 'Link da Bio',
+    path: PrivateRoutePath.LinkBio,
+    component: <LinkBioPage />,
+  },
+  {
+    title: 'Eventos do Link da Bio',
+    path: PrivateRoutePath.LinkBioEventos,
+    component: <LinkBioEventosPage />,
+  },
   {
     title: 'Pedidos',
     path: PrivateRoutePath.Pedido,

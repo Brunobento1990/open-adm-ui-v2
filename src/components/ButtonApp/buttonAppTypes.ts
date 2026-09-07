@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
+import type { ButtonProps } from '@mui/material'
 
 export enum ButtonAppVariant {
   Contained = 'contained',
@@ -28,4 +29,5 @@ export type ButtonAppProps = {
   type?: ButtonHTMLAttributes<HTMLButtonElement>['type']
   variant?: ButtonAppVariant
   onClick?: (e?: any) => void
+  sx?: ButtonProps['sx']
 }

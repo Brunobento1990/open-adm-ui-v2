@@ -28,6 +28,20 @@ export const menus: Menu[] = [
         icone: 'mdi:store-check-outline',
         filhos: [],
       },
+      {
+        id: 42,
+        nome: 'Link da Bio',
+        caminho: PrivateRoutePath.LinkBio,
+        icone: 'solar:link-circle-linear',
+        filhos: [],
+      },
+      {
+        id: 43,
+        nome: 'Eventos do Link da Bio',
+        caminho: PrivateRoutePath.LinkBioEventos,
+        icone: 'solar:chart-2-linear',
+        filhos: [],
+      },
     ],
   },
   {

@@ -191,6 +191,7 @@ const renderizadores: Record<InputAppType, InputAppRender> = {
   [InputAppType.Password]: renderTextField(InputAppType.Password),
   [InputAppType.Number]: renderTextField(InputAppType.Number),
   [InputAppType.Currency]: renderCurrencyField,
+  [InputAppType.Color]: renderTextField(InputAppType.Color),
   [InputAppType.Date]: renderTextField(InputAppType.Date),
   [InputAppType.Search]: renderTextField(InputAppType.Search),
   [InputAppType.Tel]: renderTextField(InputAppType.Tel),
