@@ -28,8 +28,8 @@ jobs:
 
       - name: Build Image
         run: |
-          docker build . -t brunobentocaina/open-adm-ui:$TAG
+          docker build . -t brunobentocaina/open-adm-ui-v2:$TAG
 
       - name: Push
         run: |
-          docker push brunobentocaina/open-adm-ui:$TAG
+          docker push brunobentocaina/open-adm-ui-v2:$TAG
