@@ -308,13 +308,25 @@ export function LinkBioPage() {
                   Use as setas para definir a ordem de exibição.
                 </TextApp>
               </BoxApp>
-              <ButtonApp
-                disabled={!form.values.id}
-                onClick={() => setItemModal(null)}
-                startIcon={<IconApp icon="solar:add-circle-linear" />}
-              >
-                Adicionar
-              </ButtonApp>
+              {isCelular ? (
+                <IconButtonComTolltip
+                  aria-label="Adicionar link"
+                  disabled={!form.values.id}
+                  onClick={() => setItemModal(null)}
+                  sx={{ flexShrink: 0 }}
+                  tooltip="Adicionar link"
+                >
+                  <IconApp icon="solar:add-circle-linear" />
+                </IconButtonComTolltip>
+              ) : (
+                <ButtonApp
+                  disabled={!form.values.id}
+                  onClick={() => setItemModal(null)}
+                  startIcon={<IconApp icon="solar:add-circle-linear" />}
+                >
+                  Adicionar
+                </ButtonApp>
+              )}
             </BoxApp>
             {!form.values.id && (
               <TextApp color={TextAppColor.Secondary}>
@@ -335,6 +347,10 @@ export function LinkBioPage() {
                   gap={1}
                   key={link.id}
                   p={1.25}
+                  sx={{
+                    alignItems: { xs: 'stretch', sm: 'center' },
+                    flexDirection: { xs: 'column', sm: 'row' },
+                  }}
                 >
                   <BoxApp
                     alignItems={BoxAppAlignItems.Center}
@@ -353,47 +369,59 @@ export function LinkBioPage() {
                       </TextApp>
                     </BoxApp>
                   </BoxApp>
-                  <IconButtonComTolltip
-                    aria-label="Mover link para cima"
-                    disabled={index === 0 || linksLoading}
-                    onClick={() => moverItem(index, -1)}
-                    tooltip="Mover para cima"
+                  <BoxApp
+                    alignItems={BoxAppAlignItems.Center}
+                    display={BoxAppDisplay.Flex}
+                    gap={0.5}
+                    sx={{
+                      justifyContent: { xs: 'space-between', sm: 'flex-end' },
+                      width: { xs: '100%', sm: 'auto' },
+                    }}
                   >
-                    <IconApp icon="solar:alt-arrow-up-linear" />
-                  </IconButtonComTolltip>
-                  <IconButtonComTolltip
-                    aria-label="Mover link para baixo"
-                    disabled={index === links.length - 1 || linksLoading}
-                    onClick={() => moverItem(index, 1)}
-                    tooltip="Mover para baixo"
-                  >
-                    <IconApp icon="solar:alt-arrow-down-linear" />
-                  </IconButtonComTolltip>
-                  <IconButtonComTolltip
-                    aria-label={link.ativo ? 'Desativar link' : 'Ativar link'}
-                    disabled={linksLoading}
-                    onClick={() => alterarStatus(link, !link.ativo)}
-                    tooltip={link.ativo ? 'Desativar' : 'Ativar'}
-                  >
-                    <IconApp icon={link.ativo ? 'solar:eye-linear' : 'solar:eye-closed-linear'} />
-                  </IconButtonComTolltip>
-                  <IconButtonComTolltip
-                    aria-label="Editar link"
-                    disabled={linksLoading}
-                    onClick={() => setItemModal(link)}
-                    tooltip="Editar"
-                  >
-                    <IconApp icon="solar:pen-linear" />
-                  </IconButtonComTolltip>
-                  <IconButtonComTolltip
-                    aria-label="Excluir link"
-                    color="error"
-                    disabled={linksLoading}
-                    onClick={() => setItemParaExcluir(link)}
-                    tooltip="Excluir"
-                  >
-                    <IconApp icon="solar:trash-bin-trash-linear" />
-                  </IconButtonComTolltip>
+                    <IconButtonComTolltip
+                      aria-label="Mover link para cima"
+                      disabled={index === 0 || linksLoading}
+                      onClick={() => moverItem(index, -1)}
+                      tooltip="Mover para cima"
+                    >
+                      <IconApp icon="solar:alt-arrow-up-linear" />
+                    </IconButtonComTolltip>
+                    <IconButtonComTolltip
+                      aria-label="Mover link para baixo"
+                      disabled={index === links.length - 1 || linksLoading}
+                      onClick={() => moverItem(index, 1)}
+                      tooltip="Mover para baixo"
+                    >
+                      <IconApp icon="solar:alt-arrow-down-linear" />
+                    </IconButtonComTolltip>
+                    <IconButtonComTolltip
+                      aria-label={link.ativo ? 'Desativar link' : 'Ativar link'}
+                      disabled={linksLoading}
+                      onClick={() => alterarStatus(link, !link.ativo)}
+                      tooltip={link.ativo ? 'Desativar' : 'Ativar'}
+                    >
+                      <IconApp
+                        icon={link.ativo ? 'solar:eye-linear' : 'solar:eye-closed-linear'}
+                      />
+                    </IconButtonComTolltip>
+                    <IconButtonComTolltip
+                      aria-label="Editar link"
+                      disabled={linksLoading}
+                      onClick={() => setItemModal(link)}
+                      tooltip="Editar"
+                    >
+                      <IconApp icon="solar:pen-linear" />
+                    </IconButtonComTolltip>
+                    <IconButtonComTolltip
+                      aria-label="Excluir link"
+                      color="error"
+                      disabled={linksLoading}
+                      onClick={() => setItemParaExcluir(link)}
+                      tooltip="Excluir"
+                    >
+                      <IconApp icon="solar:trash-bin-trash-linear" />
+                    </IconButtonComTolltip>
+                  </BoxApp>
                 </BoxApp>
               ))}
             </BoxApp>
