@@ -35,6 +35,12 @@ export function ClienteVendaPage() {
 
   const columns: TypeColumns[] = [
     {
+      field: 'numero',
+      headerName: 'N',
+      minWidth: 10,
+      sortable: true,
+    },
+    {
       field: ClienteVendaFormField.Nome,
       headerName: 'Nome',
       flex: 1,
@@ -59,6 +65,7 @@ export function ClienteVendaPage() {
       field: ClienteVendaFormField.Senha,
       headerName: 'Atualizar senha',
       width: 150,
+      sortable: false,
       cellRenderer: ({ data }: ICellRendererParams<ClienteVenda>) =>
         data && (
           <IconButtonComTolltip
@@ -74,6 +81,7 @@ export function ClienteVendaPage() {
       field: 'ativarAcesso',
       headerName: 'Ativar/Bloquear acesso',
       width: 180,
+      sortable: false,
       cellRenderer: ({ data }: ICellRendererParams<ClienteVenda>) =>
         data && (
           <IconButtonComTolltip
@@ -99,8 +107,6 @@ export function ClienteVendaPage() {
         desabilitarColunaAtivo
         refreshPai={refresh}
         nomeDaTabela={ClienteVendaTable.Name}
-        orderBy={ClienteVendaFormField.Nome}
-        order="asc"
         url={ApiRoutePath.ClienteVenda}
         urlAdd={PrivateRoutePath.ClienteVendaAdicionar}
         urlView={PrivateRoutePath.ClienteVendaVisualizar}

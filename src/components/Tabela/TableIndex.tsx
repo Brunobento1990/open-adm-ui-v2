@@ -1,12 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { ApiResourceRoutePath } from '../../api/apiRoutes'
 import { keysLocalStorage } from '../../configs/keysLocalStorage'
-import {
-  ApiMethod,
-  useApi,
-  type StatusRequisicao,
-  type TypeMethod,
-} from '../../hook/useApi'
+import { ApiMethod, useApi, type StatusRequisicao, type TypeMethod } from '../../hook/useApi'
 import { useLocalStorageApp } from '../../hook/useLocalStorageApp'
 import { useNavigationApp } from '../../hook/useNavigationApp'
 import { BoxApp } from '../BoxApp/BoxApp'
@@ -16,10 +11,10 @@ import {
   BoxAppFlexDirection,
   BoxAppOverflow,
 } from '../BoxApp/boxAppTypes'
+import type { MenuAppItem } from '../MenuApp/MenuApp'
 import { DefaultColuns } from './DefaultColuns'
 import { FooterTable } from './FooterTable'
 import { HeaderTable } from './HeaderTable'
-import type { MenuAppItem } from '../MenuApp/MenuApp'
 import { TabelaComDrag } from './TabelaComDrag'
 import {
   TableSortDirection,
@@ -67,8 +62,7 @@ export interface ITableIndexProps {
 export function TableIndex(props: ITableIndexProps) {
   const { getItem } = useLocalStorageApp()
   const { navigate } = useNavigationApp()
-  const listarInativoInitial =
-    getItem<string>(keysLocalStorage.listarInativos) === 'true'
+  const listarInativoInitial = getItem<string>(keysLocalStorage.listarInativos) === 'true'
   const [listarInativos, setListarInativos] = useState(listarInativoInitial)
   const [paginacao, setPaginacao] = useState<PaginacaoResponse>()
   const [chaveReset, setChaveReset] = useState(0)
@@ -78,7 +72,7 @@ export function TableIndex(props: ITableIndexProps) {
     Number(getItem<string>(keysLocalStorage.quantidadePorPagina) ?? '15'),
   )
   const [sorting, setSorting] = useState<ISortingTable>({
-    field: props.orderBy ?? 'id',
+    field: props.orderBy ?? 'numero',
     sort: props.order ?? TableSortDirection.Desc,
   })
   const { action, statusRequisicao } = useApi({
@@ -150,12 +144,14 @@ export function TableIndex(props: ITableIndexProps) {
     if (response !== undefined) await refresh()
   }
 
-  const defaultColumns = props.desabilitarColunaAcoes ? [] : DefaultColuns({
-    alterarStatus: props.desabilitarColunaAtivo ? undefined : alterarStatus,
-    editar: props.urlEdit ? onDoubleClick : undefined,
-    loadingAlterarStatus: alterarStatusApi.loading,
-    visualizar: props.urlView ? onDoubleClickView : undefined,
-  })
+  const defaultColumns = props.desabilitarColunaAcoes
+    ? []
+    : DefaultColuns({
+        alterarStatus: props.desabilitarColunaAtivo ? undefined : alterarStatus,
+        editar: props.urlEdit ? onDoubleClick : undefined,
+        loadingAlterarStatus: alterarStatusApi.loading,
+        visualizar: props.urlView ? onDoubleClickView : undefined,
+      })
 
   return (
     <BoxApp
@@ -181,9 +177,7 @@ export function TableIndex(props: ITableIndexProps) {
           desabilitarColunaAtivo={props.desabilitarColunaAtivo}
           childrenHeader={props.childrenHeader}
           acoesExtras={props.acoesExtras}
-          reiniciarColunas={
-            props.nomeDaTabela ? excluirConfiguracaoTabela : undefined
-          }
+          reiniciarColunas={props.nomeDaTabela ? excluirConfiguracaoTabela : undefined}
         />
       )}
 
@@ -192,11 +186,7 @@ export function TableIndex(props: ITableIndexProps) {
           loading={statusRequisicao === 'loading'}
           selecionarLinha={props.selecionarLinha}
           onDoubleClick={
-            props.urlEdit
-              ? onDoubleClick
-              : props.urlView
-                ? onDoubleClickView
-                : undefined
+            props.urlEdit ? onDoubleClick : props.urlView ? onDoubleClickView : undefined
           }
           rowHeight={props.rowHeight}
           height="100%"
