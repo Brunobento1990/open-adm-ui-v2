@@ -1,7 +1,7 @@
 {
   "name": "open-adm-ui-v2",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.4",
   "type": "module",
   "scripts": {
     "dev": "vite --port 5174",
