@@ -1,7 +1,7 @@
 export enum PublicRoutePath {
   Root = '/',
   Login = '/login',
-  CadastrarSenha = '/cadastrar-senha/:codigo',
+  CadastrarSenha = '/recuperar-senha/:codigo',
   ComandaPublica = '/comanda/publica/:idPublico',
 }
 

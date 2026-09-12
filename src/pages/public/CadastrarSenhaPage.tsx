@@ -12,15 +12,17 @@ import { DividerApp } from '../../components/DividerApp/DividerApp'
 import { InputApp } from '../../components/InputApp/InputApp'
 import { InputAppType } from '../../components/InputApp/inputAppTypes'
 import { PaperApp } from '../../components/PaperApp/PaperApp'
-import { TextApp, TextAppColor, TextAppVariant, TextAppWeight } from '../../components/TextApp/TextApp'
+import {
+  TextApp,
+  TextAppColor,
+  TextAppVariant,
+  TextAppWeight,
+} from '../../components/TextApp/TextApp'
 import { FormRoot } from '../../form'
 import { useFormikAdapter } from '../../hook/useFormikAdapter'
 import { YupAdapter } from '../../lib/YupAdapter'
 import { PublicRoutePath } from '../../routes/appRoutes'
-import {
-  CadastrarSenhaFormField,
-  type CadastrarSenhaFormValues,
-} from '../../types/LoginTypes'
+import { CadastrarSenhaFormField, type CadastrarSenhaFormValues } from '../../types/LoginTypes'
 
 const initialValues: CadastrarSenhaFormValues = {
   [CadastrarSenhaFormField.Senha]: '',
@@ -49,7 +51,7 @@ export function CadastrarSenhaPage() {
 
       await api.action(
         {
-          codigo,
+          token: codigo,
           [CadastrarSenhaFormField.Senha]: values.senha,
           [CadastrarSenhaFormField.ConfirmacaoSenha]: values.confirmacaoSenha,
         },
@@ -74,9 +76,7 @@ export function CadastrarSenhaPage() {
               <TextApp component="h1" variant={TextAppVariant.Title} weight={TextAppWeight.Bold}>
                 Cadastrar senha
               </TextApp>
-              <TextApp color={TextAppColor.Secondary}>
-                Digite e confirme sua nova senha.
-              </TextApp>
+              <TextApp color={TextAppColor.Secondary}>Digite e confirme sua nova senha.</TextApp>
             </BoxApp>
             <DividerApp />
             <FormRoot.Form
@@ -86,7 +86,11 @@ export function CadastrarSenhaPage() {
               submit={form.onSubmit}
               textoButton="Alterar senha"
             >
-              <BoxApp display={BoxAppDisplay.Flex} flexDirection={BoxAppFlexDirection.Column} gap={2.25}>
+              <BoxApp
+                display={BoxAppDisplay.Flex}
+                flexDirection={BoxAppFlexDirection.Column}
+                gap={2.25}
+              >
                 <InputApp
                   autoComplete="new-password"
                   error={form.error(CadastrarSenhaFormField.Senha)}

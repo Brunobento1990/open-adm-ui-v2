@@ -23,7 +23,7 @@ export interface CadastrarSenhaFormValues {
 }
 
 export interface CadastrarSenhaRequest {
-  codigo: string
+  token: string
   [CadastrarSenhaFormField.Senha]: string
   [CadastrarSenhaFormField.ConfirmacaoSenha]: string
 }
