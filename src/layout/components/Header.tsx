@@ -2,22 +2,18 @@ import { Icon } from '@iconify/react'
 import { Avatar, IconButton, Stack, Tooltip } from '@mui/material'
 import { useState } from 'react'
 import { useApiUsuarioLogout } from '../../api/useApiUsuario'
+import { BoxApp } from '../../components/BoxApp/BoxApp'
 import {
-  BoxApp
-} from '../../components/BoxApp/BoxApp'
-import { BoxAppComponent, BoxAppDisplay, BoxAppFlexDirection } from '../../components/BoxApp/boxAppTypes'
+  BoxAppComponent,
+  BoxAppDisplay,
+  BoxAppFlexDirection,
+} from '../../components/BoxApp/boxAppTypes'
 import { MenuApp, type MenuAppItem } from '../../components/MenuApp/MenuApp'
-import {
-  TextApp,
-  TextAppVariant,
-  TextAppWeight
-} from '../../components/TextApp/TextApp'
+import { TextApp, TextAppVariant, TextAppWeight } from '../../components/TextApp/TextApp'
 import { useAppThemeMode } from '../../hook/useAppThemeMode'
 import { useAuth } from '../../hook/useAuth'
-import { useNavigationApp } from '../../hook/useNavigationApp'
 import { useThemeApp } from '../../hook/useThemeApp'
 import { ThemeModeValue } from '../theme/themeMode'
-import { PrivateRoutePath } from '../../routes/appRoutes'
 import { TrocarSenhaModal } from './TrocarSenhaModal'
 
 type HeaderProps = {
@@ -57,7 +53,7 @@ export function Header({ title, onOpenMobileSidebar }: HeaderProps) {
   const { backgroundColor, borderRadius, cores, isCelular } = useThemeApp()
   const { logout, usuario } = useAuth()
   const apiLogout = useApiUsuarioLogout()
-  const { navigate } = useNavigationApp()
+  //const { navigate } = useNavigationApp()
   const { mode, toggleMode } = useAppThemeMode()
   const themeIcon = mode === ThemeModeValue.Dark ? HeaderIcon.Sun : HeaderIcon.Moon
 
@@ -74,11 +70,11 @@ export function Header({ title, onOpenMobileSidebar }: HeaderProps) {
       icon: HeaderIcon.Password,
       onClick: () => setTrocarSenhaOpen(true),
     },
-    {
-      label: 'Minha conta',
-      icon: HeaderIcon.Account,
-      onClick: () => navigate(PrivateRoutePath.MinhaConta),
-    },
+    // {
+    //   label: 'Minha conta',
+    //   icon: HeaderIcon.Account,
+    //   onClick: () => navigate(PrivateRoutePath.MinhaConta),
+    // },
     {
       disabled: apiLogout.loading,
       label: 'Sair',
@@ -126,11 +122,7 @@ export function Header({ title, onOpenMobileSidebar }: HeaderProps) {
             flexDirection={BoxAppFlexDirection.Column}
             minWidth={0}
           >
-            <TextApp
-              variant={TextAppVariant.Subtitle}
-              weight={TextAppWeight.Bold}
-              noWrap
-            >
+            <TextApp variant={TextAppVariant.Subtitle} weight={TextAppWeight.Bold} noWrap>
               {title}
             </TextApp>
           </BoxApp>
@@ -195,12 +187,7 @@ export function Header({ title, onOpenMobileSidebar }: HeaderProps) {
           />
         </Stack>
       </Stack>
-      {trocarSenhaOpen && (
-        <TrocarSenhaModal
-          onClose={() => setTrocarSenhaOpen(false)}
-          open
-        />
-      )}
+      {trocarSenhaOpen && <TrocarSenhaModal onClose={() => setTrocarSenhaOpen(false)} open />}
     </BoxApp>
   )
 }

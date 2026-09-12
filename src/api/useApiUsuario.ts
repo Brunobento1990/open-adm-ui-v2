@@ -1,5 +1,5 @@
-import type { TrocarSenhaRequest, Usuario, UsuarioSessao } from '../types/UsuarioTypes'
 import { ApiMethod, useApi } from '../hook/useApi'
+import type { TrocarSenhaRequest, Usuario, UsuarioSessao } from '../types/UsuarioTypes'
 import { ApiRoutePath, UsuarioApiRoutePath } from './apiRoutes'
 
 type LogoutResponse = {
@@ -47,26 +47,28 @@ export function useApiUsuarioLogoutSessao() {
 
   return {
     ...api,
-    action: (sessaoId: string) => api.action<LogoutResponse>({
-      urlParams: `/${sessaoId}`,
-      message: 'Sessão encerrada com sucesso!',
-    }),
+    action: (sessaoId: string) =>
+      api.action<LogoutResponse>({
+        urlParams: `/${sessaoId}`,
+        message: 'Sessão encerrada com sucesso!',
+      }),
   }
 }
 
 export function useApiUsuarioTrocarSenha() {
   const api = useApi({
     method: ApiMethod.Put,
-    url: `${ApiRoutePath.Usuario}${UsuarioApiRoutePath.TrocarSenha}`,
+    url: `funcionarios/trocar-senha`,
   })
 
   return {
     ...api,
-    action: (values: TrocarSenhaRequest, onSuccess: () => void) => api.action<LogoutResponse>({
-      body: values,
-      message: 'Senha alterada com sucesso!',
-      onSuccess,
-    }),
+    action: (values: TrocarSenhaRequest, onSuccess: () => void) =>
+      api.action<LogoutResponse>({
+        body: values,
+        message: 'Senha alterada com sucesso!',
+        onSuccess,
+      }),
   }
 }
 
@@ -81,24 +83,28 @@ export function useApiUsuario() {
 
   return {
     obter: {
-      fetch: (id: string) => apiObter.action<Usuario>({
-        urlParams: `?id=${encodeURIComponent(id)}`,
-      }),
+      fetch: (id: string) =>
+        apiObter.action<Usuario>({
+          urlParams: `?id=${encodeURIComponent(id)}`,
+        }),
       loading: apiObter.loading,
     },
     criar: {
-      fetch: (values: Partial<Usuario>) => apiCriar.action<Usuario>({
-        body: values,
-        message: 'Usuário criado com sucesso. O e-mail para cadastro da primeira senha foi enviado.',
-      }),
+      fetch: (values: Partial<Usuario>) =>
+        apiCriar.action<Usuario>({
+          body: values,
+          message:
+            'Usuário criado com sucesso. O e-mail para cadastro da primeira senha foi enviado.',
+        }),
       loading: apiCriar.loading,
     },
     atualizar: {
-      fetch: (id: string, values: Partial<Usuario>) => apiAtualizar.action<Usuario>({
-        body: values,
-        urlParams: `?id=${encodeURIComponent(id)}`,
-        message: 'Usuário atualizado com sucesso',
-      }),
+      fetch: (id: string, values: Partial<Usuario>) =>
+        apiAtualizar.action<Usuario>({
+          body: values,
+          urlParams: `?id=${encodeURIComponent(id)}`,
+          message: 'Usuário atualizado com sucesso',
+        }),
       loading: apiAtualizar.loading,
     },
   }
