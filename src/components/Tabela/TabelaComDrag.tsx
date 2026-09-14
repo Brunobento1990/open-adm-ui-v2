@@ -158,6 +158,10 @@ export function TabelaComDrag(props: TabelaComDragProps) {
               applyOrder: true,
             })
           }
+          if (props.preencherLargura) event.api.sizeColumnsToFit()
+        }}
+        onGridSizeChanged={(event) => {
+          if (props.preencherLargura) event.api.sizeColumnsToFit()
         }}
         onCellContextMenu={(event) => {
           if (!props.onContextMenu || !event.event) return

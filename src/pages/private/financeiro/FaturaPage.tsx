@@ -8,6 +8,7 @@ import {
   EstornarParcelaButton,
   EstornoParcelaProvider,
 } from '../../../components/Fatura/EstornarParcelaButton'
+import { FaturaMobileRow } from '../../../components/Fatura/FaturaMobileRow'
 import { PagarParcelaButton } from '../../../components/Fatura/PagarParcelaButton'
 import { StatusParcelaBadge } from '../../../components/Fatura/StatusParcelaBadge'
 import { InputApp } from '../../../components/InputApp/InputApp'
@@ -44,7 +45,7 @@ const situacaoOptions = [
 ]
 
 export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
-  const { getPaletteColor } = useThemeApp()
+  const { getPaletteColor, isCelular } = useThemeApp()
   const [searchParams] = useSearchParams()
   const pedidoId = searchParams.get('pedidoId') || undefined
   const [refresh, setRefresh] = useState(0)
@@ -77,7 +78,7 @@ export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
     setFiltrosModalAberto(false)
   }
 
-  const columns: TypeColumns[] = [
+  const desktopColumns: TypeColumns[] = [
     {
       field: FaturaColumnField.NumeroFatura,
       headerName: 'Nº fatura',
@@ -172,6 +173,18 @@ export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
     },
   ]
 
+  const mobileColumns: TypeColumns[] = [
+    {
+      field: FaturaColumnField.NumeroFatura,
+      headerName: 'Faturas',
+      flex: 1,
+      minWidth: 280,
+      sortable: true,
+      cellRenderer: ({ data }: ICellRendererParams<ParcelaPaginacao>) =>
+        data ? <FaturaMobileRow parcela={data} tipo={tipo} /> : null,
+    },
+  ]
+
   const menuItems: MenuAppItem[] = [
     {
       icon: 'solar:filter-linear',
@@ -241,7 +254,7 @@ export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
   return (
     <EstornoParcelaProvider onEstornada={() => setRefresh((atual) => atual + 1)}>
       <TableIndex
-        columns={columns}
+        columns={isCelular ? mobileColumns : desktopColumns}
         desabilitarColunaAtivo
         filtroComplementar={{
           tipo,
@@ -252,10 +265,12 @@ export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
           pedidoId,
         }}
         menuItems={menuItems}
-        nomeDaTabela={`fatura-${tipo}`}
+        nomeDaTabela={`fatura-${tipo}-${isCelular ? 'mobile' : 'desktop'}`}
         notBtnAdd={!urlAdd}
         urlAdd={urlAdd}
         orderBy={FaturaColumnField.NumeroFatura}
+        preencherLargura={isCelular}
+        rowHeight={isCelular ? 270 : undefined}
         refreshPai={`${refresh}-${pedidoId ?? ''}`}
         url={ApiRoutePath.Parcela}
       />

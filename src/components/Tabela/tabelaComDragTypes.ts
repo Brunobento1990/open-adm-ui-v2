@@ -47,6 +47,7 @@ export interface TabelaComDragProps {
   suppressAnimationFrame?: boolean
   headerHeight?: number
   atualizarColunas?: (colunas: string) => void
+  preencherLargura?: boolean
 }
 
 export function mergeTabelaComDragColumns(

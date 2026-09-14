@@ -79,13 +79,15 @@ function LancamentoExtrato({ transacao }: LancamentoExtratoProps) {
   return (
     <BoxApp
       alignItems={BoxAppAlignItems.Center}
+      boxSizing="border-box"
       display={BoxAppDisplay.Flex}
       gap="1rem"
       justifyContent={BoxAppJustifyContent.SpaceBetween}
       px=".75rem"
       py=".75rem"
+      width="100%"
     >
-      <BoxApp minWidth={0}>
+      <BoxApp flex={1} minWidth={0} overflow={BoxAppOverflow.Hidden}>
         <TextApp noWrap weight={TextAppWeight.Medium}>{descricao}</TextApp>
         <BoxApp alignItems={BoxAppAlignItems.Center} display={BoxAppDisplay.Flex} gap=".5rem" mt=".25rem">
           <TextApp color={TextAppColor.Secondary} size={TextAppSize.Small}>
@@ -99,6 +101,7 @@ function LancamentoExtrato({ transacao }: LancamentoExtratoProps) {
       <TextApp
         color={entrada ? cores.success : cores.error}
         noWrap
+        sx={{ flexShrink: 0 }}
         weight={TextAppWeight.SemiBold}
       >
         {valor}
@@ -116,19 +119,23 @@ function GrupoExtrato({ data, grupo }: GrupoExtratoProps) {
   const { cores } = useThemeApp()
 
   return (
-    <BoxApp>
+    <BoxApp boxSizing="border-box" minWidth={0} width="100%">
       <BoxApp
         alignItems={BoxAppAlignItems.Center}
         backgroundColor={cores.dividerSoft}
         borderRadius="6px"
+        boxSizing="border-box"
         display={BoxAppDisplay.Flex}
         gap="1rem"
         justifyContent={BoxAppJustifyContent.SpaceBetween}
         px=".75rem"
         py=".625rem"
+        width="100%"
       >
-        <TextApp weight={TextAppWeight.SemiBold}>{formatarDataHoraUtcLocal(data)}</TextApp>
-        <BoxApp>
+        <TextApp noWrap sx={{ minWidth: 0 }} weight={TextAppWeight.SemiBold}>
+          {formatarDataHoraUtcLocal(data)}
+        </TextApp>
+        <BoxApp sx={{ flexShrink: 0 }}>
           <TextApp align={TextAppAlign.Right} color={TextAppColor.Secondary} fontSize=".7rem">Total do dia</TextApp>
           <TextApp
             color={grupo.total >= 0 ? cores.success : cores.error}
@@ -159,6 +166,7 @@ function GrupoExtrato({ data, grupo }: GrupoExtratoProps) {
 
 export function TransacaoFinanceiraPage() {
   const { extrato } = useApiTransacaoFinanceira()
+  const { isCelular } = useThemeApp()
   const [extratoFinanceiro, setExtratoFinanceiro] = useState<ExtratoFinanceiro>({})
   const filtroInicial = criarFiltroInicial()
   const form = useFormikAdapter<TransacaoFinanceiraFiltro>({
@@ -182,8 +190,8 @@ export function TransacaoFinanceiraPage() {
 
   return (
     <FormRoot.Form loading={extrato.loading} submit={form.onSubmit} textoButton="Filtrar">
-      <FormRoot.FormRow>
-        <FormRoot.FormItemRow xs={12} md={3}>
+      <FormRoot.FormRow spacing={isCelular ? 1 : 3}>
+        <FormRoot.FormItemRow xs={6} md={3}>
           <InputApp
             error={form.error(TransacaoFinanceiraFiltroField.DataInicial)}
             helperText={form.helperText(TransacaoFinanceiraFiltroField.DataInicial)}
@@ -196,7 +204,7 @@ export function TransacaoFinanceiraPage() {
             value={form.values.dataInicial}
           />
         </FormRoot.FormItemRow>
-        <FormRoot.FormItemRow xs={12} md={3}>
+        <FormRoot.FormItemRow xs={6} md={3}>
           <InputApp
             error={form.error(TransacaoFinanceiraFiltroField.DataFinal)}
             helperText={form.helperText(TransacaoFinanceiraFiltroField.DataFinal)}
@@ -210,12 +218,23 @@ export function TransacaoFinanceiraPage() {
           />
         </FormRoot.FormItemRow>
       </FormRoot.FormRow>
-      <BoxApp flex={1} minHeight="300px" overflow={BoxAppOverflow.Auto} pr=".25rem">
+      <BoxApp
+        flex={isCelular ? undefined : 1}
+        minHeight={isCelular ? undefined : '300px'}
+        overflow={isCelular ? BoxAppOverflow.Visible : BoxAppOverflow.Auto}
+        pr={isCelular ? undefined : '.25rem'}
+      >
         {extrato.loading && <ProgressApp />}
         {!extrato.loading && grupos.length === 0 && (
           <TextApp color={TextAppColor.Secondary}>Não há transações no período informado.</TextApp>
         )}
-        <BoxApp display={BoxAppDisplay.Grid} gap=".75rem">
+        <BoxApp
+          boxSizing="border-box"
+          display={BoxAppDisplay.Grid}
+          gap=".75rem"
+          minWidth={0}
+          width="100%"
+        >
           {grupos.map(([data, grupo]) => (
             <GrupoExtrato data={data} grupo={grupo} key={data} />
           ))}

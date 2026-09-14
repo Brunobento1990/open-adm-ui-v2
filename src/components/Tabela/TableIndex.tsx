@@ -57,6 +57,7 @@ export interface ITableIndexProps {
   statusInicial?: StatusRequisicao
   headersReq?: any
   menuItems?: MenuAppItem[]
+  preencherLargura?: boolean
 }
 
 export function TableIndex(props: ITableIndexProps) {
@@ -198,6 +199,7 @@ export function TableIndex(props: ITableIndexProps) {
           getBackgroundColor={props.getBackgroundColor}
           nomeDaTabela={props.nomeDaTabela}
           chaveReset={chaveReset}
+          preencherLargura={props.preencherLargura}
         />
       </BoxApp>
 
