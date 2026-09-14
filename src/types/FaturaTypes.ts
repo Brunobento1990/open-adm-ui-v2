@@ -53,6 +53,8 @@ export type ParcelaPaginacao = {
 }
 
 export type FaturaFiltros = {
+  clienteId?: string
+  cliente?: { id: string; nome: string }
   dataVencimentoInicial?: string
   dataVencimentoFinal?: string
   status: StatusParcela | StatusParcelaFiltro.Todos

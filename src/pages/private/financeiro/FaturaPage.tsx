@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { ApiRoutePath } from '../../../api/apiRoutes'
 import { ButtonApp, ButtonAppVariant } from '../../../components/ButtonApp/ButtonApp'
+import { ClienteEcommerceDropDown } from '../../../components/DropDown/ClienteEcommerceDropDown'
 import {
   EstornarParcelaButton,
   EstornoParcelaProvider,
@@ -37,7 +38,7 @@ type FaturaPageProps = {
 const situacaoOptions = [
   { label: 'Todos', value: StatusParcelaFiltro.Todos },
   { label: 'Pendente', value: StatusParcela.Pendente },
-  { label: 'Pago parcial', value: StatusParcela.PagoParcial },
+  //{ label: 'Pago parcial', value: StatusParcela.PagoParcial },
   { label: 'Pago', value: StatusParcela.Pago },
   { label: 'Vencida', value: StatusParcela.Vencida },
 ]
@@ -50,14 +51,10 @@ export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
   const [filtros, setFiltros] = useState<FaturaFiltros>({
     status: StatusParcelaFiltro.Todos,
   })
-  const [filtrosTemporarios, setFiltrosTemporarios] =
-    useState<FaturaFiltros>(filtros)
+  const [filtrosTemporarios, setFiltrosTemporarios] = useState<FaturaFiltros>(filtros)
   const [filtrosModalAberto, setFiltrosModalAberto] = useState(false)
 
-  function alterarFiltroTemporario(
-    campo: keyof FaturaFiltros,
-    valor?: string | number | boolean,
-  ) {
+  function alterarFiltroTemporario(campo: keyof FaturaFiltros, valor?: string | number | boolean) {
     setFiltrosTemporarios((atual) => ({ ...atual, [campo]: valor }))
   }
 
@@ -162,7 +159,8 @@ export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
       sortable: false,
       cellRenderer: ({ data }: ICellRendererParams<ParcelaPaginacao>) => {
         if (!data) return null
-        const permiteEstorno = data.status === StatusParcela.PagoParcial || data.status === StatusParcela.Pago
+        const permiteEstorno =
+          data.status === StatusParcela.PagoParcial || data.status === StatusParcela.Pago
 
         return (
           <StackApp direction="row" spacing={0.5}>
@@ -187,14 +185,14 @@ export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
     <ModalChildren
       action={aplicarFiltros}
       close={() => setFiltrosModalAberto(false)}
-      footerChildren={(
+      footerChildren={
         <StackApp direction="row" spacing={1}>
           <ButtonApp onClick={limparFiltros} variant={ButtonAppVariant.Outlined}>
             Limpar filtros
           </ButtonApp>
           <ButtonApp onClick={aplicarFiltros}>Aplicar filtros</ButtonApp>
         </StackApp>
-      )}
+      }
       fullWidth
       maxWidth="sm"
       open={filtrosModalAberto}
@@ -202,27 +200,36 @@ export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
       titulo="Filtros"
     >
       <StackApp spacing={2}>
+        <ClienteEcommerceDropDown
+          label="Cliente"
+          onChange={(cliente) =>
+            setFiltrosTemporarios((atual) => ({
+              ...atual,
+              cliente,
+              clienteId: cliente?.id,
+            }))
+          }
+          required={false}
+          value={filtrosTemporarios.cliente}
+        />
         <InputApp
           id="dataVencimentoInicial"
           label="Vencimento inicial"
-          onChange={(id, value) =>
-            alterarFiltroTemporario(id as keyof FaturaFiltros, value)}
+          onChange={(id, value) => alterarFiltroTemporario(id as keyof FaturaFiltros, value)}
           type={InputAppType.Date}
           value={filtrosTemporarios.dataVencimentoInicial ?? ''}
         />
         <InputApp
           id="dataVencimentoFinal"
           label="Vencimento final"
-          onChange={(id, value) =>
-            alterarFiltroTemporario(id as keyof FaturaFiltros, value)}
+          onChange={(id, value) => alterarFiltroTemporario(id as keyof FaturaFiltros, value)}
           type={InputAppType.Date}
           value={filtrosTemporarios.dataVencimentoFinal ?? ''}
         />
         <InputApp
           id="status"
           label="Situação"
-          onChange={(id, value) =>
-            alterarFiltroTemporario(id as keyof FaturaFiltros, value)}
+          onChange={(id, value) => alterarFiltroTemporario(id as keyof FaturaFiltros, value)}
           options={situacaoOptions}
           type={InputAppType.Select}
           value={filtrosTemporarios.status}
@@ -238,6 +245,7 @@ export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
         desabilitarColunaAtivo
         filtroComplementar={{
           tipo,
+          clienteId: filtros.clienteId || undefined,
           dataVencimentoInicial: filtros.dataVencimentoInicial || undefined,
           dataVencimentoFinal: filtros.dataVencimentoFinal || undefined,
           status: filtros.status || undefined,
