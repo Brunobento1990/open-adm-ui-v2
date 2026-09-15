@@ -32,8 +32,9 @@ import { TipoPaletaCorEnum } from '../../../types/TipoPaletaCorEnum'
 import { formatarDataHoraUtcLocal } from '../../../utils/dateUtils'
 import { baixarPdf } from '../../../utils/pdfUtils'
 import { ExcluirPedidoButton } from './ExcluirPedidoButton'
+import { PedidoMobileRow } from './PedidoMobileRow'
 
-const PedidoTable = { Name: 'pedidos' } as const
+const PedidoTable = { Desktop: 'pedidos', Mobile: 'pedidos-mobile' } as const
 
 const statusOptions = [{ label: 'Todos', value: PedidoStatusFiltro.Todos }, ...PedidoStatusOptions]
 
@@ -48,7 +49,7 @@ export function PedidoPage() {
   const { download, excluir } = useApiPedido()
   const { getItem, removeItem, setItem } = useLocalStorageApp()
   const { navigate } = useNavigationApp()
-  const { cores, getPaletteColor } = useThemeApp()
+  const { cores, getPaletteColor, isCelular } = useThemeApp()
   const [state, setState] = useState<PedidoPageState>(() => {
     const statusSalvo = Number(getItem<string>(keysLocalStorage.pedidoStatusFiltro))
     const statusInicial = PedidoStatusOptions.some((option) => option.value === statusSalvo)
@@ -102,7 +103,7 @@ export function PedidoPage() {
     return sucesso
   }
 
-  const columns: TypeColumns[] = [
+  const desktopColumns: TypeColumns[] = [
     {
       field: PedidoColumnField.Numero,
       headerName: 'N°',
@@ -246,6 +247,26 @@ export function PedidoPage() {
     },
   ]
 
+  const mobileColumns: TypeColumns[] = [
+    {
+      field: PedidoColumnField.Numero,
+      headerName: 'Pedidos',
+      flex: 1,
+      minWidth: 280,
+      sortable: true,
+      cellRenderer: ({ data }: ICellRendererParams<PedidoPaginacao>) =>
+        data ? (
+          <PedidoMobileRow
+            downloadLoading={download.loading}
+            excluirLoading={excluir.loading}
+            onDownload={() => downloadPedido(data)}
+            onExcluir={() => excluirPedido(data)}
+            pedido={data}
+          />
+        ) : null,
+    },
+  ]
+
   const menuItems: MenuAppItem[] = [
     {
       icon: 'solar:filter-linear',
@@ -258,7 +279,7 @@ export function PedidoPage() {
   return (
     <>
       <TableIndex
-        columns={columns}
+        columns={isCelular ? mobileColumns : desktopColumns}
         desabilitarColunaAcoes
         desabilitarColunaAtivo
         filtroComplementar={{
@@ -268,8 +289,10 @@ export function PedidoPage() {
               : state.filtros.statusPedido,
         }}
         menuItems={menuItems}
-        nomeDaTabela={PedidoTable.Name}
+        nomeDaTabela={isCelular ? PedidoTable.Mobile : PedidoTable.Desktop}
         orderBy={PedidoColumnField.Numero}
+        preencherLargura={isCelular}
+        rowHeight={isCelular ? 220 : undefined}
         refreshPai={state.refresh}
         url={ApiRoutePath.Pedido}
         urlAdd={PrivateRoutePath.PedidoAdicionar}
