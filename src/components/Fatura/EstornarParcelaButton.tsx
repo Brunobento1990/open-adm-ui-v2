@@ -9,6 +9,7 @@ import { TextApp } from '../TextApp/TextApp'
 
 type EstornarParcelaButtonProps = {
   parcelaId: string
+  renderTrigger?: (abrir: () => void, loading: boolean) => ReactNode
 }
 
 const EstornarParcelaIcon = 'mage:reload-reverse'
@@ -30,7 +31,7 @@ export function EstornoParcelaProvider({
   )
 }
 
-export function EstornarParcelaButton({ parcelaId }: EstornarParcelaButtonProps) {
+export function EstornarParcelaButton({ parcelaId, renderTrigger }: EstornarParcelaButtonProps) {
   const [modalAberto, setModalAberto] = useState(false)
   const onEstornada = useContext(EstornoParcelaContext)
   const estornarApi = useApi({
@@ -51,16 +52,18 @@ export function EstornarParcelaButton({ parcelaId }: EstornarParcelaButtonProps)
 
   return (
     <>
-      <IconButtonComTolltip
-        aria-label="estornar pagamentos da parcela"
-        onClick={(event) => {
-          event.stopPropagation()
-          setModalAberto(true)
-        }}
-        tooltip="Estornar"
-      >
-        <IconApp icon={EstornarParcelaIcon} />
-      </IconButtonComTolltip>
+      {renderTrigger ? renderTrigger(() => setModalAberto(true), estornarApi.loading) : (
+        <IconButtonComTolltip
+          aria-label="estornar pagamentos da parcela"
+          onClick={(event) => {
+            event.stopPropagation()
+            setModalAberto(true)
+          }}
+          tooltip="Estornar"
+        >
+          <IconApp icon={EstornarParcelaIcon} />
+        </IconButtonComTolltip>
+      )}
 
       <ModalChildren
         close={() => setModalAberto(false)}

@@ -183,6 +183,7 @@ export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
       flex: 1,
       minWidth: 280,
       sortable: true,
+      cellStyle: { paddingRight: '4px' },
       cellRenderer: ({ data }: ICellRendererParams<ParcelaPaginacao>) =>
         data ? <FaturaMobileRow parcela={data} tipo={tipo} /> : null,
     },
@@ -273,7 +274,8 @@ export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
         urlAdd={urlAdd}
         orderBy={FaturaColumnField.NumeroFatura}
         preencherLargura={isCelular}
-        rowHeight={isCelular ? 270 : undefined}
+        barraRolagemCompacta={isCelular}
+        rowHeight={isCelular ? 164 : undefined}
         refreshPai={`${refresh}-${pedidoId ?? ''}`}
         url={ApiRoutePath.Parcela}
       />

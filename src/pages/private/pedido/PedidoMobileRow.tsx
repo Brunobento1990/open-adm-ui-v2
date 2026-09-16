@@ -12,7 +12,6 @@ import {
   PedidoStatusLabel,
   type PedidoPaginacao,
 } from '../../../types/PedidoTypes'
-import { formatarDataHoraUtcLocal } from '../../../utils/dateUtils'
 import { ExcluirPedidoButton } from './ExcluirPedidoButton'
 
 type PedidoMobileRowProps = {
@@ -58,7 +57,8 @@ export function PedidoMobileRow({
         icon: 'solar:wallet-money-outline',
         iconColor: cores.success,
         label: 'Acessar financeiro',
-        onClick: () => navigate(`${PrivateRoutePath.ContaAReceber}?pedidoId=${encodeURIComponent(pedido.id)}`),
+        onClick: () =>
+          navigate(`${PrivateRoutePath.ContaAReceber}?pedidoId=${encodeURIComponent(pedido.id)}`),
       },
       {
         icon: 'solar:eye-linear',
@@ -86,13 +86,21 @@ export function PedidoMobileRow({
   }
 
   return (
-    <BoxApp py={0.25} width="100%">
-      <StackApp direction="row" spacing={0.5} sx={{ alignItems: 'stretch' }}>
+    <BoxApp width="100%">
+      <StackApp direction="row" sx={{ alignItems: 'stretch' }}>
         <StackApp spacing={0.5} sx={{ flex: 1, minWidth: 0 }}>
-          <StackApp direction="row" spacing={0.5} sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
+          <StackApp
+            direction="row"
+            spacing={0.5}
+            sx={{ alignItems: 'center', justifyContent: 'space-between' }}
+          >
             <BoxApp flex={1} minWidth={0} sx={{ overflow: 'hidden' }}>
-              <TextApp fontSize="0.8rem" noWrap weight={TextAppWeight.Bold}>{pedido.usuario}</TextApp>
-              <TextApp color={TextAppColor.Secondary} fontSize="0.75rem">Pedido #{pedido.numero}</TextApp>
+              <TextApp fontSize="0.8rem" noWrap weight={TextAppWeight.Bold}>
+                {pedido.usuario}
+              </TextApp>
+              <TextApp color={TextAppColor.Secondary} fontSize="0.75rem">
+                Pedido #{pedido.numero}
+              </TextApp>
             </BoxApp>
             <BadgeApp
               cor={getPaletteColor(PedidoStatusColorMap[pedido.statusPedido])}
@@ -103,19 +111,33 @@ export function PedidoMobileRow({
             />
           </StackApp>
 
-          <StackApp direction="row" spacing={0.5} sx={{ justifyContent: 'space-between' }}>
+          {/* <StackApp direction="row" spacing={0.5} sx={{ justifyContent: 'space-between' }}>
             <TextApp color={TextAppColor.Secondary} fontSize="0.75rem">Cadastro</TextApp>
             <TextApp fontSize="0.75rem" weight={TextAppWeight.Medium}>
               {formatarDataHoraUtcLocal(pedido.dataDeCriacao)}
             </TextApp>
-          </StackApp>
+          </StackApp> */}
 
-          <StackApp direction="row" spacing={0.5} sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
-            <TextApp color={TextAppColor.Secondary} fontSize="0.75rem">Estoque</TextApp>
+          <StackApp
+            direction="row"
+            spacing={0.5}
+            sx={{ alignItems: 'center', justifyContent: 'space-between' }}
+          >
+            <TextApp color={TextAppColor.Secondary} fontSize="0.75rem">
+              Estoque
+            </TextApp>
             {pedido.statusPedido === PedidoStatus.Entregue ? (
-              <TextApp fontSize="0.75rem" weight={TextAppWeight.Medium}>Fechado</TextApp>
+              <TextApp fontSize="0.75rem" weight={TextAppWeight.Medium}>
+                Fechado
+              </TextApp>
             ) : (
-              <BadgeApp cor={corEstoque} fontSize="0.7rem" padding=".1rem .4rem" texto={`${pedido.porcentagemEstoqueAtendido}%`} width="58px" />
+              <BadgeApp
+                cor={corEstoque}
+                fontSize="0.7rem"
+                padding=".1rem .4rem"
+                texto={`${pedido.porcentagemEstoqueAtendido}%`}
+                width="58px"
+              />
             )}
           </StackApp>
         </StackApp>
