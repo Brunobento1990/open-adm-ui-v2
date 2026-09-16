@@ -38,6 +38,7 @@ export const FaturaColumnField = {
 
 export type ParcelaPaginacao = {
   id: string
+  faturaId: string
   numeroFatura: number
   numeroDaParcela: number
   numeroPedido?: number | null
@@ -124,6 +125,32 @@ export type ResultadoPadrao = {
 export type FaturaNegociarPayload = {
   pedidoId: string
   parcelas: ParcelaCriar[]
+}
+
+export type ParcelaSugerida = {
+  id: string
+  numeroDaParcela: number
+  dataDeVencimento: string
+  meioDePagamento?: MeioDePagamento | null
+  valor: number
+  valorAPagarAReceber: number
+  valorPagoRecebido: number
+}
+
+export type FaturaSugestaoParcelamento = {
+  id: string
+  numero: number
+  total: number
+  tipo: TipoFatura
+  parcelas: ParcelaSugerida[] | null
+}
+
+
+export type ParcelaRenegociacao = Pick<ParcelaCriar, 'dataDeVencimento' | 'numeroDaParcela' | 'meioDePagamento' | 'valor'>
+export enum FaturaParcelaCardMode { Criar = 'criar', Renegociar = 'renegociar' }
+export type FaturaRenegociarPayload = {
+  faturaId: string
+  parcelas: ParcelaRenegociacao[]
 }
 export const FaturaFormField = {
   Parcelas: 'parcelas',

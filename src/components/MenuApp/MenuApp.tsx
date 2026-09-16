@@ -47,12 +47,9 @@ type MenuAppProps = {
 }
 
 export function MenuApp({
-  active,
   ariaLabel,
   anchorOrigin = { vertical: 'bottom', horizontal: 'right' },
-  buttonColor,
   buttonContent,
-  buttonHoverColor,
   buttonIcon,
   buttonSize = 'medium',
   buttonSx,
@@ -69,11 +66,9 @@ export function MenuApp({
   iconFontSize = 14,
   transformOrigin = { vertical: 'top', horizontal: 'right' },
 }: MenuAppProps) {
-  const { borderRadius, cores } = useThemeApp()
+  const { cores } = useThemeApp()
   const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null)
   const menuAberto = Boolean(menuAnchorEl)
-  const color = buttonColor ?? cores.text.primary
-  const hoverColor = buttonHoverColor ?? 'primary.main'
 
   function abrirMenu(event: MouseEvent<HTMLButtonElement>) {
     setMenuAnchorEl(event.currentTarget)
@@ -100,19 +95,19 @@ export function MenuApp({
           onClick={abrirMenu}
           size={buttonSize}
           sx={[
-            {
-              borderRadius,
-              color: menuAberto || active ? hoverColor : color,
-              height: 38,
-              transition: 'all 160ms ease',
-              width: 38,
-              backgroundColor: menuAberto || active ? alpha(cores.primary, 0.1) : 'transparent',
-              '&:hover': {
-                backgroundColor: alpha(cores.primary, 0.08),
-                color: hoverColor,
-                transform: 'translateY(-1px)',
-              },
-            },
+            // {
+            //   borderRadius,
+            //   color: menuAberto || active ? hoverColor : color,
+            //   height: 38,
+            //   transition: 'all 160ms ease',
+            //   width: 38,
+            //   backgroundColor: menuAberto || active ? alpha(cores.primary, 0.1) : 'transparent',
+            //   '&:hover': {
+            //     backgroundColor: alpha(cores.primary, 0.08),
+            //     color: hoverColor,
+            //     transform: 'translateY(-1px)',
+            //   },
+            // },
             ...(Array.isArray(buttonSx) ? buttonSx : [buttonSx]),
           ]}
         >

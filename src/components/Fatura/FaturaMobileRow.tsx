@@ -8,6 +8,7 @@ import { StackApp } from '../StackApp/StackApp'
 import { TextApp, TextAppColor, TextAppWeight } from '../TextApp/TextApp'
 import { EstornarParcelaButton } from './EstornarParcelaButton'
 import { PagarParcelaButton } from './PagarParcelaButton'
+import { RenegociarFaturaButton } from './RenegociarFaturaButton'
 import { StatusParcelaBadge } from './StatusParcelaBadge'
 
 type Props = {
@@ -86,6 +87,7 @@ export function FaturaMobileRow({ parcela, tipo }: Props) {
         {(!parcela.quitada || permiteEstorno) && (
           <StackApp direction="row" spacing={0.5} sx={{ justifyContent: 'flex-end' }}>
             {!parcela.quitada && <PagarParcelaButton parcelaId={parcela.id} />}
+            {!parcela.quitada && <RenegociarFaturaButton faturaId={parcela.faturaId} />}
             {permiteEstorno && <EstornarParcelaButton parcelaId={parcela.id} />}
           </StackApp>
         )}

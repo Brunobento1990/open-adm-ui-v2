@@ -4,12 +4,14 @@ import { useSearchParams } from 'react-router-dom'
 import { ApiRoutePath } from '../../../api/apiRoutes'
 import { ButtonApp, ButtonAppVariant } from '../../../components/ButtonApp/ButtonApp'
 import { ClienteEcommerceDropDown } from '../../../components/DropDown/ClienteEcommerceDropDown'
+import { DropDownApp } from '../../../components/DropDown/DropDownApp'
 import {
   EstornarParcelaButton,
   EstornoParcelaProvider,
 } from '../../../components/Fatura/EstornarParcelaButton'
 import { FaturaMobileRow } from '../../../components/Fatura/FaturaMobileRow'
 import { PagarParcelaButton } from '../../../components/Fatura/PagarParcelaButton'
+import { RenegociarFaturaButton } from '../../../components/Fatura/RenegociarFaturaButton'
 import { StatusParcelaBadge } from '../../../components/Fatura/StatusParcelaBadge'
 import { InputApp } from '../../../components/InputApp/InputApp'
 import { InputAppType } from '../../../components/InputApp/inputAppTypes'
@@ -156,7 +158,7 @@ export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
     {
       field: FaturaColumnField.Acoes,
       headerName: 'Ações',
-      width: 100,
+      width: 140,
       sortable: false,
       cellRenderer: ({ data }: ICellRendererParams<ParcelaPaginacao>) => {
         if (!data) return null
@@ -166,6 +168,7 @@ export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
         return (
           <StackApp direction="row" spacing={0.5}>
             {!data.quitada && <PagarParcelaButton parcelaId={data.id} />}
+            {!data.quitada && <RenegociarFaturaButton faturaId={data.faturaId} />}
             {permiteEstorno && <EstornarParcelaButton parcelaId={data.id} />}
           </StackApp>
         )
@@ -239,13 +242,13 @@ export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
           type={InputAppType.Date}
           value={filtrosTemporarios.dataVencimentoFinal ?? ''}
         />
-        <InputApp
+        <DropDownApp
           id="status"
           label="Situação"
           onChange={(id, value) => alterarFiltroTemporario(id as keyof FaturaFiltros, value)}
-          options={situacaoOptions}
-          type={InputAppType.Select}
-          value={filtrosTemporarios.status}
+          values={situacaoOptions}
+          keyLabel="label"
+          value={situacaoOptions.find((option) => option.value === filtrosTemporarios.status)}
         />
       </StackApp>
     </ModalChildren>

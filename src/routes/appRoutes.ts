@@ -36,6 +36,8 @@ export enum PrivateRoutePath {
   PedidoModificarStatusId = '/pedidos/modificar-status-pedido/:id',
   FaturaNegociarCobranca = '/financeiro/fatura/negociar-cobranca',
   FaturaNegociarCobrancaId = '/financeiro/fatura/negociar-cobranca/:id',
+  FaturaRenegociar = '/financeiro/fatura/renegociar',
+  FaturaRenegociarId = '/financeiro/fatura/renegociar/:id',
   Usuario = '/cadastros/usuarios',
   UsuarioAdicionar = '/cadastros/usuarios/adicionar',
   UsuarioEditar = '/cadastros/usuarios/editar',

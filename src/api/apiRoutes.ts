@@ -168,6 +168,8 @@ export enum FaturaApiRoutePath {
   Bonificar = '/bonificar',
   Criar = '/criar',
   Negociar = '/negociar',
+  Renegociar = '/renegociar',
+  SugerirParcelamento = '/sugerir-parcelamento',
 }
 
 export enum ParceiroApiRoutePath {

@@ -140,6 +140,7 @@ export function FormApp(props: propsForm) {
                         <>
                             <ButtonApp
                                 fullWidth
+                                disabled={props.buttonSalvarDisabled}
                                 loading={props.loading}
                                 type='submit'
                             >

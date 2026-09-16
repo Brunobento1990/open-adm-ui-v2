@@ -1,4 +1,5 @@
 import { useApiMovimentoProduto } from '../../../api/useApiMovimentoProduto'
+import { DropDownApp } from '../../../components/DropDown/DropDownApp'
 import { PesoDropDown } from '../../../components/DropDown/PesoDropDown'
 import { ProdutoDropDown } from '../../../components/DropDown/ProdutoDropDown'
 import { TamanhoDropDown } from '../../../components/DropDown/TamanhoDropDown'
@@ -87,18 +88,19 @@ export function MovimentoProdutoFormPage() {
       </FormRoot.FormRow>
       <FormRoot.FormRow>
         <FormRoot.FormItemRow sm={3} xs={12}>
-          <InputApp
+          <DropDownApp
             error={form.error(MovimentoProdutoFormField.TipoMovimentacaoDeProduto)}
             helperText={form.helperText(MovimentoProdutoFormField.TipoMovimentacaoDeProduto)}
             id={MovimentoProdutoFormField.TipoMovimentacaoDeProduto}
             label="Tipo de movimentação"
-            name={MovimentoProdutoFormField.TipoMovimentacaoDeProduto}
             onBlur={form.onBlur}
             onChange={(field, value) => form.onChange(field, Number(value))}
-            options={TipoMovimentacaoProdutoOptions}
+            values={TipoMovimentacaoProdutoOptions}
             required
-            type={InputAppType.Select}
-            value={form.values.tipoMovimentacaoDeProduto ?? ''}
+            keyLabel="label"
+            value={TipoMovimentacaoProdutoOptions.find(
+              (option) => option.value === form.values.tipoMovimentacaoDeProduto,
+            )}
           />
         </FormRoot.FormItemRow>
         <FormRoot.FormItemRow sm={3} xs={12}>

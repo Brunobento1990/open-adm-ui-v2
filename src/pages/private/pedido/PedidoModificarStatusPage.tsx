@@ -5,6 +5,7 @@ import { useApiPedido } from '../../../api/useApiPedido'
 import { BoxApp } from '../../../components/BoxApp/BoxApp'
 import { ButtonApp, ButtonAppVariant } from '../../../components/ButtonApp/ButtonApp'
 import { DividerApp } from '../../../components/DividerApp/DividerApp'
+import { DropDownApp } from '../../../components/DropDown/DropDownApp'
 import { InputApp } from '../../../components/InputApp/InputApp'
 import { InputAppType } from '../../../components/InputApp/inputAppTypes'
 import { ModalChildren } from '../../../components/Modal/ModalChildren'
@@ -127,17 +128,19 @@ export function PedidoModificarStatusPage() {
               </StackApp>
             </BoxApp>
             <DividerApp>Selecione o status</DividerApp>
-            <InputApp
+            <DropDownApp
               error={form.error(PedidoStatusField.Status)}
               helperText={form.helperText(PedidoStatusField.Status)}
               id={PedidoStatusField.Status}
               label="Status"
               onBlur={form.onBlur}
               onChange={form.onChange}
-              options={PedidoStatusOptions}
+              values={PedidoStatusOptions}
               required
-              type={InputAppType.Select}
-              value={form.values.statusPedido}
+              keyLabel="label"
+              value={PedidoStatusOptions.find(
+                (option) => option.value === form.values.statusPedido,
+              )}
             />
           </StackApp>
         )}

@@ -1,13 +1,12 @@
 import type { ICellRendererParams } from 'ag-grid-community'
 import { useState } from 'react'
-import { useApiPedido } from '../../../api/useApiPedido'
 import { ApiRoutePath } from '../../../api/apiRoutes'
+import { useApiPedido } from '../../../api/useApiPedido'
 import { BadgeApp } from '../../../components/BadegApp/BadgeApp'
 import { ButtonApp, ButtonAppVariant } from '../../../components/ButtonApp/ButtonApp'
+import { DropDownApp } from '../../../components/DropDown/DropDownApp'
 import { IconApp } from '../../../components/Icon/IconApp'
 import { IconButtonComTolltip } from '../../../components/IconButtonComTolltip/IconButtonComTolltip'
-import { InputApp } from '../../../components/InputApp/InputApp'
-import { InputAppType } from '../../../components/InputApp/inputAppTypes'
 import type { MenuAppItem } from '../../../components/MenuApp/MenuApp'
 import { ModalChildren } from '../../../components/Modal/ModalChildren'
 import { StackApp } from '../../../components/StackApp/StackApp'
@@ -173,7 +172,8 @@ export function PedidoPage() {
           !data ||
           data.statusPedido === PedidoStatus.Entregue ||
           data.statusPedido === PedidoStatus.Cancelado
-        ) return null
+        )
+          return null
 
         return (
           <IconButtonComTolltip
@@ -312,7 +312,7 @@ export function PedidoPage() {
         open={state.filtrosModalAberto}
         titulo="Filtros"
       >
-        <InputApp
+        <DropDownApp
           id="statusPedido"
           label="Status"
           onChange={(_, value) =>
@@ -321,9 +321,11 @@ export function PedidoPage() {
               filtrosTemporarios: { statusPedido: Number(value) },
             }))
           }
-          options={statusOptions}
-          type={InputAppType.Select}
-          value={state.filtrosTemporarios.statusPedido}
+          values={statusOptions}
+          value={statusOptions.find(
+            (option) => option.value === state.filtrosTemporarios.statusPedido,
+          )}
+          keyLabel="label"
         />
       </ModalChildren>
     </>

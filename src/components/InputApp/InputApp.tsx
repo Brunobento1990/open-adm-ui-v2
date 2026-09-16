@@ -1,19 +1,20 @@
-import { Checkbox, FormControlLabel, InputAdornment, MenuItem, TextField } from '@mui/material'
+import { Checkbox, FormControlLabel, InputAdornment, TextField } from '@mui/material'
 import type { FocusEvent, ReactNode } from 'react'
+import { DropDownApp } from '../DropDown/DropDownApp'
 import { InputAppType } from './inputAppTypes'
 
 type InputAppTipoTexto = Exclude<InputAppType, InputAppType.Checkbox | InputAppType.Select>
 
 type InputAppDesfoque = FocusEvent<HTMLElement>
 type InputAppValor = string | number | boolean
-type InputAppSelectOption = {
+export type InputAppSelectOption = {
   label: ReactNode
   value: string | number
 }
 
 type InputAppBaseProps = {
   id?: string
-  label?: ReactNode
+  label?: ReactNode | string
   name?: string
   type?: InputAppType
   required?: boolean
@@ -33,6 +34,7 @@ type InputAppBaseProps = {
   options?: InputAppSelectOption[]
   onChange?: (id: string, value?: InputAppValor) => void | Promise<void>
   onBlur?: (event: InputAppDesfoque) => void
+  keyLabel?: string
 }
 
 type InputAppTextoProps = InputAppBaseProps & {
@@ -83,9 +85,8 @@ function renderCurrencyField({
   value,
 }: InputAppRenderProps) {
   const fieldId = id ?? name
-  const formattedValue = value === '' || value === undefined
-    ? ''
-    : currencyFormatter.format(Number(value))
+  const formattedValue =
+    value === '' || value === undefined ? '' : currencyFormatter.format(Number(value))
 
   return (
     <TextField
@@ -111,9 +112,7 @@ function renderCurrencyField({
         htmlInput: { inputMode: 'numeric' },
         input: startAdornment
           ? {
-              startAdornment: (
-                <InputAdornment position="start">{startAdornment}</InputAdornment>
-              ),
+              startAdornment: <InputAdornment position="start">{startAdornment}</InputAdornment>,
             }
           : undefined,
       }}
@@ -172,9 +171,7 @@ function renderTextField(inputType: InputAppTipoTexto): InputAppRender {
           },
           input: startAdornment
             ? {
-                startAdornment: (
-                  <InputAdornment position="start">{startAdornment}</InputAdornment>
-                ),
+                startAdornment: <InputAdornment position="start">{startAdornment}</InputAdornment>,
               }
             : undefined,
         }}
@@ -200,7 +197,6 @@ const renderizadores: Record<InputAppType, InputAppRender> = {
     disabled,
     error,
     focus,
-    fullWidth = true,
     helperText,
     id,
     label,
@@ -210,34 +206,27 @@ const renderizadores: Record<InputAppType, InputAppRender> = {
     options,
     required,
     value,
+    keyLabel,
   }) => {
     const fieldId = id ?? name
 
     return (
-      <TextField
-        autoFocus={focus}
-        disabled={disabled}
-        error={error}
-        fullWidth={fullWidth}
-        helperText={helperText}
-        id={id}
-        label={label}
-        name={name}
-        onBlur={onBlur}
-        onChange={(event) => {
-          if (fieldId) onChange?.(fieldId, event.target.value)
-        }}
+      <DropDownApp
+        id={fieldId || ''}
+        readonly={disabled}
+        label={label as string}
+        keyLabel={keyLabel || ''}
         required={required}
-        select
-        size="small"
+        values={options || []}
         value={value}
-      >
-        {options?.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </TextField>
+        onBlur={onBlur}
+        onChange={(selectedValue) => {
+          if (fieldId) onChange?.(fieldId, selectedValue)
+        }}
+        error={error}
+        helperText={helperText}
+        focus={focus}
+      />
     )
   },
   [InputAppType.Checkbox]: ({

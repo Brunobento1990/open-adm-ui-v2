@@ -1,5 +1,5 @@
 import { FormRoot } from '../../form'
-import type { ParcelaCriar } from '../../types/FaturaTypes'
+import { FaturaParcelaCardMode, type ParcelaRenegociacao } from '../../types/FaturaTypes'
 import { BoxApp } from '../BoxApp/BoxApp'
 import {
   BoxAppAlignItems,
@@ -12,9 +12,15 @@ import { InputApp } from '../InputApp/InputApp'
 import { InputAppType } from '../InputApp/inputAppTypes'
 import { TextApp, TextAppColor, TextAppWeight } from '../TextApp/TextApp'
 
-type Props = { index: number; onChange: (value: ParcelaCriar) => void; parcela: ParcelaCriar }
+type Props<T extends ParcelaRenegociacao> = {
+  index: number
+  mode?: FaturaParcelaCardMode
+  onChange: (value: T) => void
+  parcela: T
+}
 
-export function FaturaParcelaCard({ index, onChange, parcela }: Props) {
+export function FaturaParcelaCard<T extends ParcelaRenegociacao>(props: Props<T>) {
+  const { index, parcela } = props
   return (
     <FormRoot.FormItemRow sm={3} xs={12}>
       <BoxApp
@@ -36,27 +42,29 @@ export function FaturaParcelaCard({ index, onChange, parcela }: Props) {
           <TextApp color={TextAppColor.Primary} weight={TextAppWeight.SemiBold}>
             Parcela {parcela.numeroDaParcela}
           </TextApp>
-          <InputApp
-            checked={parcela.aVista}
-            id={`aVista-${index}`}
-            label="À vista"
-            onChange={(_, value) => onChange({ ...parcela, aVista: Boolean(value) })}
-            type={InputAppType.Checkbox}
-          />
+          {props.mode !== FaturaParcelaCardMode.Renegociar && (
+            <InputApp
+              checked={'aVista' in parcela && Boolean(parcela.aVista)}
+              id={`aVista-${index}`}
+              label="À vista"
+              onChange={(_, value) => props.onChange({ ...parcela, aVista: Boolean(value) } as T)}
+              type={InputAppType.Checkbox}
+            />
+          )}
         </BoxApp>
         <InputApp
           id={`vencimento-${index}`}
           label="Vencimento"
           name={`vencimento-${index}`}
-          onChange={(_, value) => onChange({ ...parcela, dataDeVencimento: String(value) })}
+          onChange={(_, value) => props.onChange({ ...parcela, dataDeVencimento: String(value) } as T)}
           required
           type={InputAppType.Date}
           value={parcela.dataDeVencimento}
         />
         <MeioDePagamentoDropDown
           id={`meioDePagamento-${index}`}
-          onChange={(value) => onChange({ ...parcela, meioDePagamento: value })}
-          required
+          onChange={(value) => props.onChange({ ...parcela, meioDePagamento: value } as T)}
+          required={props.mode !== FaturaParcelaCardMode.Renegociar}
           value={parcela.meioDePagamento}
         />
         <InputApp

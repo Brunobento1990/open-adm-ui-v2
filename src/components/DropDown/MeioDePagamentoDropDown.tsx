@@ -1,6 +1,5 @@
 import { MeioDePagamento } from '../../types/FaturaTypes'
-import { InputApp } from '../InputApp/InputApp'
-import { InputAppType } from '../InputApp/inputAppTypes'
+import { DropDownApp } from './DropDownApp'
 
 const options = [
   { label: 'Dinheiro', value: MeioDePagamento.Dinheiro },
@@ -19,16 +18,16 @@ type Props = {
 
 export function MeioDePagamentoDropDown({ id, onChange, required, value }: Props) {
   return (
-    <InputApp
+    <DropDownApp
       id={id}
       label="Meio de pagamento"
-      onChange={(_, newValue) =>
+      onChange={(_, newValue) => {
         onChange(newValue ? (Number(newValue) as MeioDePagamento) : undefined)
-      }
-      options={options}
+      }}
+      values={options}
       required={required}
-      type={InputAppType.Select}
-      value={value ?? ''}
+      value={options.find((option) => option.value === value) as any}
+      keyLabel="label"
     />
   )
 }

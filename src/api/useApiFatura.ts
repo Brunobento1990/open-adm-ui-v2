@@ -3,6 +3,8 @@ import type {
   FaturaBaixaAutomaticaPayload,
   FaturaCriarPayload,
   FaturaNegociarPayload,
+  FaturaRenegociarPayload,
+  FaturaSugestaoParcelamento,
   ResultadoPadrao,
 } from '../types/FaturaTypes'
 import { ApiRoutePath, FaturaApiRoutePath } from './apiRoutes'
@@ -23,6 +25,14 @@ export function useApiFatura() {
   const apiNegociar = useApi({
     method: ApiMethod.Post,
     url: `${ApiRoutePath.Fatura}${FaturaApiRoutePath.Negociar}`,
+  })
+  const apiSugerirParcelamento = useApi({
+    method: ApiMethod.Get,
+    url: `${ApiRoutePath.Fatura}${FaturaApiRoutePath.SugerirParcelamento}`,
+  })
+  const apiRenegociar = useApi({
+    method: ApiMethod.Post,
+    url: `${ApiRoutePath.Fatura}${FaturaApiRoutePath.Renegociar}`,
   })
 
   return {
@@ -57,6 +67,19 @@ export function useApiFatura() {
           message: 'Cobrança parcelada com sucesso',
         }),
       loading: apiNegociar.loading,
+    },
+    sugerirParcelamento: {
+      fetch: (faturaId: string) => apiSugerirParcelamento.action<FaturaSugestaoParcelamento>({
+        urlParams: `?faturaId=${encodeURIComponent(faturaId)}`,
+      }),
+      loading: apiSugerirParcelamento.loading,
+    },
+    renegociar: {
+      fetch: (body: FaturaRenegociarPayload) => apiRenegociar.action<ResultadoPadrao>({
+        body,
+        message: 'Fatura renegociada com sucesso',
+      }),
+      loading: apiRenegociar.loading,
     },
   }
 }

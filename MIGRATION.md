@@ -11,6 +11,7 @@
 
 ## Próximos passos
 
+- [ ] Verificar a renegociação de fatura em `/financeiro/fatura/renegociar/:faturaId`: confirmar navegação com `faturaId` da paginação, consulta `GET /fatura/sugerir-parcelamento`, saldo e parcelas sugeridas, edição de quantidade/vencimento/meio de pagamento, payload `POST /fatura/renegociar`, resposta e atualização visível da lista. Implementada e ainda sem teste de integração ou aceitação manual.
 - [ ] Migrar **Vendas/Tabela de preço** separando criação e edição: criação envia cabeçalho e itens em um único payload; edição salva somente o cabeçalho no submit principal e persiste adição, alteração e exclusão de itens imediatamente após confirmação. O endpoint provisório de atualização individual é `PUT /item-tabela-de-preco/update`.
 - [x] Migrar **Vendas/Relatório venda produto**: filtros por data e períodos rápidos, ordenação, totalizadores, paginação, visualização responsiva e download do PDF.
 - [ ] Adicionar o redirecionamento do card **Cobranças mais antigas** da Home para `/financeiro/fatura/negociar-cobranca/:faturaId`, usando o identificador da fatura selecionada.
