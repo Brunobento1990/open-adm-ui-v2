@@ -7,8 +7,8 @@ import { TextApp } from '../TextApp/TextApp'
 
 const opcoesDeQuantidadePorPagina = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50].map(
   (quantidade) => ({
-    id: quantidade,
     label: quantidade.toString(),
+    value: quantidade,
   }),
 )
 
@@ -61,7 +61,7 @@ export function FooterTable({
           label=""
           onChange={(_, value) => changeQuantidadePorPagina(value)}
           value={opcoesDeQuantidadePorPagina.find(
-            (option) => option.id === quantidadePorPagina,
+            (option) => option.value === quantidadePorPagina,
           )}
           values={opcoesDeQuantidadePorPagina}
           width="80px"
@@ -109,7 +109,7 @@ export function FooterTable({
               label=""
               onChange={(_, value) => changeQuantidadePorPagina(value)}
               value={opcoesDeQuantidadePorPagina.find(
-                (option) => option.id === quantidadePorPagina,
+                (option) => option.value === quantidadePorPagina,
               )}
               values={opcoesDeQuantidadePorPagina}
               width="100px"

@@ -1,6 +1,11 @@
 import { redeSocialOpcoes, type RedeSocialTipo } from '../../types/ParceiroTypes'
 import { DropDownApp } from './DropDownApp'
 
+const opcoes = redeSocialOpcoes.map((opcao) => ({
+  label: opcao.descricao,
+  value: opcao.id,
+}))
+
 type RedeSocialDropDownProps = {
   id: string
   onChange: (value?: RedeSocialTipo) => void
@@ -11,11 +16,11 @@ export function RedeSocialDropDown({ id, onChange, value }: RedeSocialDropDownPr
   return (
     <DropDownApp
       id={id}
-      keyLabel="descricao"
+      keyLabel="label"
       label="Tipo"
       onChange={(_, newValue?: RedeSocialTipo) => onChange(newValue)}
-      value={redeSocialOpcoes.find((option) => option.id === value)}
-      values={[...redeSocialOpcoes]}
+      value={opcoes.find((opcao) => opcao.value === value)}
+      values={opcoes}
     />
   )
 }
