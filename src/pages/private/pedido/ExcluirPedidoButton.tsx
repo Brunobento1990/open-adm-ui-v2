@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import {
   ButtonApp,
   ButtonAppColor,
@@ -14,9 +14,10 @@ type ExcluirPedidoButtonProps = {
   loading?: boolean
   numero: number
   onConfirmar: () => Promise<boolean>
+  renderTrigger?: (abrir: () => void) => ReactNode
 }
 
-export function ExcluirPedidoButton({ loading, numero, onConfirmar }: ExcluirPedidoButtonProps) {
+export function ExcluirPedidoButton({ loading, numero, onConfirmar, renderTrigger }: ExcluirPedidoButtonProps) {
   const [modalAberto, setModalAberto] = useState(false)
   const { cores } = useThemeApp()
 
@@ -26,17 +27,19 @@ export function ExcluirPedidoButton({ loading, numero, onConfirmar }: ExcluirPed
 
   return (
     <>
-      <IconButtonComTolltip
-        aria-label={`Excluir pedido ${numero}`}
-        disabled={loading}
-        onClick={(event) => {
-          event.stopPropagation()
-          setModalAberto(true)
-        }}
-        tooltip="Excluir pedido"
-      >
-        <IconApp color={cores.error} icon="solar:trash-bin-trash-linear" />
-      </IconButtonComTolltip>
+      {renderTrigger ? renderTrigger(() => setModalAberto(true)) : (
+        <IconButtonComTolltip
+          aria-label={`Excluir pedido ${numero}`}
+          disabled={loading}
+          onClick={(event) => {
+            event.stopPropagation()
+            setModalAberto(true)
+          }}
+          tooltip="Excluir pedido"
+        >
+          <IconApp color={cores.error} icon="solar:trash-bin-trash-linear" />
+        </IconButtonComTolltip>
+      )}
       <ModalChildren
         close={() => setModalAberto(false)}
         footerChildren={

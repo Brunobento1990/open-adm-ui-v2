@@ -48,6 +48,7 @@ export interface TabelaComDragProps {
   headerHeight?: number
   atualizarColunas?: (colunas: string) => void
   preencherLargura?: boolean
+  barraRolagemCompacta?: boolean
 }
 
 export function mergeTabelaComDragColumns(

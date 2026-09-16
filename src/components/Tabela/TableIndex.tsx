@@ -58,6 +58,7 @@ export interface ITableIndexProps {
   headersReq?: any
   menuItems?: MenuAppItem[]
   preencherLargura?: boolean
+  barraRolagemCompacta?: boolean
 }
 
 export function TableIndex(props: ITableIndexProps) {
@@ -200,6 +201,7 @@ export function TableIndex(props: ITableIndexProps) {
           nomeDaTabela={props.nomeDaTabela}
           chaveReset={chaveReset}
           preencherLargura={props.preencherLargura}
+          barraRolagemCompacta={props.barraRolagemCompacta}
         />
       </BoxApp>
 

@@ -1,7 +1,6 @@
 import { BadgeApp } from '../../../components/BadegApp/BadgeApp'
 import { BoxApp } from '../../../components/BoxApp/BoxApp'
-import { IconApp } from '../../../components/Icon/IconApp'
-import { IconButtonComTolltip } from '../../../components/IconButtonComTolltip/IconButtonComTolltip'
+import { MenuApp, type MenuAppItem } from '../../../components/MenuApp/MenuApp'
 import { StackApp } from '../../../components/StackApp/StackApp'
 import { TextApp, TextAppColor, TextAppWeight } from '../../../components/TextApp/TextApp'
 import { useNavigationApp } from '../../../hook/useNavigationApp'
@@ -42,89 +41,103 @@ export function PedidoMobileRow({
         ? cores.warning
         : cores.success
 
+  function criarMenuItems(abrirExclusao: () => void): MenuAppItem[] {
+    const items: MenuAppItem[] = []
+
+    if (permiteModificarStatus) {
+      items.push({
+        icon: 'fe:app-menu',
+        iconColor: cores.primary,
+        label: 'Modificar status',
+        onClick: () => navigate(`${PrivateRoutePath.PedidoModificarStatus}/${pedido.id}`),
+      })
+    }
+
+    items.push(
+      {
+        icon: 'solar:wallet-money-outline',
+        iconColor: cores.success,
+        label: 'Acessar financeiro',
+        onClick: () => navigate(`${PrivateRoutePath.ContaAReceber}?pedidoId=${encodeURIComponent(pedido.id)}`),
+      },
+      {
+        icon: 'solar:eye-linear',
+        iconColor: cores.primary,
+        label: 'Visualizar pedido',
+        onClick: () => navigate(`${PrivateRoutePath.PedidoVisualizar}/${pedido.id}`),
+      },
+      {
+        disabled: downloadLoading,
+        icon: 'material-symbols-light:download',
+        iconColor: cores.primary,
+        label: 'Download do pedido',
+        onClick: onDownload,
+      },
+      {
+        disabled: excluirLoading,
+        icon: 'solar:trash-bin-trash-linear',
+        iconColor: cores.error,
+        label: 'Excluir pedido',
+        onClick: abrirExclusao,
+      },
+    )
+
+    return items
+  }
+
   return (
-    <BoxApp py={1} width="100%">
-      <StackApp spacing={1}>
-        <StackApp direction="row" spacing={1} sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }}>
-          <BoxApp flex={1} minWidth={0} sx={{ overflow: 'hidden' }}>
-            <TextApp noWrap weight={TextAppWeight.Bold}>{pedido.usuario}</TextApp>
-            <TextApp color={TextAppColor.Secondary}>Pedido #{pedido.numero}</TextApp>
-          </BoxApp>
-          <BadgeApp
-            cor={getPaletteColor(PedidoStatusColorMap[pedido.statusPedido])}
-            texto={PedidoStatusLabel[pedido.statusPedido]}
-            width="100px"
-          />
-        </StackApp>
-
-        <StackApp direction="row" spacing={1} sx={{ justifyContent: 'space-between' }}>
-          <TextApp color={TextAppColor.Secondary}>Cadastro</TextApp>
-          <TextApp weight={TextAppWeight.Medium}>
-            {formatarDataHoraUtcLocal(pedido.dataDeCriacao)}
-          </TextApp>
-        </StackApp>
-
-        <StackApp direction="row" spacing={1} sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
-          <TextApp color={TextAppColor.Secondary}>Estoque</TextApp>
-          {pedido.statusPedido === PedidoStatus.Entregue ? (
-            <TextApp weight={TextAppWeight.Medium}>Fechado</TextApp>
-          ) : (
-            <BadgeApp cor={corEstoque} padding=".3rem .75rem" texto={`${pedido.porcentagemEstoqueAtendido}%`} width="72px" />
-          )}
-        </StackApp>
-
-        <BoxApp borderTop="1px solid" borderColor="divider" pt={0.5}>
-          <StackApp direction="row" spacing={0.5} sx={{ justifyContent: 'flex-end' }}>
-            {permiteModificarStatus && (
-              <IconButtonComTolltip
-                aria-label="Modificar status do pedido"
-                onClick={(event) => {
-                  event.stopPropagation()
-                  navigate(`${PrivateRoutePath.PedidoModificarStatus}/${pedido.id}`)
-                }}
-                tooltip="Modificar status do pedido"
-              >
-                <IconApp color={cores.primary} icon="fe:app-menu" />
-              </IconButtonComTolltip>
-            )}
-            <IconButtonComTolltip
-              aria-label="Acessar financeiro do pedido"
-              onClick={(event) => {
-                event.stopPropagation()
-                navigate(`${PrivateRoutePath.ContaAReceber}?pedidoId=${encodeURIComponent(pedido.id)}`)
-              }}
-              tooltip="Acessar financeiro do pedido"
-            >
-              <IconApp color={cores.success} icon="solar:wallet-money-outline" />
-            </IconButtonComTolltip>
-            <IconButtonComTolltip
-              aria-label="Visualizar pedido"
-              onClick={(event) => {
-                event.stopPropagation()
-                navigate(`${PrivateRoutePath.PedidoVisualizar}/${pedido.id}`)
-              }}
-              tooltip="Visualizar pedido"
-            >
-              <IconApp color={cores.primary} icon="solar:eye-linear" />
-            </IconButtonComTolltip>
-            <IconButtonComTolltip
-              aria-label="Download do pedido"
-              disabled={downloadLoading}
-              onClick={(event) => {
-                event.stopPropagation()
-                onDownload()
-              }}
-              tooltip="Download do pedido"
-            >
-              <IconApp color={cores.primary} icon="material-symbols-light:download" />
-            </IconButtonComTolltip>
-            <ExcluirPedidoButton
-              loading={excluirLoading}
-              numero={pedido.numero}
-              onConfirmar={onExcluir}
+    <BoxApp py={0.25} width="100%">
+      <StackApp direction="row" spacing={0.5} sx={{ alignItems: 'stretch' }}>
+        <StackApp spacing={0.5} sx={{ flex: 1, minWidth: 0 }}>
+          <StackApp direction="row" spacing={0.5} sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
+            <BoxApp flex={1} minWidth={0} sx={{ overflow: 'hidden' }}>
+              <TextApp fontSize="0.8rem" noWrap weight={TextAppWeight.Bold}>{pedido.usuario}</TextApp>
+              <TextApp color={TextAppColor.Secondary} fontSize="0.75rem">Pedido #{pedido.numero}</TextApp>
+            </BoxApp>
+            <BadgeApp
+              cor={getPaletteColor(PedidoStatusColorMap[pedido.statusPedido])}
+              fontSize="0.7rem"
+              padding=".1rem .3rem"
+              texto={PedidoStatusLabel[pedido.statusPedido]}
+              width="82px"
             />
           </StackApp>
-        </BoxApp>
+
+          <StackApp direction="row" spacing={0.5} sx={{ justifyContent: 'space-between' }}>
+            <TextApp color={TextAppColor.Secondary} fontSize="0.75rem">Cadastro</TextApp>
+            <TextApp fontSize="0.75rem" weight={TextAppWeight.Medium}>
+              {formatarDataHoraUtcLocal(pedido.dataDeCriacao)}
+            </TextApp>
+          </StackApp>
+
+          <StackApp direction="row" spacing={0.5} sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
+            <TextApp color={TextAppColor.Secondary} fontSize="0.75rem">Estoque</TextApp>
+            {pedido.statusPedido === PedidoStatus.Entregue ? (
+              <TextApp fontSize="0.75rem" weight={TextAppWeight.Medium}>Fechado</TextApp>
+            ) : (
+              <BadgeApp cor={corEstoque} fontSize="0.7rem" padding=".1rem .4rem" texto={`${pedido.porcentagemEstoqueAtendido}%`} width="58px" />
+            )}
+          </StackApp>
+        </StackApp>
+
+        <StackApp sx={{ alignSelf: 'flex-start' }} onClick={(event) => event.stopPropagation()}>
+          <ExcluirPedidoButton
+            loading={excluirLoading}
+            numero={pedido.numero}
+            onConfirmar={onExcluir}
+            renderTrigger={(abrirExclusao) => (
+              <MenuApp
+                ariaLabel={`Ações do pedido ${pedido.numero}`}
+                buttonIcon="mdi:dots-vertical"
+                buttonSize="small"
+                buttonSx={{ padding: 0.5 }}
+                id={`pedido-acoes-${pedido.id}`}
+                items={criarMenuItems(abrirExclusao)}
+                tooltip="Ações do pedido"
+              />
+            )}
+          />
+        </StackApp>
       </StackApp>
     </BoxApp>
   )

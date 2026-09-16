@@ -116,6 +116,7 @@ export function TabelaComDrag(props: TabelaComDragProps) {
 
   return (
     <div
+      className={props.barraRolagemCompacta ? 'tabela-scrollbar-compacta' : undefined}
       onContextMenu={(event) => event.preventDefault()}
       style={{
         width: props.width ?? '100%',
@@ -130,6 +131,22 @@ export function TabelaComDrag(props: TabelaComDragProps) {
             align-items: center;
             justify-content: start;
             user-select: text;
+          }
+
+          .tabela-scrollbar-compacta .ag-body-vertical-scroll {
+            min-width: 6px !important;
+            max-width: 6px !important;
+            width: 6px !important;
+          }
+
+          .tabela-scrollbar-compacta .ag-body-vertical-scroll-viewport,
+          .tabela-scrollbar-compacta .ag-body-viewport {
+            scrollbar-width: thin;
+          }
+
+          .tabela-scrollbar-compacta .ag-body-vertical-scroll-viewport::-webkit-scrollbar,
+          .tabela-scrollbar-compacta .ag-body-viewport::-webkit-scrollbar {
+            width: 6px;
           }
         `}
       </style>

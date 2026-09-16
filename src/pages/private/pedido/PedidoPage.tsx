@@ -253,7 +253,8 @@ export function PedidoPage() {
       headerName: 'Pedidos',
       flex: 1,
       minWidth: 280,
-      sortable: true,
+      sortable: false,
+      cellStyle: { paddingRight: '0px' },
       cellRenderer: ({ data }: ICellRendererParams<PedidoPaginacao>) =>
         data ? (
           <PedidoMobileRow
@@ -292,7 +293,8 @@ export function PedidoPage() {
         nomeDaTabela={isCelular ? PedidoTable.Mobile : PedidoTable.Desktop}
         orderBy={PedidoColumnField.Numero}
         preencherLargura={isCelular}
-        rowHeight={isCelular ? 220 : undefined}
+        barraRolagemCompacta={isCelular}
+        rowHeight={isCelular ? 112 : undefined}
         refreshPai={state.refresh}
         url={ApiRoutePath.Pedido}
         urlAdd={PrivateRoutePath.PedidoAdicionar}
