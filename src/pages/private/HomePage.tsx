@@ -4,6 +4,7 @@ import { AvatarApp as Avatar } from '../../components/AvatarApp/AvatarApp'
 import { BoxApp as Box } from '../../components/BoxApp/BoxApp'
 import { DividerApp as Divider } from '../../components/DividerApp/DividerApp'
 import { IconApp } from '../../components/Icon/IconApp'
+import { IconButtonComTolltip } from '../../components/IconButtonComTolltip/IconButtonComTolltip'
 import { PaperApp as Paper } from '../../components/PaperApp/PaperApp'
 import { ProgressApp as LinearProgress } from '../../components/ProgressApp/ProgressApp'
 import { SkeletonApp as Skeleton } from '../../components/SkeletonApp/SkeletonApp'
@@ -45,6 +46,7 @@ type SectionCardProps = {
   accentColor?: string
   action?: ReactNode
   icon?: string
+  onIconClick?: () => void
   order?: number
   children: ReactNode
 }
@@ -55,6 +57,7 @@ function SectionCard({
   accentColor,
   action,
   icon,
+  onIconClick,
   order,
   children,
 }: SectionCardProps) {
@@ -75,7 +78,23 @@ function SectionCard({
         sx={{ alignItems: 'center', justifyContent: 'space-between', mb: 2 }}
       >
         <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center', minWidth: 0 }}>
-          {icon && accentColor && (
+          {icon && accentColor && (onIconClick ? (
+            <IconButtonComTolltip
+              aria-label={`Ir para ${title}`}
+              onClick={onIconClick}
+              tooltip={`Ir para ${title}`}
+              sx={{
+                bgcolor: accentColor,
+                color: 'common.white',
+                flexShrink: 0,
+                height: 38,
+                width: 38,
+                '&:hover': { bgcolor: accentColor, filter: 'brightness(0.9)' },
+              }}
+            >
+              <IconApp icon={icon} width="1.25rem" />
+            </IconButtonComTolltip>
+          ) : (
             <Box
               sx={{
                 bgcolor: accentColor,
@@ -90,7 +109,7 @@ function SectionCard({
             >
               <IconApp icon={icon} width="1.25rem" />
             </Box>
-          )}
+          ))}
           <Box sx={{ minWidth: 0 }}>
             <Typography
               component="h2"
@@ -221,6 +240,7 @@ type MonthlySummaryCardProps = {
   icon: string
   label: string
   loading: boolean
+  onIconClick?: () => void
   previousPeriod: string
   value?: DashboardVariacaoMensal
   valueColor?: string
@@ -233,6 +253,7 @@ function MonthlySummaryCard({
   icon,
   label,
   loading,
+  onIconClick,
   previousPeriod,
   value,
   valueColor = 'text.primary',
@@ -248,6 +269,7 @@ function MonthlySummaryCard({
       subtitle="Comparação com o mesmo mês do ano anterior"
       accentColor={color}
       icon={icon}
+      onIconClick={onIconClick}
     >
       {loading ? (
         <LoadingRows />
@@ -510,6 +532,7 @@ export function HomePage() {
           icon={DashboardIcon.ResumoPedidos}
           label="Pedidos"
           loading={loading}
+          onIconClick={() => navigate(PrivateRoutePath.Pedido)}
           previousPeriod={previousPeriod}
           value={resumoMensal?.quantidadePedidos}
         />
@@ -520,6 +543,7 @@ export function HomePage() {
           icon={DashboardIcon.ResumoValor}
           label="Valor vendido"
           loading={loading}
+          onIconClick={() => navigate(PrivateRoutePath.RelatorioPedidoPeriodo)}
           previousPeriod={previousPeriod}
           value={resumoMensal?.valorTotalVendido}
           valueColor="success.main"
@@ -531,6 +555,7 @@ export function HomePage() {
           icon={DashboardIcon.ResumoItens}
           label="Itens vendidos"
           loading={loading}
+          onIconClick={() => navigate(PrivateRoutePath.RelatorioVendaProduto)}
           previousPeriod={previousPeriod}
           value={resumoMensal?.quantidadeItensVendidos}
         />
