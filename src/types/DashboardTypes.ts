@@ -9,6 +9,29 @@ export interface DashboardVariacaoMensalPedido {
   anoAnterior: number
 }
 
+export interface DashboardVariacaoMensal {
+  atual: number
+  anoAnterior: number
+  variacao: number
+  variacaoPercentual: number
+}
+
+export interface DashboardResumoMensalCategoria {
+  categoriaId: string
+  categoria: string
+  quantidadeItensVendidos: DashboardVariacaoMensal
+}
+
+export interface DashboardResumoMensal {
+  mes: number
+  anoAtual: number
+  anoAnterior: number
+  quantidadePedidos: DashboardVariacaoMensal
+  valorTotalVendido: DashboardVariacaoMensal
+  quantidadeItensVendidos: DashboardVariacaoMensal
+  categorias: DashboardResumoMensalCategoria[]
+}
+
 export interface DashboardStatusPedido {
   quantidade: number
   status: PedidoStatus
@@ -66,6 +89,7 @@ export interface DashboardCobranca {
 }
 
 export interface Dashboard {
+  resumoMensal: DashboardResumoMensal
   movimentos: DashboardMovimentoProduto[]
   totalAReceber: number
   statusPedido: DashboardStatusPedido[]

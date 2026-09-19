@@ -1,9 +1,7 @@
 import { Box, Divider, Drawer, List, Skeleton, Stack } from '@mui/material'
 import { useState } from 'react'
-import {
-  BoxApp
-} from '../../components/BoxApp/BoxApp'
-import { BoxAppComponent } from '../../components/BoxApp/boxAppTypes'
+import { BoxApp } from '../../components/BoxApp/BoxApp'
+import { BoxAppComponent, BoxAppOverflow } from '../../components/BoxApp/boxAppTypes'
 import {
   TextApp,
   TextAppColor,
@@ -27,9 +25,7 @@ export function Sidebar({ isMobileOpen, onMobileClose }: SidebarProps) {
   const { empresa } = useAuth()
   const { loading, menus } = useMenus()
   const { borderRadius, isCelular, navigation } = useThemeApp()
-  const [openIds, setOpenIds] = useState<string[]>(() =>
-    getInitialOpenMenuIds(menus, pathName),
-  )
+  const [openIds, setOpenIds] = useState<string[]>(() => getInitialOpenMenuIds(menus, pathName))
 
   const toggleMenu = (id: string) => {
     setOpenIds((current) =>
@@ -41,12 +37,16 @@ export function Sidebar({ isMobileOpen, onMobileClose }: SidebarProps) {
     <BoxApp
       component={BoxAppComponent.Aside}
       width={navigation.width}
-      minHeight="100vh"
+      height="100%"
+      minHeight={0}
       p={2.5}
+      boxSizing="border-box"
+      overflow={BoxAppOverflow.Auto}
       borderRight="1px solid"
       borderColor={navigation.sidebar.border}
       backgroundColor={navigation.sidebar.background}
       color={navigation.sidebar.foreground}
+      sx={{ flexShrink: 0 }}
     >
       <Stack spacing={2.5}>
         <Box
@@ -82,14 +82,11 @@ export function Sidebar({ isMobileOpen, onMobileClose }: SidebarProps) {
         <Divider sx={{ borderColor: navigation.sidebar.border }} />
 
         <List disablePadding component="nav" sx={{ mx: -0.5 }}>
-          {loading && menus.length === 0 && Array.from({ length: 4 }, (_, index) => (
-            <Skeleton
-              key={index}
-              height={42}
-              sx={{ borderRadius, mb: 0.5 }}
-              variant="rounded"
-            />
-          ))}
+          {loading &&
+            menus.length === 0 &&
+            Array.from({ length: 4 }, (_, index) => (
+              <Skeleton key={index} height={42} sx={{ borderRadius, mb: 0.5 }} variant="rounded" />
+            ))}
           {menus.map((menu) => (
             <SidebarMenuItemNode
               key={menu.id}

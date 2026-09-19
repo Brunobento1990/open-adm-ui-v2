@@ -15,7 +15,9 @@ import { PrivateRoutePath } from '../../routes/appRoutes'
 import type {
   Dashboard,
   DashboardProdutoVendido,
+  DashboardResumoMensalCategoria,
   DashboardStatusPedido,
+  DashboardVariacaoMensal,
 } from '../../types/DashboardTypes'
 import { PedidoStatusColorMap, PedidoStatusLabel } from '../../types/PedidoTypes'
 import { formatMoney, formatNumber } from '../../utils/moneyUtils'
@@ -30,7 +32,12 @@ const DashboardIcon = {
   Pedido: 'solar:cart-large-2-linear',
   Produto: 'solar:bag-4-linear',
   Reservado: 'solar:lock-keyhole-minimalistic-linear',
+  ResumoItens: 'solar:box-minimalistic-linear',
+  ResumoPedidos: 'solar:clipboard-list-linear',
+  ResumoValor: 'solar:wad-of-money-linear',
 } as const
+
+const monthFormatter = new Intl.DateTimeFormat('pt-BR', { month: 'long' })
 
 type SectionCardProps = {
   title: string
@@ -207,6 +214,159 @@ function EmptyState({ children }: { children: ReactNode }) {
   )
 }
 
+type MonthlySummaryCardProps = {
+  color: string
+  currentPeriod: string
+  formatter: (value: number) => string
+  icon: string
+  label: string
+  loading: boolean
+  previousPeriod: string
+  value?: DashboardVariacaoMensal
+  valueColor?: string
+}
+
+function MonthlySummaryCard({
+  color,
+  currentPeriod,
+  formatter,
+  icon,
+  label,
+  loading,
+  previousPeriod,
+  value,
+  valueColor = 'text.primary',
+}: MonthlySummaryCardProps) {
+  const variation = value?.variacaoPercentual ?? 0
+  const variationColor =
+    variation > 0 ? 'success.main' : variation < 0 ? 'error.main' : 'text.secondary'
+  const variationIcon = variation >= 0 ? DashboardIcon.ArrowUp : DashboardIcon.ArrowDown
+
+  return (
+    <SectionCard
+      title={label}
+      subtitle="Comparação com o mesmo mês do ano anterior"
+      accentColor={color}
+      icon={icon}
+    >
+      {loading ? (
+        <LoadingRows />
+      ) : (
+        <Stack spacing={1.25}>
+          <Box>
+            <Typography
+              color={valueColor}
+              variant="h5"
+              sx={{ fontWeight: 750, overflowWrap: 'anywhere' }}
+            >
+              {formatter(value?.atual ?? 0)}
+            </Typography>
+            <Typography color="text.secondary" variant="caption">
+              em {currentPeriod}
+            </Typography>
+          </Box>
+          <Divider />
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            spacing={{ xs: 0.5, sm: 1 }}
+            sx={{
+              alignItems: { xs: 'stretch', sm: 'center' },
+              justifyContent: 'space-between',
+            }}
+          >
+            <Typography color="text.secondary" variant="body2">
+              <Box component="span" sx={{ color: 'text.primary', fontWeight: 650 }}>
+                {formatter(value?.anoAnterior ?? 0)}
+              </Box>{' '}
+              em {previousPeriod}
+            </Typography>
+            <Stack
+              direction="row"
+              spacing={0.4}
+              sx={{
+                alignItems: 'center',
+                alignSelf: { xs: 'flex-end', sm: 'auto' },
+                color: variationColor,
+              }}
+            >
+              {variation !== 0 && <IconApp icon={variationIcon} width="1rem" />}
+              <Typography color={variationColor} variant="body2" sx={{ fontWeight: 750 }}>
+                {formatNumber(Math.abs(variation))}%
+              </Typography>
+            </Stack>
+          </Stack>
+        </Stack>
+      )}
+    </SectionCard>
+  )
+}
+
+function MonthlyCategories({
+  categories,
+  color,
+  loading,
+  previousPeriod,
+}: {
+  categories: DashboardResumoMensalCategoria[]
+  color: string
+  loading: boolean
+  previousPeriod: string
+}) {
+  return (
+    <SectionCard
+      title="Itens vendidos por categoria"
+      subtitle="Comparação com o mesmo mês do ano anterior"
+      accentColor={color}
+      icon="solar:chart-2-linear"
+    >
+      {loading ? (
+        <LoadingRows />
+      ) : !categories.length ? (
+        <EmptyState>Nenhuma venda por categoria neste período.</EmptyState>
+      ) : (
+        <Stack divider={<Divider flexItem />}>
+          {categories.map((item) => {
+            const variation = item.quantidadeItensVendidos.variacaoPercentual
+            const variationColor =
+              variation > 0 ? 'success.main' : variation < 0 ? 'error.main' : 'text.secondary'
+            const variationIcon = variation >= 0 ? DashboardIcon.ArrowUp : DashboardIcon.ArrowDown
+
+            return (
+              <Stack key={item.categoriaId} spacing={0.35} sx={{ py: 1.25 }}>
+                <Typography noWrap variant="body2" sx={{ fontWeight: 650 }}>
+                  {item.categoria}
+                </Typography>
+                <Typography variant="h6" sx={{ fontWeight: 750 }}>
+                  {formatNumber(item.quantidadeItensVendidos.atual)} itens
+                </Typography>
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  sx={{ alignItems: 'center', justifyContent: 'space-between' }}
+                >
+                  <Typography color="text.secondary" variant="caption" sx={{ flexShrink: 0 }}>
+                    {formatNumber(item.quantidadeItensVendidos.anoAnterior)} em {previousPeriod}
+                  </Typography>
+                  <Stack
+                    direction="row"
+                    spacing={0.4}
+                    sx={{ alignItems: 'center', color: variationColor, flexShrink: 0 }}
+                  >
+                    {variation !== 0 && <IconApp icon={variationIcon} width="1rem" />}
+                    <Typography color={variationColor} variant="caption" sx={{ fontWeight: 750 }}>
+                      {formatNumber(Math.abs(variation))}%
+                    </Typography>
+                  </Stack>
+                </Stack>
+              </Stack>
+            )
+          })}
+        </Stack>
+      )}
+    </SectionCard>
+  )
+}
+
 function ProductList({ products }: { products: DashboardProdutoVendido[] }) {
   if (!products.length) return <EmptyState>Nenhum produto encontrado.</EmptyState>
 
@@ -279,6 +439,14 @@ export function HomePage() {
     (total, cobranca) => total + cobranca.valor,
     0,
   )
+  const resumoMensal = dashboard?.resumoMensal
+  const currentYear = resumoMensal?.anoAtual ?? new Date().getFullYear()
+  const previousYear = resumoMensal?.anoAnterior ?? currentYear - 1
+  const resumoMes = resumoMensal
+    ? monthFormatter.format(new Date(resumoMensal.anoAtual, resumoMensal.mes - 1, 1))
+    : ''
+  const currentPeriod = resumoMes ? `${resumoMes}/${currentYear}` : String(currentYear)
+  const previousPeriod = resumoMes ? `${resumoMes}/${previousYear}` : String(previousYear)
 
   const kpis = [
     {
@@ -321,6 +489,59 @@ export function HomePage() {
         width: '100%',
       }}
     >
+      <SectionDivider label={resumoMes ? `Resumo mensal · ${resumoMes}` : 'Resumo mensal'} />
+      <Box
+        sx={{
+          alignItems: 'start',
+          display: 'grid',
+          gap: { xs: 1.5, sm: 2 },
+          gridTemplateColumns: {
+            xs: 'minmax(0, 1fr)',
+            md: 'repeat(2, minmax(0, 1fr))',
+            xl: 'repeat(4, minmax(0, 1fr))',
+          },
+          mb: { xs: 1.5, sm: 2 },
+        }}
+      >
+        <MonthlySummaryCard
+          color={cores.primary}
+          currentPeriod={currentPeriod}
+          formatter={formatNumber}
+          icon={DashboardIcon.ResumoPedidos}
+          label="Pedidos"
+          loading={loading}
+          previousPeriod={previousPeriod}
+          value={resumoMensal?.quantidadePedidos}
+        />
+        <MonthlySummaryCard
+          color={cores.success}
+          currentPeriod={currentPeriod}
+          formatter={formatMoney}
+          icon={DashboardIcon.ResumoValor}
+          label="Valor vendido"
+          loading={loading}
+          previousPeriod={previousPeriod}
+          value={resumoMensal?.valorTotalVendido}
+          valueColor="success.main"
+        />
+        <MonthlySummaryCard
+          color={cores.info}
+          currentPeriod={currentPeriod}
+          formatter={formatNumber}
+          icon={DashboardIcon.ResumoItens}
+          label="Itens vendidos"
+          loading={loading}
+          previousPeriod={previousPeriod}
+          value={resumoMensal?.quantidadeItensVendidos}
+        />
+        <MonthlyCategories
+          categories={resumoMensal?.categorias ?? []}
+          color={cores.primary}
+          loading={loading}
+          previousPeriod={previousPeriod}
+        />
+      </Box>
+
       <SectionDivider label="Financeiro e cobranças" />
       <Box
         sx={{
