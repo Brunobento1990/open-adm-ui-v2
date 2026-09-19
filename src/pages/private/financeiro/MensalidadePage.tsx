@@ -10,6 +10,7 @@ import {
   MensalidadeStatus,
   type Mensalidade,
 } from '../../../types/MensalidadeTypes'
+import { formatarDataHora } from '../../../utils/dateUtils'
 import { formatMoney } from '../../../utils/moneyUtils'
 
 const MensalidadeTable = { Name: 'mensalidades' } as const
@@ -37,6 +38,13 @@ export function MensalidadePage() {
       minWidth: 150,
       cellRenderer: ({ data }: ICellRendererParams<Mensalidade>) =>
         data ? formatMoney(data.valorPago) : '',
+    },
+    {
+      field: MensalidadeColumnField.Vencimento,
+      headerName: 'Vencimento',
+      minWidth: 150,
+      cellRenderer: ({ data }: ICellRendererParams<Mensalidade>) =>
+        data ? formatarDataHora(data.dataDeVencimento) : '',
     },
     {
       field: MensalidadeColumnField.Status,

@@ -20,6 +20,20 @@ export function formatarDataHoraUtcLocal(value?: string) {
   }).format(date)
 }
 
+export function formatarDataHora(value?: string) {
+  if (!value) return ''
+
+  const date = new Date(normalizarDataUtc(value))
+  if (Number.isNaN(date.getTime())) return ''
+
+  return new Intl.DateTimeFormat(DateTimeLocale.PtBr, {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  })
+    .format(date)
+    .split(',')[0]
+}
+
 export function formatarHoraUtcLocal(value?: string) {
   if (!value) return ''
 

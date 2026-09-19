@@ -4,6 +4,7 @@ export enum MensalidadeColumnField {
   Status = 'status',
   Valor = 'valor',
   ValorPago = 'valorPago',
+  Vencimento = 'vencimento',
 }
 
 export const MensalidadeStatus = {
