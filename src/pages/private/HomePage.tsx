@@ -543,7 +543,7 @@ export function HomePage() {
           icon={DashboardIcon.ResumoValor}
           label="Valor vendido"
           loading={loading}
-          onIconClick={() => navigate(PrivateRoutePath.RelatorioPedidoPeriodo)}
+          onIconClick={() => navigate(PrivateRoutePath.RelatorioVendaProduto)}
           previousPeriod={previousPeriod}
           value={resumoMensal?.valorTotalVendido}
           valueColor="success.main"
@@ -555,7 +555,6 @@ export function HomePage() {
           icon={DashboardIcon.ResumoItens}
           label="Itens vendidos"
           loading={loading}
-          onIconClick={() => navigate(PrivateRoutePath.RelatorioVendaProduto)}
           previousPeriod={previousPeriod}
           value={resumoMensal?.quantidadeItensVendidos}
         />
