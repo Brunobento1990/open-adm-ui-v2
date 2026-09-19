@@ -6,6 +6,7 @@ import { Rnd, type Position } from 'react-rnd'
 import { TextApp, TextAppColor, TextAppSize, TextAppWeight } from '../../../components/TextApp/TextApp'
 import { useAtendimentoChat } from '../../../context/useAtendimentoChat'
 import { useThemeApp } from '../../../hook/useThemeApp'
+import { useMediaQueryApp } from '../../../hook/useMediaQueryApp'
 import { ChatIcon, SidebarChatVariant, type ChatViewModel } from '../../../types/AtendimentoChatTypes'
 import { EnviarMensagemChat } from './EnviarMensagemChat'
 import { HeaderChat } from './HeaderChat'
@@ -78,7 +79,8 @@ export function FloatingChatWindow() {
     ativo: floatingChatAberto,
     chatInicial: chatInicialSuspenso,
   })
-  const { backgroundColor, borderRadius, cores, isCelular, shadow } = useThemeApp()
+  const { backgroundColor, borderRadius, cores, shadow } = useThemeApp()
+  const { isCelular } = useMediaQueryApp()
   const [minimizado, setMinimizado] = useState(false)
   const [mostrarConversas, setMostrarConversas] = useState(false)
   const [position, setPosition] = useState<Position>(floatingChatDefaultPosition)

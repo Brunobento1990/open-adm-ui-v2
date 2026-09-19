@@ -12,6 +12,7 @@ import { ButtonApp, ButtonAppVariant } from '../components/ButtonApp/ButtonApp';
 import { IconApp } from '../components/Icon/IconApp';
 import { useNavigationApp } from '../hook/useNavigationApp';
 import { useThemeApp } from '../hook/useThemeApp';
+import { useMediaQueryApp } from '../hook/useMediaQueryApp';
 import { FormAction, type FormAction as FormActionType } from '../types/Form';
 
 interface propsForm {
@@ -48,7 +49,8 @@ interface IFooterForm {
 
 export function FormApp(props: propsForm) {
     const { navigate } = useNavigationApp();
-    const { backgroundColor, borderRadius, cores, isCelular } = useThemeApp();
+    const { backgroundColor, borderRadius, cores } = useThemeApp();
+    const { isCelular } = useMediaQueryApp();
     const readonly = props.readonly ?? props.action === FormAction.View;
     const mobileActions = Boolean(props.responsiveMobileActions && isCelular);
 

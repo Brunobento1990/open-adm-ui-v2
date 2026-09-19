@@ -22,6 +22,7 @@ import {
 import { FormRoot } from '../../../form'
 import { useFormikAdapter } from '../../../hook/useFormikAdapter'
 import { useThemeApp } from '../../../hook/useThemeApp'
+import { useMediaQueryApp } from '../../../hook/useMediaQueryApp'
 import { YupAdapter } from '../../../lib/YupAdapter'
 import {
   TipoTransacaoFinanceira,
@@ -166,7 +167,7 @@ function GrupoExtrato({ data, grupo }: GrupoExtratoProps) {
 
 export function TransacaoFinanceiraPage() {
   const { extrato } = useApiTransacaoFinanceira()
-  const { isCelular } = useThemeApp()
+  const { isCelular } = useMediaQueryApp()
   const [extratoFinanceiro, setExtratoFinanceiro] = useState<ExtratoFinanceiro>({})
   const filtroInicial = criarFiltroInicial()
   const form = useFormikAdapter<TransacaoFinanceiraFiltro>({

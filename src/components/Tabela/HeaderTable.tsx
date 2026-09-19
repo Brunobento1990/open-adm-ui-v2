@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useLocalStorageApp } from '../../hook/useLocalStorageApp'
 import { useNavigationApp } from '../../hook/useNavigationApp'
 import { useThemeApp } from '../../hook/useThemeApp'
+import { useMediaQueryApp } from '../../hook/useMediaQueryApp'
 import { ButtonApp } from '../ButtonApp/ButtonApp'
 import { InputApp } from '../InputApp/InputApp'
 import { InputAppType } from '../InputApp/inputAppTypes'
@@ -56,7 +57,8 @@ export function HeaderTable({
 }: HeaderTableProps) {
   const { navigate } = useNavigationApp()
   const { setItem } = useLocalStorageApp()
-  const { cores, isCelular } = useThemeApp()
+  const { cores } = useThemeApp()
+  const { isCelular } = useMediaQueryApp()
   const [searchParams, setSearchParams] = useSearchParams()
   const [search, setSearch] = useState('')
 

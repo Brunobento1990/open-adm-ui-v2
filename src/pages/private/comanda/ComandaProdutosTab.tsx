@@ -9,7 +9,7 @@ import { InputApp } from '../../../components/InputApp/InputApp'
 import { InputAppType } from '../../../components/InputApp/inputAppTypes'
 import { ModalChildren } from '../../../components/Modal/ModalChildren'
 import { useSnackbarApp } from '../../../components/Snackbar/useSnackbar'
-import { useThemeApp } from '../../../hook/useThemeApp'
+import { useMediaQueryApp } from '../../../hook/useMediaQueryApp'
 import type { ComandaItem } from '../../../types/ComandaTypes'
 import { FormAction, type FormAction as FormActionType } from '../../../types/Form'
 import type { Produto } from '../../../types/ProdutoTypes'
@@ -29,7 +29,7 @@ export function ComandaProdutosTab({ action, comandaId, itens, onIrParaGeral, re
   const { adicionarItem, excluirItem, obterItens } = useApiComanda()
   const { obterPreco } = useApiTabelaDePreco()
   const snack = useSnackbarApp()
-  const { isCelular } = useThemeApp()
+  const { isCelular } = useMediaQueryApp()
   const [produto, setProduto] = useState<Produto>()
   const [quantidade, setQuantidade] = useState<number | ''>(1)
   const [valorUnitario, setValorUnitario] = useState<number | ''>('')

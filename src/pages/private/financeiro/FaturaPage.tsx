@@ -21,6 +21,7 @@ import { StackApp } from '../../../components/StackApp/StackApp'
 import { TableIndex } from '../../../components/Tabela/TableIndex'
 import type { TypeColumns } from '../../../components/Tabela/tabelaComDragTypes'
 import { useThemeApp } from '../../../hook/useThemeApp'
+import { useMediaQueryApp } from '../../../hook/useMediaQueryApp'
 import {
   FaturaColumnField,
   StatusParcela,
@@ -47,7 +48,8 @@ const situacaoOptions = [
 ]
 
 export function FaturaPage({ tipo, urlAdd }: FaturaPageProps) {
-  const { getPaletteColor, isCelular } = useThemeApp()
+  const { getPaletteColor } = useThemeApp()
+  const { isCelular } = useMediaQueryApp()
   const [searchParams] = useSearchParams()
   const pedidoId = searchParams.get('pedidoId') || undefined
   const [refresh, setRefresh] = useState(0)

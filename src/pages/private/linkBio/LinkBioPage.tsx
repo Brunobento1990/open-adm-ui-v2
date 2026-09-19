@@ -22,7 +22,7 @@ import { SkeletonApp } from '../../../components/SkeletonApp/SkeletonApp'
 import { TextApp, TextAppColor, TextAppWeight } from '../../../components/TextApp/TextApp'
 import { FormRoot } from '../../../form'
 import { useFormikAdapter } from '../../../hook/useFormikAdapter'
-import { useThemeApp } from '../../../hook/useThemeApp'
+import { useMediaQueryApp } from '../../../hook/useMediaQueryApp'
 import { YupAdapter } from '../../../lib/YupAdapter'
 import {
   LinkBioConfiguracaoFormField,
@@ -48,7 +48,7 @@ const validationSchema = new YupAdapter()
 export function LinkBioPage() {
   const api = useApiLinkBio()
   const { obter: obterParceiro } = useApiParceiro()
-  const { isCelular } = useThemeApp()
+  const { isCelular } = useMediaQueryApp()
   const [links, setLinks] = useState<LinkBioItem[]>([])
   const [logo, setLogo] = useState<string>()
   const [nomeEmpresa, setNomeEmpresa] = useState<string>()

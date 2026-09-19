@@ -11,7 +11,7 @@ import { ModalChildren } from '../../../components/Modal/ModalChildren'
 import { useSnackbarApp } from '../../../components/Snackbar/useSnackbar'
 import { FormRoot } from '../../../form'
 import { useNavigationApp } from '../../../hook/useNavigationApp'
-import { useThemeApp } from '../../../hook/useThemeApp'
+import { useMediaQueryApp } from '../../../hook/useMediaQueryApp'
 import { PrivateRoutePath } from '../../../routes/appRoutes'
 import type { Cliente } from '../../../types/ClienteTypes'
 import { ComandaStatus, ComandaStatusLabel, type Comanda, type ComandaItem } from '../../../types/ComandaTypes'
@@ -35,7 +35,7 @@ export function ComandaFormPage({ action }: ComandaFormPageProps) {
   const { atualizar, alterarStatus, criar, obter } = useApiComanda()
   const { navigate } = useNavigationApp()
   const snack = useSnackbarApp()
-  const { isCelular } = useThemeApp()
+  const { isCelular } = useMediaQueryApp()
   const [tab, setTab] = useState(ComandaTab.Geral)
   const [comanda, setComanda] = useState<Comanda>()
   const [identificacao, setIdentificacao] = useState('')

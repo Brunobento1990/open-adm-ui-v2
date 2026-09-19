@@ -1,12 +1,8 @@
-import { useMediaQuery } from '@mui/material'
 import { alpha, useTheme } from '@mui/material/styles'
 import { TipoPaletaCorEnum } from '../types/TipoPaletaCorEnum'
 
 export function useThemeApp() {
   const theme = useTheme()
-  const celular = !useMediaQuery((theme) => theme.breakpoints.up('sm'))
-  const tablet = !useMediaQuery('(min-width:1300px)')
-  const notbook = !useMediaQuery('(min-width:1750px)')
   const sidebarHover = alpha(theme.palette.primary.main, theme.palette.mode === 'light' ? 0.06 : 0.12)
   const sidebarActive = alpha(theme.palette.primary.main, theme.palette.mode === 'light' ? 0.12 : 0.2)
   const chatSentBubbleBackground = theme.palette.mode === 'light' ? '#dcf8c6' : '#1f5d43'
@@ -64,8 +60,5 @@ export function useThemeApp() {
         },
       },
     },
-    isCelular: celular,
-    isTablet: tablet,
-    isNotbook: notbook,
   }
 }

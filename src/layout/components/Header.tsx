@@ -13,6 +13,7 @@ import { TextApp, TextAppVariant, TextAppWeight } from '../../components/TextApp
 import { useAppThemeMode } from '../../hook/useAppThemeMode'
 import { useAuth } from '../../hook/useAuth'
 import { useThemeApp } from '../../hook/useThemeApp'
+import { useMediaQueryApp } from '../../hook/useMediaQueryApp'
 import { ThemeModeValue } from '../theme/themeMode'
 import { TrocarSenhaModal } from './TrocarSenhaModal'
 
@@ -50,7 +51,8 @@ function getInitials(name?: string) {
 
 export function Header({ title, onOpenMobileSidebar }: HeaderProps) {
   const [trocarSenhaOpen, setTrocarSenhaOpen] = useState(false)
-  const { backgroundColor, borderRadius, cores, isCelular } = useThemeApp()
+  const { backgroundColor, borderRadius, cores } = useThemeApp()
+  const { isCelular } = useMediaQueryApp()
   const { logout, usuario } = useAuth()
   const apiLogout = useApiUsuarioLogout()
   //const { navigate } = useNavigationApp()

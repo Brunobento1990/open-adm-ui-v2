@@ -1,5 +1,6 @@
 import { BarChart } from '@mui/x-charts/BarChart'
 import { useThemeApp } from '../../hook/useThemeApp'
+import { useMediaQueryApp } from '../../hook/useMediaQueryApp'
 import { TipoPaletaCorEnum } from '../../types/TipoPaletaCorEnum'
 
 export type BarChartAppSeries = {
@@ -16,7 +17,8 @@ type BarChartAppProps = {
 }
 
 export function BarChartApp({ height, labels, series, valueFormatter }: BarChartAppProps) {
-  const { getPaletteColor, isCelular } = useThemeApp()
+  const { getPaletteColor } = useThemeApp()
+  const { isCelular } = useMediaQueryApp()
   const chartHeight = height ?? Math.max(320, labels.length * 30 + 100)
 
   return (

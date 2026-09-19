@@ -16,7 +16,7 @@ import { RadioApp } from '../../../components/RadioApp/RadioApp'
 import { TextApp } from '../../../components/TextApp/TextApp'
 import { FormRoot } from '../../../form'
 import { useFormikAdapter } from '../../../hook/useFormikAdapter'
-import { useThemeApp } from '../../../hook/useThemeApp'
+import { useMediaQueryApp } from '../../../hook/useMediaQueryApp'
 import {
   RelatorioVendaProdutoFormField,
   TipoRelatorioVendaProduto,
@@ -42,7 +42,7 @@ const periodoOptions = [
 
 export function RelatorioVendaProdutoPage() {
   const api = useApiRelatorioVendaProduto()
-  const { isCelular } = useThemeApp()
+  const { isCelular } = useMediaQueryApp()
   const [response, setResponse] = useState<RelatorioVendaProdutoResponse>()
   const form = useFormikAdapter<RelatorioVendaProdutoFormValues>({
     initialValues,

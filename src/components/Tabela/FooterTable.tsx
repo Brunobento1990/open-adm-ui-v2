@@ -1,7 +1,7 @@
 import { Pagination, Stack } from '@mui/material'
 import { keysLocalStorage } from '../../configs/keysLocalStorage'
 import { useLocalStorageApp } from '../../hook/useLocalStorageApp'
-import { useThemeApp } from '../../hook/useThemeApp'
+import { useMediaQueryApp } from '../../hook/useMediaQueryApp'
 import { DropDownApp } from '../DropDown/DropDownApp'
 import { TextApp } from '../TextApp/TextApp'
 
@@ -36,7 +36,7 @@ export function FooterTable({
   totalDeRegistros,
 }: FooterTableProps) {
   const { setItem } = useLocalStorageApp()
-  const { isCelular } = useThemeApp()
+  const { isCelular } = useMediaQueryApp()
 
   function changeQuantidadePorPagina(value?: number) {
     if (!value) return

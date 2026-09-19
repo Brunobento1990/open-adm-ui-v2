@@ -24,7 +24,7 @@ import { TextApp, TextAppColor } from '../../../components/TextApp/TextApp'
 import { FormRoot } from '../../../form'
 import { useFormikAdapter } from '../../../hook/useFormikAdapter'
 import { useNavigationApp } from '../../../hook/useNavigationApp'
-import { useThemeApp } from '../../../hook/useThemeApp'
+import { useMediaQueryApp } from '../../../hook/useMediaQueryApp'
 import { YupAdapter } from '../../../lib/YupAdapter'
 import { PrivateRoutePath } from '../../../routes/appRoutes'
 import { EnderecoClienteVendaField } from '../../../types/ClienteVendaTypes'
@@ -86,7 +86,7 @@ function encontrarPreco(
 
 export function PedidoFormPage() {
   const { navigate } = useNavigationApp()
-  const { isCelular } = useThemeApp()
+  const { isCelular } = useMediaQueryApp()
   const { consultar: consultarCepApi } = useApiCep()
   const { obter: obterCliente } = useApiClienteVenda()
   const { criar } = useApiPedido()

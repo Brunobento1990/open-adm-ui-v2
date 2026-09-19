@@ -14,7 +14,7 @@ import { TabsApp } from '../../../components/TabsApp/TabsApp'
 import { TextApp, TextAppWeight } from '../../../components/TextApp/TextApp'
 import { FormRoot } from '../../../form'
 import { useFormikAdapter } from '../../../hook/useFormikAdapter'
-import { useThemeApp } from '../../../hook/useThemeApp'
+import { useMediaQueryApp } from '../../../hook/useMediaQueryApp'
 import { YupAdapter } from '../../../lib/YupAdapter'
 import { RelatorioPedidoFormField, type RelatorioPedidoFormValues, type RelatorioPedidoListagem, type RelatorioPedidoPayload } from '../../../types/PedidoTypes'
 import { TipoPaletaCorEnum } from '../../../types/TipoPaletaCorEnum'
@@ -45,7 +45,7 @@ function criarPayload(values: RelatorioPedidoFormValues): RelatorioPedidoPayload
 
 export function RelatorioPedidoPeriodoPage() {
   const { imprimirRelatorioPorPeriodo, relatorioPorPeriodo } = useApiPedido()
-  const { isCelular } = useThemeApp()
+  const { isCelular } = useMediaQueryApp()
   const snack = useSnackbarApp()
   const [tab, setTab] = useState<number>(RelatorioTab.Itens)
   const [relatorio, setRelatorio] = useState<RelatorioPedidoListagem>()

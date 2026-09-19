@@ -16,6 +16,7 @@ import { keysLocalStorage } from '../../../configs/keysLocalStorage'
 import { useLocalStorageApp } from '../../../hook/useLocalStorageApp'
 import { useNavigationApp } from '../../../hook/useNavigationApp'
 import { useThemeApp } from '../../../hook/useThemeApp'
+import { useMediaQueryApp } from '../../../hook/useMediaQueryApp'
 import { PrivateRoutePath } from '../../../routes/appRoutes'
 import {
   PedidoColumnField,
@@ -48,7 +49,8 @@ export function PedidoPage() {
   const { download, excluir } = useApiPedido()
   const { getItem, removeItem, setItem } = useLocalStorageApp()
   const { navigate } = useNavigationApp()
-  const { cores, getPaletteColor, isCelular } = useThemeApp()
+  const { cores, getPaletteColor } = useThemeApp()
+  const { isCelular } = useMediaQueryApp()
   const [state, setState] = useState<PedidoPageState>(() => {
     const statusSalvo = Number(getItem<string>(keysLocalStorage.pedidoStatusFiltro))
     const statusInicial = PedidoStatusOptions.some((option) => option.value === statusSalvo)

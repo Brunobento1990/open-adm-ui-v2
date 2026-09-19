@@ -12,6 +12,7 @@ import { useAuth } from '../../hook/useAuth'
 import { useNavigationApp } from '../../hook/useNavigationApp'
 import { useMenus } from '../../hook/useMenus'
 import { useThemeApp } from '../../hook/useThemeApp'
+import { useMediaQueryApp } from '../../hook/useMediaQueryApp'
 import { SidebarMenuItemNode } from './SidebarMenuItemNode'
 import { getInitialOpenMenuIds } from './sidebarMenuUtils'
 
@@ -24,7 +25,8 @@ export function Sidebar({ isMobileOpen, onMobileClose }: SidebarProps) {
   const { pathName } = useNavigationApp()
   const { empresa } = useAuth()
   const { loading, menus } = useMenus()
-  const { borderRadius, isCelular, navigation } = useThemeApp()
+  const { borderRadius, navigation } = useThemeApp()
+  const { isCelular } = useMediaQueryApp()
   const [openIds, setOpenIds] = useState<string[]>(() => getInitialOpenMenuIds(menus, pathName))
 
   const toggleMenu = (id: string) => {
