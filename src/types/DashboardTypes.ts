@@ -66,7 +66,6 @@ export interface DashboardCobranca {
 }
 
 export interface Dashboard {
-  variacaoMensalPedido?: DashboardVariacaoMensalPedido | null
   movimentos: DashboardMovimentoProduto[]
   totalAReceber: number
   statusPedido: DashboardStatusPedido[]

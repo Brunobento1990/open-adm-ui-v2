@@ -17,10 +17,7 @@ import type {
   DashboardProdutoVendido,
   DashboardStatusPedido,
 } from '../../types/DashboardTypes'
-import {
-  PedidoStatusColorMap,
-  PedidoStatusLabel,
-} from '../../types/PedidoTypes'
+import { PedidoStatusColorMap, PedidoStatusLabel } from '../../types/PedidoTypes'
 import { formatMoney, formatNumber } from '../../utils/moneyUtils'
 
 const DashboardIcon = {
@@ -45,7 +42,15 @@ type SectionCardProps = {
   children: ReactNode
 }
 
-function SectionCard({ title, subtitle, accentColor, action, icon, order, children }: SectionCardProps) {
+function SectionCard({
+  title,
+  subtitle,
+  accentColor,
+  action,
+  icon,
+  order,
+  children,
+}: SectionCardProps) {
   return (
     <Paper
       variant="outlined"
@@ -57,19 +62,47 @@ function SectionCard({ title, subtitle, accentColor, action, icon, order, childr
         p: { xs: 2, sm: 2.5 },
       }}
     >
-      <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+      <Stack
+        direction="row"
+        spacing={1.25}
+        sx={{ alignItems: 'center', justifyContent: 'space-between', mb: 2 }}
+      >
         <Stack direction="row" spacing={1.25} sx={{ alignItems: 'center', minWidth: 0 }}>
           {icon && accentColor && (
-            <Box sx={{ bgcolor: accentColor, borderRadius: '50%', color: 'common.white', display: 'grid', flexShrink: 0, height: 38, placeItems: 'center', width: 38 }}>
+            <Box
+              sx={{
+                bgcolor: accentColor,
+                borderRadius: '50%',
+                color: 'common.white',
+                display: 'grid',
+                flexShrink: 0,
+                height: 38,
+                placeItems: 'center',
+                width: 38,
+              }}
+            >
               <IconApp icon={icon} width="1.25rem" />
             </Box>
           )}
           <Box sx={{ minWidth: 0 }}>
-            <Typography component="h2" sx={{ color: 'text.primary', fontSize: '1rem', fontWeight: 750, letterSpacing: '-0.01em', lineHeight: 1.3 }}>
+            <Typography
+              component="h2"
+              sx={{
+                color: 'text.primary',
+                fontSize: '1rem',
+                fontWeight: 750,
+                letterSpacing: '-0.01em',
+                lineHeight: 1.3,
+              }}
+            >
               {title}
             </Typography>
             {subtitle && (
-              <Typography color="text.secondary" variant="caption" sx={{ display: 'block', lineHeight: 1.4, mt: 0.25, opacity: 0.78 }}>
+              <Typography
+                color="text.secondary"
+                variant="caption"
+                sx={{ display: 'block', lineHeight: 1.4, mt: 0.25, opacity: 0.78 }}
+              >
                 {subtitle}
               </Typography>
             )}
@@ -88,7 +121,15 @@ function SectionDivider({ label }: { label: string }) {
       <Divider sx={{ flex: 1 }} />
       <Typography
         component="h2"
-        sx={{ bgcolor: 'primary.main', borderRadius: 10, color: 'primary.contrastText', fontSize: '0.75rem', fontWeight: 700, px: 1.5, py: 0.5 }}
+        sx={{
+          bgcolor: 'primary.main',
+          borderRadius: 10,
+          color: 'primary.contrastText',
+          fontSize: '0.75rem',
+          fontWeight: 700,
+          px: 1.5,
+          py: 0.5,
+        }}
       >
         {label}
       </Typography>
@@ -108,10 +149,19 @@ type KpiCardProps = {
 
 function KpiCard({ color, icon, label, loading, value, colorWithOpacity }: KpiCardProps) {
   return (
-    <Paper variant="outlined" sx={{ borderTop: `4px solid ${color}`, minHeight: 126, minWidth: 0, p: { xs: 1.5, sm: 2 } }}>
-      <Stack direction="row" spacing={1.5} sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }}>
+    <Paper
+      variant="outlined"
+      sx={{ borderTop: `4px solid ${color}`, minHeight: 126, minWidth: 0, p: { xs: 1.5, sm: 2 } }}
+    >
+      <Stack
+        direction="row"
+        spacing={1.5}
+        sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }}
+      >
         <Box sx={{ minWidth: 0 }}>
-          <Typography color="text.secondary" variant="body2">{label}</Typography>
+          <Typography color="text.secondary" variant="body2">
+            {label}
+          </Typography>
           {loading ? (
             <Skeleton height={36} width={92} />
           ) : (
@@ -120,7 +170,18 @@ function KpiCard({ color, icon, label, loading, value, colorWithOpacity }: KpiCa
             </Typography>
           )}
         </Box>
-        <Box sx={{ bgcolor: colorWithOpacity(color, 0.12), borderRadius: 1.5, color, display: 'grid', flexShrink: 0, height: 38, placeItems: 'center', width: 38 }}>
+        <Box
+          sx={{
+            bgcolor: colorWithOpacity(color, 0.12),
+            borderRadius: 1.5,
+            color,
+            display: 'grid',
+            flexShrink: 0,
+            height: 38,
+            placeItems: 'center',
+            width: 38,
+          }}
+        >
           <IconApp icon={icon} width="1.3125rem" />
         </Box>
       </Stack>
@@ -131,13 +192,19 @@ function KpiCard({ color, icon, label, loading, value, colorWithOpacity }: KpiCa
 function LoadingRows() {
   return (
     <Stack spacing={1.5}>
-      {Array.from({ length: 4 }, (_, index) => <Skeleton key={index} height={34} variant="rounded" />)}
+      {Array.from({ length: 4 }, (_, index) => (
+        <Skeleton key={index} height={34} variant="rounded" />
+      ))}
     </Stack>
   )
 }
 
 function EmptyState({ children }: { children: ReactNode }) {
-  return <Typography color="text.secondary" variant="body2" sx={{ py: 1 }}>{children}</Typography>
+  return (
+    <Typography color="text.secondary" variant="body2" sx={{ py: 1 }}>
+      {children}
+    </Typography>
+  )
 }
 
 function ProductList({ products }: { products: DashboardProdutoVendido[] }) {
@@ -146,19 +213,34 @@ function ProductList({ products }: { products: DashboardProdutoVendido[] }) {
   return (
     <Stack divider={<Divider flexItem />}>
       {products.map((product) => (
-        <Stack key={`${product.id}-${product.peso ?? ''}-${product.tamanho ?? ''}`} direction="row" spacing={1.5} sx={{ alignItems: 'center', borderRadius: 1, px: 0.5, py: 1 }}>
-          <Avatar src={product.foto ?? undefined} variant="rounded" sx={{ bgcolor: 'action.selected', height: 42, width: 42 }}>
+        <Stack
+          key={`${product.id}-${product.peso ?? ''}-${product.tamanho ?? ''}`}
+          direction="row"
+          spacing={1.5}
+          sx={{ alignItems: 'center', borderRadius: 1, px: 0.5, py: 1 }}
+        >
+          <Avatar
+            src={product.foto ?? undefined}
+            variant="rounded"
+            sx={{ bgcolor: 'action.selected', height: 42, width: 42 }}
+          >
             <IconApp icon={DashboardIcon.Produto} width="1.25rem" />
           </Avatar>
           <Box sx={{ flex: 1, minWidth: 0 }}>
-            <Typography noWrap variant="body2" sx={{ fontWeight: 600 }}>{product.descricao}</Typography>
+            <Typography noWrap variant="body2" sx={{ fontWeight: 600 }}>
+              {product.descricao}
+            </Typography>
             <Typography noWrap color="text.secondary" variant="caption">
               {[product.tamanho, product.peso].filter(Boolean).join(' · ') || 'Sem variação'}
             </Typography>
           </Box>
           <Box sx={{ flexShrink: 0, textAlign: 'right' }}>
-            <Typography variant="body2" sx={{ fontWeight: 700 }}>{formatMoney(product.valorTotal)}</Typography>
-            <Typography color="text.secondary" variant="caption">{formatNumber(product.quantidade)} vendidos</Typography>
+            <Typography variant="body2" sx={{ fontWeight: 700 }}>
+              {formatMoney(product.valorTotal)}
+            </Typography>
+            <Typography color="text.secondary" variant="caption">
+              {formatNumber(product.quantidade)} vendidos
+            </Typography>
           </Box>
         </Stack>
       ))}
@@ -185,19 +267,13 @@ export function HomePage() {
   const movimentos = dashboard?.movimentos ?? []
   const categoriasMovimento = Array.from(
     new Set(
-      movimentos.flatMap((movimento) =>
-        movimento.dados.map((item) => item.categoria.trim()),
-      ),
+      movimentos.flatMap((movimento) => movimento.dados.map((item) => item.categoria.trim())),
     ),
   )
   const maxMovimentos = Math.max(
     1,
-    ...movimentos.flatMap((movimento) =>
-      movimento.dados.map((item) => item.quantidade),
-    ),
+    ...movimentos.flatMap((movimento) => movimento.dados.map((item) => item.quantidade)),
   )
-  const variacao = dashboard?.variacaoMensalPedido
-  const variacaoPositiva = (variacao?.porcentagem ?? 0) >= 0
   const cobrancasMaisAntigas = dashboard?.cobranca.cobrancasMaisAntigas ?? []
   const totalCobrancasMaisAntigas = cobrancasMaisAntigas.reduce(
     (total, cobranca) => total + cobranca.valor,
@@ -205,83 +281,188 @@ export function HomePage() {
   )
 
   const kpis = [
-    { label: `Pedidos no período`, value: formatNumber(dashboard?.totalDePedidos ?? 0), icon: DashboardIcon.Pedido, color: cores.error },
-    { label: 'Produtos em estoque', value: formatNumber(dashboard?.totalProdutoEstoque ?? 0), icon: DashboardIcon.Estoque, color: cores.success },
-    { label: 'Produtos reservados', value: formatNumber(dashboard?.totalProdutoEstoqueReservado ?? 0), icon: DashboardIcon.Reservado, color: cores.warning },
-    { label: 'Produtos disponíveis', value: formatNumber(dashboard?.quantidadeProdutoDisponivel ?? 0), icon: DashboardIcon.Produto, color: cores.info },
+    {
+      label: `Pedidos no período`,
+      value: formatNumber(dashboard?.totalDePedidos ?? 0),
+      icon: DashboardIcon.Pedido,
+      color: cores.error,
+    },
+    {
+      label: 'Produtos em estoque',
+      value: formatNumber(dashboard?.totalProdutoEstoque ?? 0),
+      icon: DashboardIcon.Estoque,
+      color: cores.success,
+    },
+    {
+      label: 'Produtos reservados',
+      value: formatNumber(dashboard?.totalProdutoEstoqueReservado ?? 0),
+      icon: DashboardIcon.Reservado,
+      color: cores.warning,
+    },
+    {
+      label: 'Produtos disponíveis',
+      value: formatNumber(dashboard?.quantidadeProdutoDisponivel ?? 0),
+      icon: DashboardIcon.Produto,
+      color: cores.info,
+    },
   ]
 
   return (
-    <Box component="main" sx={{ height: '100%', maxWidth: 1600, minWidth: 0, mx: 'auto', overflowX: 'hidden', overflowY: 'auto', pr: { sm: 0.5 }, width: '100%' }}>
+    <Box
+      component="main"
+      sx={{
+        height: '100%',
+        maxWidth: 1600,
+        minWidth: 0,
+        mx: 'auto',
+        overflowX: 'hidden',
+        overflowY: 'auto',
+        pr: { sm: 0.5 },
+        width: '100%',
+      }}
+    >
       <SectionDivider label="Financeiro e cobranças" />
-      <Box sx={{ display: 'grid', gap: { xs: 1.5, sm: 2 }, gridTemplateColumns: { xs: 'minmax(0, 1fr)', lg: 'repeat(2, minmax(0, 1fr))' }, mb: { xs: 1.5, sm: 2 } }}>
-        <SectionCard title="Vencimento de parcelas" subtitle="Hoje e próximos 7 dias" accentColor={cores.info} icon="solar:calendar-mark-outline" order={1}>
-          {loading ? <LoadingRows /> : (
+      <Box
+        sx={{
+          display: 'grid',
+          gap: { xs: 1.5, sm: 2 },
+          gridTemplateColumns: { xs: 'minmax(0, 1fr)', lg: 'repeat(3, minmax(0, 1fr))' },
+          mb: { xs: 1.5, sm: 2 },
+        }}
+      >
+        <SectionCard
+          title="Vencimento de parcelas"
+          subtitle="Hoje e próximos 7 dias"
+          accentColor={cores.info}
+          icon="solar:calendar-mark-outline"
+          order={1}
+        >
+          {loading ? (
+            <LoadingRows />
+          ) : (
             <Stack spacing={1.5}>
               <Box>
-                <Typography color="success.main" variant="body2" sx={{ fontWeight: 700 }}>A receber</Typography>
-                <Stack direction="row" sx={{ justifyContent: 'space-between' }}><Typography variant="body2">Hoje</Typography><Typography variant="body2" sx={{ fontWeight: 600 }}>{formatMoney(dashboard?.parcelas.aReceberHoje ?? 0)}</Typography></Stack>
-                <Stack direction="row" sx={{ justifyContent: 'space-between' }}><Typography variant="body2">Na semana</Typography><Typography variant="body2" sx={{ fontWeight: 600 }}>{formatMoney(dashboard?.parcelas.aReceberSemana ?? 0)}</Typography></Stack>
+                <Typography color="success.main" variant="body2" sx={{ fontWeight: 700 }}>
+                  A receber
+                </Typography>
+                <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
+                  <Typography variant="body2">Hoje</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                    {formatMoney(dashboard?.parcelas.aReceberHoje ?? 0)}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
+                  <Typography variant="body2">Na semana</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                    {formatMoney(dashboard?.parcelas.aReceberSemana ?? 0)}
+                  </Typography>
+                </Stack>
               </Box>
               <Divider />
               <Box>
-                <Typography color="error.main" variant="body2" sx={{ fontWeight: 700 }}>A pagar</Typography>
-                <Stack direction="row" sx={{ justifyContent: 'space-between' }}><Typography variant="body2">Hoje</Typography><Typography variant="body2" sx={{ fontWeight: 600 }}>{formatMoney(dashboard?.parcelas.aPagarHoje ?? 0)}</Typography></Stack>
-                <Stack direction="row" sx={{ justifyContent: 'space-between' }}><Typography variant="body2">Na semana</Typography><Typography variant="body2" sx={{ fontWeight: 600 }}>{formatMoney(dashboard?.parcelas.aPagarSemana ?? 0)}</Typography></Stack>
+                <Typography color="error.main" variant="body2" sx={{ fontWeight: 700 }}>
+                  A pagar
+                </Typography>
+                <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
+                  <Typography variant="body2">Hoje</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                    {formatMoney(dashboard?.parcelas.aPagarHoje ?? 0)}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
+                  <Typography variant="body2">Na semana</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                    {formatMoney(dashboard?.parcelas.aPagarSemana ?? 0)}
+                  </Typography>
+                </Stack>
               </Box>
             </Stack>
           )}
         </SectionCard>
 
-        <SectionCard title="Cobranças" subtitle="Valores pendentes" accentColor={cores.warning} icon={DashboardIcon.Cobranca} order={3}>
-          {loading ? <LoadingRows /> : (
+        <SectionCard
+          title="Cobranças"
+          subtitle="Valores pendentes"
+          accentColor={cores.warning}
+          icon={DashboardIcon.Cobranca}
+          order={3}
+        >
+          {loading ? (
+            <LoadingRows />
+          ) : (
             <Stack spacing={1.25}>
-              <Stack direction="row" sx={{ justifyContent: 'space-between' }}><Typography color="text.secondary" variant="body2">Hoje</Typography><Typography variant="body2" sx={{ fontWeight: 700 }}>{formatMoney(dashboard?.cobranca.totalHoje ?? 0)}</Typography></Stack>
-              <Stack direction="row" sx={{ justifyContent: 'space-between' }}><Typography color="text.secondary" variant="body2">Últimos 7 dias</Typography><Typography variant="body2" sx={{ fontWeight: 700 }}>{formatMoney(dashboard?.cobranca.totalSemana ?? 0)}</Typography></Stack>
-              <Divider />
-              <Typography color="success.main" variant="h6">{formatMoney(dashboard?.cobranca.totalCobranca ?? 0)}</Typography>
-              <Typography color="text.secondary" variant="body2">{formatNumber(dashboard?.cobranca.quantidadeACobrar ?? 0)} pedidos aguardando cobrança</Typography>
-            </Stack>
-          )}
-        </SectionCard>
-
-        <SectionCard title={`Variação de pedidos${variacao?.mes ? ` — ${variacao.mes}` : ''}`} subtitle="Comparação anual" accentColor={cores.error} icon={DashboardIcon.Pedido} order={2}>
-          {loading ? <LoadingRows /> : !variacao ? <EmptyState>Variação indisponível.</EmptyState> : (
-            <Stack spacing={1.5}>
-              <Stack direction="row" spacing={0.75} sx={{ alignItems: 'center', color: variacaoPositiva ? 'success.main' : 'error.main' }}>
-                <IconApp icon={variacaoPositiva ? DashboardIcon.ArrowUp : DashboardIcon.ArrowDown} width="1.5rem" />
-                <Typography variant="h5" sx={{ fontWeight: 700 }}>{formatNumber(variacao.porcentagem)}%</Typography>
+              <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
+                <Typography color="text.secondary" variant="body2">
+                  Hoje
+                </Typography>
+                <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                  {formatMoney(dashboard?.cobranca.totalHoje ?? 0)}
+                </Typography>
+              </Stack>
+              <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
+                <Typography color="text.secondary" variant="body2">
+                  Últimos 7 dias
+                </Typography>
+                <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                  {formatMoney(dashboard?.cobranca.totalSemana ?? 0)}
+                </Typography>
               </Stack>
               <Divider />
-              <Stack direction="row" sx={{ justifyContent: 'space-between' }}><Typography variant="body2">{variacao.anoAnterior}</Typography><Typography variant="body2" sx={{ fontWeight: 700 }}>{formatNumber(variacao.totalAnoAnterior)} pedidos</Typography></Stack>
-              <Stack direction="row" sx={{ justifyContent: 'space-between' }}><Typography variant="body2">{variacao.anoAtual}</Typography><Typography variant="body2" sx={{ fontWeight: 700 }}>{formatNumber(variacao.totalAnoAtual)} pedidos</Typography></Stack>
+              <Typography color="success.main" variant="h6">
+                {formatMoney(dashboard?.cobranca.totalCobranca ?? 0)}
+              </Typography>
+              <Typography color="text.secondary" variant="body2">
+                {formatNumber(dashboard?.cobranca.quantidadeACobrar ?? 0)} pedidos aguardando
+                cobrança
+              </Typography>
             </Stack>
           )}
         </SectionCard>
+
         <SectionCard
           title="Cobranças mais antigas"
           subtitle="Pendências que exigem atenção"
           accentColor={cores.warning}
           icon="weui:time-outlined"
           order={4}
-          action={!loading && cobrancasMaisAntigas.length > 0 ? (
-            <Typography color="warning.main" variant="caption" sx={{ flexShrink: 0, fontWeight: 700, textAlign: 'right' }}>
-              {cobrancasMaisAntigas.length} {cobrancasMaisAntigas.length === 1 ? 'cobrança' : 'cobranças'} · {formatMoney(totalCobrancasMaisAntigas)}
-            </Typography>
-          ) : undefined}
+          action={
+            !loading && cobrancasMaisAntigas.length > 0 ? (
+              <Typography
+                color="warning.main"
+                variant="caption"
+                sx={{ flexShrink: 0, fontWeight: 700, textAlign: 'right' }}
+              >
+                {cobrancasMaisAntigas.length}{' '}
+                {cobrancasMaisAntigas.length === 1 ? 'cobrança' : 'cobranças'} ·{' '}
+                {formatMoney(totalCobrancasMaisAntigas)}
+              </Typography>
+            ) : undefined
+          }
         >
-          {loading ? <LoadingRows /> : !cobrancasMaisAntigas.length ? <EmptyState>Nenhuma cobrança pendente.</EmptyState> : (
+          {loading ? (
+            <LoadingRows />
+          ) : !cobrancasMaisAntigas.length ? (
+            <EmptyState>Nenhuma cobrança pendente.</EmptyState>
+          ) : (
             <Stack divider={<Divider flexItem />}>
               {cobrancasMaisAntigas.map((item) => (
                 <Box key={item.pedidoId} sx={{ py: 1.25 }}>
                   <Typography noWrap variant="body2" sx={{ fontWeight: 650 }}>
                     Pedido #{item.numeroPedido} · {item.cliente}
                   </Typography>
-                  <Stack direction="row" spacing={1} sx={{ alignItems: 'center', justifyContent: 'space-between', mt: 0.35 }}>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    sx={{ alignItems: 'center', justifyContent: 'space-between', mt: 0.35 }}
+                  >
                     <Typography color="text.secondary" variant="caption">
                       {item.aDias} {item.aDias === 1 ? 'dia' : 'dias'} em aberto
                     </Typography>
-                    <Typography color="success.main" variant="body2" sx={{ flexShrink: 0, fontVariantNumeric: 'tabular-nums', fontWeight: 700 }}>
+                    <Typography
+                      color="success.main"
+                      variant="body2"
+                      sx={{ flexShrink: 0, fontVariantNumeric: 'tabular-nums', fontWeight: 700 }}
+                    >
                       {formatMoney(item.valor)}
                     </Typography>
                   </Stack>
@@ -293,25 +474,86 @@ export function HomePage() {
       </Box>
 
       <SectionDivider label="Estoque" />
-      <Box sx={{ display: 'grid', gap: { xs: 1.5, sm: 2 }, gridTemplateColumns: { xs: 'repeat(2, minmax(0, 1fr))', lg: 'repeat(4, minmax(0, 1fr))' }, mb: { xs: 1.5, sm: 2 } }}>
-        {kpis.map((kpi) => <KpiCard key={kpi.label} {...kpi} loading={loading} colorWithOpacity={colorWithOpacity} />)}
+      <Box
+        sx={{
+          display: 'grid',
+          gap: { xs: 1.5, sm: 2 },
+          gridTemplateColumns: { xs: 'repeat(2, minmax(0, 1fr))', lg: 'repeat(4, minmax(0, 1fr))' },
+          mb: { xs: 1.5, sm: 2 },
+        }}
+      >
+        {kpis.map((kpi) => (
+          <KpiCard key={kpi.label} {...kpi} loading={loading} colorWithOpacity={colorWithOpacity} />
+        ))}
       </Box>
 
       <SectionDivider label="Pedidos" />
-      <Box sx={{ display: 'grid', gap: { xs: 1.5, sm: 2 }, gridTemplateColumns: { xs: 'minmax(0, 1fr)', lg: 'repeat(2, minmax(0, 1fr))' }, mb: { xs: 1.5, sm: 2 } }}>
+      <Box
+        sx={{
+          display: 'grid',
+          gap: { xs: 1.5, sm: 2 },
+          gridTemplateColumns: { xs: 'minmax(0, 1fr)', lg: 'repeat(2, minmax(0, 1fr))' },
+          mb: { xs: 1.5, sm: 2 },
+        }}
+      >
         <SectionCard title="Pedidos por status" subtitle="Distribuição atual">
-          {loading ? <LoadingRows /> : !(dashboard?.statusPedido.length) ? <EmptyState>Nenhum pedido encontrado.</EmptyState> : (
-            <Stack spacing={1.5}>{dashboard.statusPedido.map((item) => <StatusRow key={item.status} item={item} color={getPaletteColor(PedidoStatusColorMap[item.status])} colorWithOpacity={colorWithOpacity} />)}</Stack>
+          {loading ? (
+            <LoadingRows />
+          ) : !dashboard?.statusPedido.length ? (
+            <EmptyState>Nenhum pedido encontrado.</EmptyState>
+          ) : (
+            <Stack spacing={1.5}>
+              {dashboard.statusPedido.map((item) => (
+                <StatusRow
+                  key={item.status}
+                  item={item}
+                  color={getPaletteColor(PedidoStatusColorMap[item.status])}
+                  colorWithOpacity={colorWithOpacity}
+                />
+              ))}
+            </Stack>
           )}
         </SectionCard>
         <SectionCard title="Volume por dia" subtitle="Pedidos gerados nos últimos 7 dias">
-          {loading ? <LoadingRows /> : !(dashboard?.pedidosPorDia.length) ? <EmptyState>Nenhum pedido no período.</EmptyState> : (
+          {loading ? (
+            <LoadingRows />
+          ) : !dashboard?.pedidosPorDia.length ? (
+            <EmptyState>Nenhum pedido no período.</EmptyState>
+          ) : (
             <Stack direction="row" spacing={1} sx={{ alignItems: 'flex-end', height: 190, pt: 1 }}>
               {dashboard.pedidosPorDia.map((item) => (
-                <Stack key={item.data} spacing={0.75} sx={{ alignItems: 'center', flex: 1, height: '100%', justifyContent: 'flex-end', minWidth: 0 }}>
-                  <Typography variant="caption" sx={{ fontWeight: 700 }}>{formatNumber(item.total)}</Typography>
-                  <Box title={`${item.diaSemana}: ${item.total}`} sx={{ bgcolor: 'primary.main', borderRadius: '5px 5px 0 0', minHeight: 4, width: '70%', height: `${Math.max(3, (item.total / maxPedidosDia) * 72)}%` }} />
-                  <Typography color="text.secondary" noWrap variant="caption" sx={{ maxWidth: '100%' }}>{item.diaSemana.slice(0, 3)}</Typography>
+                <Stack
+                  key={item.data}
+                  spacing={0.75}
+                  sx={{
+                    alignItems: 'center',
+                    flex: 1,
+                    height: '100%',
+                    justifyContent: 'flex-end',
+                    minWidth: 0,
+                  }}
+                >
+                  <Typography variant="caption" sx={{ fontWeight: 700 }}>
+                    {formatNumber(item.total)}
+                  </Typography>
+                  <Box
+                    title={`${item.diaSemana}: ${item.total}`}
+                    sx={{
+                      bgcolor: 'primary.main',
+                      borderRadius: '5px 5px 0 0',
+                      minHeight: 4,
+                      width: '70%',
+                      height: `${Math.max(3, (item.total / maxPedidosDia) * 72)}%`,
+                    }}
+                  />
+                  <Typography
+                    color="text.secondary"
+                    noWrap
+                    variant="caption"
+                    sx={{ maxWidth: '100%' }}
+                  >
+                    {item.diaSemana.slice(0, 3)}
+                  </Typography>
                 </Stack>
               ))}
             </Stack>
@@ -320,27 +562,66 @@ export function HomePage() {
       </Box>
 
       <SectionDivider label="Produtos" />
-      <Box sx={{ display: 'grid', gap: { xs: 1.5, sm: 2 }, gridTemplateColumns: { xs: 'minmax(0, 1fr)', lg: 'repeat(2, minmax(0, 1fr))' }, mb: { xs: 1.5, sm: 2 } }}>
-        <SectionCard title="Produtos mais vendidos" subtitle="Quantidade vendida">{loading ? <LoadingRows /> : <ProductList products={dashboard?.produtosMaisVendidos ?? []} />}</SectionCard>
-        <SectionCard title="Produtos menos vendidos" subtitle="Quantidade vendida">{loading ? <LoadingRows /> : <ProductList products={dashboard?.produtosMenosVendidos ?? []} />}</SectionCard>
+      <Box
+        sx={{
+          display: 'grid',
+          gap: { xs: 1.5, sm: 2 },
+          gridTemplateColumns: { xs: 'minmax(0, 1fr)', lg: 'repeat(2, minmax(0, 1fr))' },
+          mb: { xs: 1.5, sm: 2 },
+        }}
+      >
+        <SectionCard title="Produtos mais vendidos" subtitle="Quantidade vendida">
+          {loading ? (
+            <LoadingRows />
+          ) : (
+            <ProductList products={dashboard?.produtosMaisVendidos ?? []} />
+          )}
+        </SectionCard>
+        <SectionCard title="Produtos menos vendidos" subtitle="Quantidade vendida">
+          {loading ? (
+            <LoadingRows />
+          ) : (
+            <ProductList products={dashboard?.produtosMenosVendidos ?? []} />
+          )}
+        </SectionCard>
       </Box>
 
       <SectionDivider label="Indicadores" />
-      <Box sx={{ display: 'grid', gap: { xs: 1.5, sm: 2 }, gridTemplateColumns: { xs: 'minmax(0, 1fr)', lg: 'minmax(0, 2fr) minmax(280px, 1fr)' }, mb: 2 }}>
+      <Box
+        sx={{
+          display: 'grid',
+          gap: { xs: 1.5, sm: 2 },
+          gridTemplateColumns: { xs: 'minmax(0, 1fr)', lg: 'minmax(0, 2fr) minmax(280px, 1fr)' },
+          mb: 2,
+        }}
+      >
         <SectionCard
           title="Movimentação por categoria"
           subtitle="Quantidade movimentada por mês"
-          action={(
+          action={
             <Typography
               color="text.secondary"
               variant="caption"
-              sx={{ bgcolor: 'action.selected', border: '1px solid', borderColor: 'divider', borderRadius: 10, flexShrink: 0, fontWeight: 700, px: 1.25, py: 0.4 }}
+              sx={{
+                bgcolor: 'action.selected',
+                border: '1px solid',
+                borderColor: 'divider',
+                borderRadius: 10,
+                flexShrink: 0,
+                fontWeight: 700,
+                px: 1.25,
+                py: 0.4,
+              }}
             >
               {movimentos.length} {movimentos.length === 1 ? 'mês' : 'meses'}
             </Typography>
-          )}
+          }
         >
-          {loading ? <LoadingRows /> : !movimentos.length ? <EmptyState>Nenhuma movimentação encontrada.</EmptyState> : (
+          {loading ? (
+            <LoadingRows />
+          ) : !movimentos.length ? (
+            <EmptyState>Nenhuma movimentação encontrada.</EmptyState>
+          ) : (
             <Stack spacing={1.75}>
               {movimentos.map((movimento) => (
                 <Box key={`${movimento.mes}-${movimento.data}`}>
@@ -366,9 +647,9 @@ export function HomePage() {
                   </Typography>
                   <Stack spacing={0.75}>
                     {categoriasMovimento.map((categoria) => {
-                      const quantidade = movimento.dados.find(
-                        (item) => item.categoria.trim() === categoria,
-                      )?.quantidade ?? 0
+                      const quantidade =
+                        movimento.dados.find((item) => item.categoria.trim() === categoria)
+                          ?.quantidade ?? 0
 
                       return (
                         <Stack
@@ -378,7 +659,17 @@ export function HomePage() {
                           spacing={1}
                           sx={{ alignItems: 'center', minHeight: 22 }}
                         >
-                          <Typography color="text.secondary" noWrap variant="caption" sx={{ fontSize: '0.72rem', fontWeight: 500, opacity: 0.82, width: { xs: 90, sm: 130 } }}>
+                          <Typography
+                            color="text.secondary"
+                            noWrap
+                            variant="caption"
+                            sx={{
+                              fontSize: '0.72rem',
+                              fontWeight: 500,
+                              opacity: 0.82,
+                              width: { xs: 90, sm: 130 },
+                            }}
+                          >
                             {categoria}
                           </Typography>
                           <LinearProgress
@@ -393,7 +684,17 @@ export function HomePage() {
                               '& .MuiLinearProgress-bar': { borderRadius: 4 },
                             }}
                           />
-                          <Typography color="text.primary" variant="caption" sx={{ fontSize: '0.72rem', fontVariantNumeric: 'tabular-nums', fontWeight: 750, textAlign: 'right', width: 52 }}>
+                          <Typography
+                            color="text.primary"
+                            variant="caption"
+                            sx={{
+                              fontSize: '0.72rem',
+                              fontVariantNumeric: 'tabular-nums',
+                              fontWeight: 750,
+                              textAlign: 'right',
+                              width: 52,
+                            }}
+                          >
                             {formatNumber(quantidade)}
                           </Typography>
                         </Stack>
@@ -406,11 +707,27 @@ export function HomePage() {
           )}
         </SectionCard>
         <SectionCard title="E-commerce" subtitle="Indicadores de clientes">
-          {loading ? <LoadingRows /> : (
+          {loading ? (
+            <LoadingRows />
+          ) : (
             <Stack divider={<Divider flexItem />}>
-              <IndicatorRow icon={DashboardIcon.Acesso} label="Acessos no mês" value={dashboard?.quantidadeDeAcessoEcommerce ?? 0} />
-              <IndicatorRow icon={DashboardIcon.Clientes} label="Clientes CNPJ" onClick={() => navigate(PrivateRoutePath.ClienteUltimosPedidosCnpj)} value={dashboard?.quantidadeDeUsuarioCnpj ?? 0} />
-              <IndicatorRow icon={DashboardIcon.Clientes} label="Clientes CPF" onClick={() => navigate(PrivateRoutePath.ClienteUltimosPedidosCpf)} value={dashboard?.quantidadeDeUsuarioCpf ?? 0} />
+              <IndicatorRow
+                icon={DashboardIcon.Acesso}
+                label="Acessos no mês"
+                value={dashboard?.quantidadeDeAcessoEcommerce ?? 0}
+              />
+              <IndicatorRow
+                icon={DashboardIcon.Clientes}
+                label="Clientes CNPJ"
+                onClick={() => navigate(PrivateRoutePath.ClienteUltimosPedidosCnpj)}
+                value={dashboard?.quantidadeDeUsuarioCnpj ?? 0}
+              />
+              <IndicatorRow
+                icon={DashboardIcon.Clientes}
+                label="Clientes CPF"
+                onClick={() => navigate(PrivateRoutePath.ClienteUltimosPedidosCpf)}
+                value={dashboard?.quantidadeDeUsuarioCpf ?? 0}
+              />
             </Stack>
           )}
         </SectionCard>
@@ -421,17 +738,49 @@ export function HomePage() {
   )
 }
 
-function StatusRow({ item, color, colorWithOpacity }: { item: DashboardStatusPedido; color: string; colorWithOpacity: (color: string, opacity: number) => string }) {
+function StatusRow({
+  item,
+  color,
+  colorWithOpacity,
+}: {
+  item: DashboardStatusPedido
+  color: string
+  colorWithOpacity: (color: string, opacity: number) => string
+}) {
   const label = PedidoStatusLabel[item.status] ?? String(item.status)
   return (
     <Box>
-      <Stack direction="row" sx={{ justifyContent: 'space-between', mb: 0.5 }}><Typography variant="body2">{label}</Typography><Typography variant="body2" sx={{ fontWeight: 700 }}>{formatNumber(item.quantidade)} ({formatNumber(item.porcentagem)}%)</Typography></Stack>
-      <LinearProgress variant="determinate" value={Math.min(100, item.porcentagem)} sx={{ bgcolor: colorWithOpacity(color, 0.12), borderRadius: 4, height: 8, '& .MuiLinearProgress-bar': { bgcolor: color, borderRadius: 4 } }} />
+      <Stack direction="row" sx={{ justifyContent: 'space-between', mb: 0.5 }}>
+        <Typography variant="body2">{label}</Typography>
+        <Typography variant="body2" sx={{ fontWeight: 700 }}>
+          {formatNumber(item.quantidade)} ({formatNumber(item.porcentagem)}%)
+        </Typography>
+      </Stack>
+      <LinearProgress
+        variant="determinate"
+        value={Math.min(100, item.porcentagem)}
+        sx={{
+          bgcolor: colorWithOpacity(color, 0.12),
+          borderRadius: 4,
+          height: 8,
+          '& .MuiLinearProgress-bar': { bgcolor: color, borderRadius: 4 },
+        }}
+      />
     </Box>
   )
 }
 
-function IndicatorRow({ icon, label, onClick, value }: { icon: string; label: string; onClick?: () => void; value: number }) {
+function IndicatorRow({
+  icon,
+  label,
+  onClick,
+  value,
+}: {
+  icon: string
+  label: string
+  onClick?: () => void
+  value: number
+}) {
   return (
     <Stack
       direction="row"
@@ -451,9 +800,25 @@ function IndicatorRow({ icon, label, onClick, value }: { icon: string; label: st
         '&:hover': onClick ? { bgcolor: 'action.hover' } : undefined,
       }}
     >
-      <Box sx={{ bgcolor: 'action.selected', borderRadius: 1.5, color: 'primary.main', display: 'grid', height: 36, placeItems: 'center', width: 36 }}><IconApp icon={icon} width="1.1875rem" /></Box>
-      <Typography variant="body2" sx={{ flex: 1 }}>{label}</Typography>
-      <Typography variant="body2" sx={{ fontWeight: 700 }}>{formatNumber(value)}</Typography>
+      <Box
+        sx={{
+          bgcolor: 'action.selected',
+          borderRadius: 1.5,
+          color: 'primary.main',
+          display: 'grid',
+          height: 36,
+          placeItems: 'center',
+          width: 36,
+        }}
+      >
+        <IconApp icon={icon} width="1.1875rem" />
+      </Box>
+      <Typography variant="body2" sx={{ flex: 1 }}>
+        {label}
+      </Typography>
+      <Typography variant="body2" sx={{ fontWeight: 700 }}>
+        {formatNumber(value)}
+      </Typography>
     </Stack>
   )
 }
