@@ -12,6 +12,7 @@ export enum ApiRoutePath {
   ConfiguracaoPedido = '/configuracoes-de-pedido',
   ConfiguracaoMercadoPago = '/configuracao-de-pagamento',
   AtendimentoNumero = '/telefone-atendimento',
+  Autenticacao = '/login',
   Login = '/login/funcionario',
   Menu = '/menu',
   Peso = '/pesos',
@@ -92,6 +93,7 @@ export enum CnpjApiRoutePath {
 }
 
 export enum LoginApiRoutePath {
+  Logout = '/logout',
   EsqueciSenha = '/esqueceu-senha',
   CadastrarSenha = '/cadastrar-senha',
 }

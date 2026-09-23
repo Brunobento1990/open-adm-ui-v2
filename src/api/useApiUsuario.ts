@@ -1,9 +1,13 @@
 import { ApiMethod, useApi } from '../hook/useApi'
 import type { TrocarSenhaRequest, Usuario, UsuarioSessao } from '../types/UsuarioTypes'
-import { ApiRoutePath, UsuarioApiRoutePath } from './apiRoutes'
+import { ApiRoutePath, LoginApiRoutePath, UsuarioApiRoutePath } from './apiRoutes'
 
 type LogoutResponse = {
   resultado: boolean
+}
+
+type LogoutAtualResponse = {
+  result: boolean
 }
 
 export function useApiMinhaConta() {
@@ -27,15 +31,15 @@ export function useApiUsuarioSessoes() {
 
 export function useApiUsuarioLogout() {
   const api = useApi({
-    method: ApiMethod.Put,
+    method: ApiMethod.Post,
     naoDeslogarAoReceber401: true,
     naoRenderizarResposta: true,
-    url: `${ApiRoutePath.Usuario}${UsuarioApiRoutePath.Logout}`,
+    url: `${ApiRoutePath.Autenticacao}${LoginApiRoutePath.Logout}`,
   })
 
   return {
     ...api,
-    action: () => api.action<LogoutResponse>(),
+    action: () => api.action<LogoutAtualResponse>(),
   }
 }
 

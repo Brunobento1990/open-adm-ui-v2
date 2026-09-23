@@ -63,7 +63,7 @@ export function Header({ title, onOpenMobileSidebar }: HeaderProps) {
     if (apiLogout.loading) return
 
     const response = await apiLogout.action()
-    if (response?.resultado) logout()
+    if (response?.result === true) logout()
   }
 
   const userMenuItems: MenuAppItem[] = [
