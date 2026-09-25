@@ -3,19 +3,18 @@ import type { Cliente } from '../types/ClienteTypes'
 import { ApiRoutePath } from './apiRoutes'
 
 export function useApiCliente() {
-  const apiCriar = useApi({ method: ApiMethod.Post, url: ApiRoutePath.Cliente })
+  const apiCriar = useApi({ method: ApiMethod.Post, url: ApiRoutePath.ClienteRepresentante })
   const apiObter = useApi({
     method: ApiMethod.Get,
-    url: ApiRoutePath.Cliente,
+    url: ApiRoutePath.ClienteRepresentante,
     naoRenderizarResposta: true,
   })
-  const apiAtualizar = useApi({ method: ApiMethod.Put, url: ApiRoutePath.Cliente })
+  const apiAtualizar = useApi({ method: ApiMethod.Put, url: ApiRoutePath.ClienteRepresentante })
 
   return {
     obter: {
-      fetch: (id: string) => apiObter.action<Cliente>({
-        urlParams: `?id=${encodeURIComponent(id)}`,
-      }),
+      fetch: (id: string) =>
+        apiObter.action<Cliente>({ urlParams: `/${encodeURIComponent(id)}` }),
       loading: apiObter.loading,
     },
     criar: {
@@ -28,7 +27,7 @@ export function useApiCliente() {
     atualizar: {
       fetch: (id: string, values: Partial<Cliente>) => apiAtualizar.action<Cliente>({
         body: values,
-        urlParams: `?id=${encodeURIComponent(id)}`,
+        urlParams: `/${encodeURIComponent(id)}`,
         message: 'Cliente atualizado com sucesso',
       }),
       loading: apiAtualizar.loading,

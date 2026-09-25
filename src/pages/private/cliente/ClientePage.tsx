@@ -36,7 +36,8 @@ export function ClientePage() {
       columns={columns}
       nomeDaTabela={ClienteTable.Name}
       orderBy={ClienteFormField.Nome}
-      url={ApiRoutePath.Cliente}
+      desabilitarColunaAtivo
+      url={ApiRoutePath.ClienteRepresentante}
       urlAdd={PrivateRoutePath.ClienteAdicionar}
       urlEdit={PrivateRoutePath.ClienteEditar}
       urlView={PrivateRoutePath.ClienteVisualizar}
