@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
 import { AtendimentoChatPage } from '../pages/private/atendimento/AtendimentoChatPage'
 import { AtendimentoNumeroPage } from '../pages/private/AtendimentoNumeroPage'
-import { BannerFormPage } from '../pages/private/banner/BannerFormPage'
-import { BannerPage } from '../pages/private/banner/BannerPage'
+// import { BannerFormPage } from '../pages/private/banner/BannerFormPage'
+// import { BannerPage } from '../pages/private/banner/BannerPage'
 import { CategoriaFormPage } from '../pages/private/categoria/CategoriaFormPage'
 import { CategoriaPage } from '../pages/private/categoria/CategoriaPage'
 import { ClienteFormPage } from '../pages/private/cliente/ClienteFormPage'
@@ -13,51 +13,51 @@ import { ClienteVendaFormPage } from '../pages/private/cliente/ClienteVendaFormP
 import { ClienteVendaPage } from '../pages/private/cliente/ClienteVendaPage'
 import { ComandaFormPage } from '../pages/private/comanda/ComandaFormPage'
 import { ComandaPage } from '../pages/private/comanda/ComandaPage'
-import { ConfiguracaoPedidoPage } from '../pages/private/configuracaoPedido/ConfiguracaoPedidoPage'
-import { ConfiguracaoMercadoPagoPage } from '../pages/private/configuracaoMercadoPago/ConfiguracaoMercadoPagoPage'
+// import { ConfiguracaoPedidoPage } from '../pages/private/configuracaoPedido/ConfiguracaoPedidoPage'
+// import { ConfiguracaoMercadoPagoPage } from '../pages/private/configuracaoMercadoPago/ConfiguracaoMercadoPagoPage'
 import { EstoqueMovimentacaoPage } from '../pages/private/estoque/EstoqueMovimentacaoPage'
 import { EstoquePage } from '../pages/private/estoque/EstoquePage'
 import { EmpresaPage } from '../pages/private/empresa/EmpresaPage'
-import { BonificadosPage } from '../pages/private/financeiro/BonificadosPage'
-import { FaturaPage } from '../pages/private/financeiro/FaturaPage'
-import { FaturaRenegociarPage } from '../pages/private/financeiro/FaturaRenegociarPage'
-import { NegociarCobrancaPage } from '../pages/private/financeiro/NegociarCobrancaPage'
-import { MensalidadePage } from '../pages/private/financeiro/MensalidadePage'
-import { PagarParcelaPage } from '../pages/private/financeiro/PagarParcelaPage'
-import { FaturaFormPage } from '../pages/private/financeiro/FaturaFormPage'
-import { MensalidadeVisualizarPage } from '../pages/private/financeiro/MensalidadeVisualizarPage'
-import { TransacaoFinanceiraPage } from '../pages/private/financeiro/TransacaoFinanceiraPage'
+// import { BonificadosPage } from '../pages/private/financeiro/BonificadosPage'
+// import { FaturaPage } from '../pages/private/financeiro/FaturaPage'
+// import { FaturaRenegociarPage } from '../pages/private/financeiro/FaturaRenegociarPage'
+// import { NegociarCobrancaPage } from '../pages/private/financeiro/NegociarCobrancaPage'
+// import { MensalidadePage } from '../pages/private/financeiro/MensalidadePage'
+// import { PagarParcelaPage } from '../pages/private/financeiro/PagarParcelaPage'
+// import { FaturaFormPage } from '../pages/private/financeiro/FaturaFormPage'
+// import { MensalidadeVisualizarPage } from '../pages/private/financeiro/MensalidadeVisualizarPage'
+// import { TransacaoFinanceiraPage } from '../pages/private/financeiro/TransacaoFinanceiraPage'
 import { HomePage } from '../pages/private/HomePage'
-import { LojaParceiraFormPage } from '../pages/private/lojaParceira/LojaParceiraFormPage'
-import { LojaParceiraPage } from '../pages/private/lojaParceira/LojaParceiraPage'
-import { LinkBioEventosPage } from '../pages/private/linkBio/LinkBioEventosPage'
-import { LinkBioPage } from '../pages/private/linkBio/LinkBioPage'
+// import { LojaParceiraFormPage } from '../pages/private/lojaParceira/LojaParceiraFormPage'
+// import { LojaParceiraPage } from '../pages/private/lojaParceira/LojaParceiraPage'
+// import { LinkBioEventosPage } from '../pages/private/linkBio/LinkBioEventosPage'
+// import { LinkBioPage } from '../pages/private/linkBio/LinkBioPage'
 import { MinhaContaPage } from '../pages/private/MinhaContaPage'
-import { MinhaEmpresaPage } from '../pages/private/minhaEmpresa/MinhaEmpresaPage'
+// import { MinhaEmpresaPage } from '../pages/private/minhaEmpresa/MinhaEmpresaPage'
 import { MovimentoProdutoFormPage } from '../pages/private/movimentoProduto/MovimentoProdutoFormPage'
 import { MovimentoProdutoPage } from '../pages/private/movimentoProduto/MovimentoProdutoPage'
 import { PedidoPage } from '../pages/private/pedido/PedidoPage'
 import { PedidoFormPage } from '../pages/private/pedido/PedidoFormPage'
 import { PedidoVisualizarPage } from '../pages/private/pedido/PedidoVisualizarPage'
 import { PedidoModificarStatusPage } from '../pages/private/pedido/PedidoModificarStatusPage'
-import { PrecoPorPesoPage } from '../pages/private/precoPorPeso/PrecoPorPesoPage'
-import { PrecoPorTamanhoPage } from '../pages/private/precoPorTamanho/PrecoPorTamanhoPage'
-import { RelatorioPedidoPeriodoPage } from '../pages/private/relatorioPedido/RelatorioPedidoPeriodoPage'
-import { RelatorioVendaProdutoPage } from '../pages/private/relatorioVendaProduto/RelatorioVendaProdutoPage'
-import { RepresentanteFormPage } from '../pages/private/representante/RepresentanteFormPage'
-import { RepresentantePage } from '../pages/private/representante/RepresentantePage'
+// import { PrecoPorPesoPage } from '../pages/private/precoPorPeso/PrecoPorPesoPage'
+// import { PrecoPorTamanhoPage } from '../pages/private/precoPorTamanho/PrecoPorTamanhoPage'
+// import { RelatorioPedidoPeriodoPage } from '../pages/private/relatorioPedido/RelatorioPedidoPeriodoPage'
+// import { RelatorioVendaProdutoPage } from '../pages/private/relatorioVendaProduto/RelatorioVendaProdutoPage'
+// import { RepresentanteFormPage } from '../pages/private/representante/RepresentanteFormPage'
+// import { RepresentantePage } from '../pages/private/representante/RepresentantePage'
 import { PesoFormPage } from '../pages/private/peso/PesoFormPage'
 import { PesoPage } from '../pages/private/peso/PesoPage'
 import { ProdutoFormPage } from '../pages/private/produto/ProdutoFormPage'
 import { ProdutoPage } from '../pages/private/produto/ProdutoPage'
-import { TabelaDePrecoFormPage } from '../pages/private/tabelaDePreco/TabelaDePrecoFormPage'
-import { TabelaDePrecoPage } from '../pages/private/tabelaDePreco/TabelaDePrecoPage'
+// import { TabelaDePrecoFormPage } from '../pages/private/tabelaDePreco/TabelaDePrecoFormPage'
+// import { TabelaDePrecoPage } from '../pages/private/tabelaDePreco/TabelaDePrecoPage'
 import { TamanhoFormPage } from '../pages/private/tamanho/TamanhoFormPage'
 import { TamanhoPage } from '../pages/private/tamanho/TamanhoPage'
 import { UsuarioFormPage } from '../pages/private/usuario/UsuarioFormPage'
 import { UsuarioPage } from '../pages/private/usuario/UsuarioPage'
 import { FormAction } from '../types/Form'
-import { TipoFatura } from '../types/FaturaTypes'
+// import { TipoFatura } from '../types/FaturaTypes'
 import { PrivateRoutePath } from './appRoutes'
 
 export type PrivateRouteConfig = {
@@ -67,16 +67,16 @@ export type PrivateRouteConfig = {
 }
 
 export const privateRoutes: PrivateRouteConfig[] = [
-  {
-    title: 'Link da Bio',
-    path: PrivateRoutePath.LinkBio,
-    component: <LinkBioPage />,
-  },
-  {
-    title: 'Eventos do Link da Bio',
-    path: PrivateRoutePath.LinkBioEventos,
-    component: <LinkBioEventosPage />,
-  },
+  // {
+  //   title: 'Link da Bio',
+  //   path: PrivateRoutePath.LinkBio,
+  //   component: <LinkBioPage />,
+  // },
+  // {
+  //   title: 'Eventos do Link da Bio',
+  //   path: PrivateRoutePath.LinkBioEventos,
+  //   component: <LinkBioEventosPage />,
+  // },
   {
     title: 'Pedidos',
     path: PrivateRoutePath.Pedido,
@@ -97,55 +97,55 @@ export const privateRoutes: PrivateRouteConfig[] = [
     path: PrivateRoutePath.PedidoModificarStatusId,
     component: <PedidoModificarStatusPage />,
   },
-  {
-    title: 'Contas a receber',
-    path: PrivateRoutePath.ContaAReceber,
-    component: (
-      <FaturaPage tipo={TipoFatura.AReceber} urlAdd={PrivateRoutePath.ContaAReceberAdicionar} />
-    ),
-  },
-  {
-    title: 'Negociar cobrança',
-    path: PrivateRoutePath.FaturaNegociarCobrancaId,
-    component: <NegociarCobrancaPage />,
-  },
-  {
-    title: 'Renegociar fatura',
-    path: PrivateRoutePath.FaturaRenegociarId,
-    component: <FaturaRenegociarPage />,
-  },
-  {
-    title: 'Nova conta a receber',
-    path: PrivateRoutePath.ContaAReceberAdicionar,
-    component: (
-      <FaturaFormPage tipo={TipoFatura.AReceber} urlVoltar={PrivateRoutePath.ContaAReceber} />
-    ),
-  },
-  {
-    title: 'Baixar parcela',
-    path: PrivateRoutePath.PagarParcelaId,
-    component: <PagarParcelaPage />,
-  },
-  {
-    title: 'Bonificados',
-    path: PrivateRoutePath.Bonificados,
-    component: <BonificadosPage />,
-  },
-  {
-    title: 'Mensalidades',
-    path: PrivateRoutePath.Mensalidade,
-    component: <MensalidadePage />,
-  },
-  {
-    title: 'Visualizar mensalidade',
-    path: PrivateRoutePath.MensalidadeVisualizarId,
-    component: <MensalidadeVisualizarPage />,
-  },
-  {
-    title: 'Extrato por período',
-    path: PrivateRoutePath.TransacaoFinanceira,
-    component: <TransacaoFinanceiraPage />,
-  },
+  // {
+  //   title: 'Contas a receber',
+  //   path: PrivateRoutePath.ContaAReceber,
+  //   component: (
+  //     <FaturaPage tipo={TipoFatura.AReceber} urlAdd={PrivateRoutePath.ContaAReceberAdicionar} />
+  //   ),
+  // },
+  // {
+  //   title: 'Negociar cobrança',
+  //   path: PrivateRoutePath.FaturaNegociarCobrancaId,
+  //   component: <NegociarCobrancaPage />,
+  // },
+  // {
+  //   title: 'Renegociar fatura',
+  //   path: PrivateRoutePath.FaturaRenegociarId,
+  //   component: <FaturaRenegociarPage />,
+  // },
+  // {
+  //   title: 'Nova conta a receber',
+  //   path: PrivateRoutePath.ContaAReceberAdicionar,
+  //   component: (
+  //     <FaturaFormPage tipo={TipoFatura.AReceber} urlVoltar={PrivateRoutePath.ContaAReceber} />
+  //   ),
+  // },
+  // {
+  //   title: 'Baixar parcela',
+  //   path: PrivateRoutePath.PagarParcelaId,
+  //   component: <PagarParcelaPage />,
+  // },
+  // {
+  //   title: 'Bonificados',
+  //   path: PrivateRoutePath.Bonificados,
+  //   component: <BonificadosPage />,
+  // },
+  // {
+  //   title: 'Mensalidades',
+  //   path: PrivateRoutePath.Mensalidade,
+  //   component: <MensalidadePage />,
+  // },
+  // {
+  //   title: 'Visualizar mensalidade',
+  //   path: PrivateRoutePath.MensalidadeVisualizarId,
+  //   component: <MensalidadeVisualizarPage />,
+  // },
+  // {
+  //   title: 'Extrato por período',
+  //   path: PrivateRoutePath.TransacaoFinanceira,
+  //   component: <TransacaoFinanceiraPage />,
+  // },
   {
     title: 'Movimentos de produto',
     path: PrivateRoutePath.MovimentoProduto,
@@ -196,46 +196,46 @@ export const privateRoutes: PrivateRouteConfig[] = [
     path: PrivateRoutePath.PesoVisualizarId,
     component: <PesoFormPage action={FormAction.View} />,
   },
-  {
-    title: 'Lojas parceiras',
-    path: PrivateRoutePath.LojaParceira,
-    component: <LojaParceiraPage />,
-  },
-  {
-    title: 'Loja parceira',
-    path: PrivateRoutePath.LojaParceiraAdicionar,
-    component: <LojaParceiraFormPage action={FormAction.Create} />,
-  },
-  {
-    title: 'Loja parceira',
-    path: PrivateRoutePath.LojaParceiraEditarId,
-    component: <LojaParceiraFormPage action={FormAction.Edit} />,
-  },
-  {
-    title: 'Visualizar loja parceira',
-    path: PrivateRoutePath.LojaParceiraVisualizarId,
-    component: <LojaParceiraFormPage action={FormAction.View} />,
-  },
-  {
-    title: 'Banners',
-    path: PrivateRoutePath.Banner,
-    component: <BannerPage />,
-  },
-  {
-    title: 'Banner',
-    path: PrivateRoutePath.BannerAdicionar,
-    component: <BannerFormPage action={FormAction.Create} />,
-  },
-  {
-    title: 'Banner',
-    path: PrivateRoutePath.BannerEditarId,
-    component: <BannerFormPage action={FormAction.Edit} />,
-  },
-  {
-    title: 'Visualizar banner',
-    path: PrivateRoutePath.BannerVisualizarId,
-    component: <BannerFormPage action={FormAction.View} />,
-  },
+  // {
+  //   title: 'Lojas parceiras',
+  //   path: PrivateRoutePath.LojaParceira,
+  //   component: <LojaParceiraPage />,
+  // },
+  // {
+  //   title: 'Loja parceira',
+  //   path: PrivateRoutePath.LojaParceiraAdicionar,
+  //   component: <LojaParceiraFormPage action={FormAction.Create} />,
+  // },
+  // {
+  //   title: 'Loja parceira',
+  //   path: PrivateRoutePath.LojaParceiraEditarId,
+  //   component: <LojaParceiraFormPage action={FormAction.Edit} />,
+  // },
+  // {
+  //   title: 'Visualizar loja parceira',
+  //   path: PrivateRoutePath.LojaParceiraVisualizarId,
+  //   component: <LojaParceiraFormPage action={FormAction.View} />,
+  // },
+  // {
+  //   title: 'Banners',
+  //   path: PrivateRoutePath.Banner,
+  //   component: <BannerPage />,
+  // },
+  // {
+  //   title: 'Banner',
+  //   path: PrivateRoutePath.BannerAdicionar,
+  //   component: <BannerFormPage action={FormAction.Create} />,
+  // },
+  // {
+  //   title: 'Banner',
+  //   path: PrivateRoutePath.BannerEditarId,
+  //   component: <BannerFormPage action={FormAction.Edit} />,
+  // },
+  // {
+  //   title: 'Visualizar banner',
+  //   path: PrivateRoutePath.BannerVisualizarId,
+  //   component: <BannerFormPage action={FormAction.View} />,
+  // },
   {
     title: 'Home',
     path: PrivateRoutePath.Dashboard,
@@ -251,21 +251,21 @@ export const privateRoutes: PrivateRouteConfig[] = [
     path: PrivateRoutePath.Empresa,
     component: <EmpresaPage />,
   },
-  {
-    title: 'Minha empresa',
-    path: PrivateRoutePath.MinhaEmpresa,
-    component: <MinhaEmpresaPage />,
-  },
-  {
-    title: 'Configuração de pedido',
-    path: PrivateRoutePath.ConfiguracaoPedido,
-    component: <ConfiguracaoPedidoPage />,
-  },
-  {
-    title: 'Configurações do Mercado Pago',
-    path: PrivateRoutePath.ConfiguracaoMercadoPago,
-    component: <ConfiguracaoMercadoPagoPage />,
-  },
+  // {
+  //   title: 'Minha empresa',
+  //   path: PrivateRoutePath.MinhaEmpresa,
+  //   component: <MinhaEmpresaPage />,
+  // },
+  // {
+  //   title: 'Configuração de pedido',
+  //   path: PrivateRoutePath.ConfiguracaoPedido,
+  //   component: <ConfiguracaoPedidoPage />,
+  // },
+  // {
+  //   title: 'Configurações do Mercado Pago',
+  //   path: PrivateRoutePath.ConfiguracaoMercadoPago,
+  //   component: <ConfiguracaoMercadoPagoPage />,
+  // },
   {
     title: 'Usuários',
     path: PrivateRoutePath.Usuario,
@@ -381,26 +381,26 @@ export const privateRoutes: PrivateRouteConfig[] = [
     path: PrivateRoutePath.ClienteVisualizarId,
     component: <ClienteFormPage action={FormAction.View} />,
   },
-  {
-    title: 'Representantes',
-    path: PrivateRoutePath.Representante,
-    component: <RepresentantePage />,
-  },
-  {
-    title: 'Representante',
-    path: PrivateRoutePath.RepresentanteAdicionar,
-    component: <RepresentanteFormPage action={FormAction.Create} />,
-  },
-  {
-    title: 'Representante',
-    path: PrivateRoutePath.RepresentanteEditarId,
-    component: <RepresentanteFormPage action={FormAction.Edit} />,
-  },
-  {
-    title: 'Visualizar representante',
-    path: PrivateRoutePath.RepresentanteVisualizarId,
-    component: <RepresentanteFormPage action={FormAction.View} />,
-  },
+  // {
+  //   title: 'Representantes',
+  //   path: PrivateRoutePath.Representante,
+  //   component: <RepresentantePage />,
+  // },
+  // {
+  //   title: 'Representante',
+  //   path: PrivateRoutePath.RepresentanteAdicionar,
+  //   component: <RepresentanteFormPage action={FormAction.Create} />,
+  // },
+  // {
+  //   title: 'Representante',
+  //   path: PrivateRoutePath.RepresentanteEditarId,
+  //   component: <RepresentanteFormPage action={FormAction.Edit} />,
+  // },
+  // {
+  //   title: 'Visualizar representante',
+  //   path: PrivateRoutePath.RepresentanteVisualizarId,
+  //   component: <RepresentanteFormPage action={FormAction.View} />,
+  // },
   {
     title: 'Produtos',
     path: PrivateRoutePath.Produto,
@@ -421,46 +421,46 @@ export const privateRoutes: PrivateRouteConfig[] = [
     path: PrivateRoutePath.ProdutoVisualizarId,
     component: <ProdutoFormPage action={FormAction.View} />,
   },
-  {
-    title: 'Tabelas de preço',
-    path: PrivateRoutePath.TabelaDePreco,
-    component: <TabelaDePrecoPage />,
-  },
-  {
-    title: 'Preço por peso',
-    path: PrivateRoutePath.PrecoPorPeso,
-    component: <PrecoPorPesoPage />,
-  },
-  {
-    title: 'Preço por tamanho',
-    path: PrivateRoutePath.PrecoPorTamanho,
-    component: <PrecoPorTamanhoPage />,
-  },
-  {
-    title: 'Relatório por período',
-    path: PrivateRoutePath.RelatorioPedidoPeriodo,
-    component: <RelatorioPedidoPeriodoPage />,
-  },
-  {
-    title: 'Relatório venda produto',
-    path: PrivateRoutePath.RelatorioVendaProduto,
-    component: <RelatorioVendaProdutoPage />,
-  },
-  {
-    title: 'Tabela de preço',
-    path: PrivateRoutePath.TabelaDePrecoAdicionar,
-    component: <TabelaDePrecoFormPage action={FormAction.Create} />,
-  },
-  {
-    title: 'Tabela de preço',
-    path: PrivateRoutePath.TabelaDePrecoEditarId,
-    component: <TabelaDePrecoFormPage action={FormAction.Edit} />,
-  },
-  {
-    title: 'Visualizar tabela de preço',
-    path: PrivateRoutePath.TabelaDePrecoVisualizarId,
-    component: <TabelaDePrecoFormPage action={FormAction.View} />,
-  },
+  // {
+  //   title: 'Tabelas de preço',
+  //   path: PrivateRoutePath.TabelaDePreco,
+  //   component: <TabelaDePrecoPage />,
+  // },
+  // {
+  //   title: 'Preço por peso',
+  //   path: PrivateRoutePath.PrecoPorPeso,
+  //   component: <PrecoPorPesoPage />,
+  // },
+  // {
+  //   title: 'Preço por tamanho',
+  //   path: PrivateRoutePath.PrecoPorTamanho,
+  //   component: <PrecoPorTamanhoPage />,
+  // },
+  // {
+  //   title: 'Relatório por período',
+  //   path: PrivateRoutePath.RelatorioPedidoPeriodo,
+  //   component: <RelatorioPedidoPeriodoPage />,
+  // },
+  // {
+  //   title: 'Relatório venda produto',
+  //   path: PrivateRoutePath.RelatorioVendaProduto,
+  //   component: <RelatorioVendaProdutoPage />,
+  // },
+  // {
+  //   title: 'Tabela de preço',
+  //   path: PrivateRoutePath.TabelaDePrecoAdicionar,
+  //   component: <TabelaDePrecoFormPage action={FormAction.Create} />,
+  // },
+  // {
+  //   title: 'Tabela de preço',
+  //   path: PrivateRoutePath.TabelaDePrecoEditarId,
+  //   component: <TabelaDePrecoFormPage action={FormAction.Edit} />,
+  // },
+  // {
+  //   title: 'Visualizar tabela de preço',
+  //   path: PrivateRoutePath.TabelaDePrecoVisualizarId,
+  //   component: <TabelaDePrecoFormPage action={FormAction.View} />,
+  // },
   {
     title: 'Chat',
     path: PrivateRoutePath.AtendimentoChat,
