@@ -175,6 +175,13 @@ export const menus: Menu[] = [
         icone: 'solar:user-id-linear',
         filhos: [],
       },
+      {
+        id: 44,
+        nome: 'Representantes',
+        caminho: PrivateRoutePath.Representante,
+        icone: 'solar:user-speak-linear',
+        filhos: [],
+      },
     ],
   },
   {

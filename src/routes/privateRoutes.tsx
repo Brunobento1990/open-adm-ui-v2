@@ -44,6 +44,8 @@ import { PrecoPorPesoPage } from '../pages/private/precoPorPeso/PrecoPorPesoPage
 import { PrecoPorTamanhoPage } from '../pages/private/precoPorTamanho/PrecoPorTamanhoPage'
 import { RelatorioPedidoPeriodoPage } from '../pages/private/relatorioPedido/RelatorioPedidoPeriodoPage'
 import { RelatorioVendaProdutoPage } from '../pages/private/relatorioVendaProduto/RelatorioVendaProdutoPage'
+import { RepresentanteFormPage } from '../pages/private/representante/RepresentanteFormPage'
+import { RepresentantePage } from '../pages/private/representante/RepresentantePage'
 import { PesoFormPage } from '../pages/private/peso/PesoFormPage'
 import { PesoPage } from '../pages/private/peso/PesoPage'
 import { ProdutoFormPage } from '../pages/private/produto/ProdutoFormPage'
@@ -378,6 +380,26 @@ export const privateRoutes: PrivateRouteConfig[] = [
     title: 'Visualizar cliente',
     path: PrivateRoutePath.ClienteVisualizarId,
     component: <ClienteFormPage action={FormAction.View} />,
+  },
+  {
+    title: 'Representantes',
+    path: PrivateRoutePath.Representante,
+    component: <RepresentantePage />,
+  },
+  {
+    title: 'Representante',
+    path: PrivateRoutePath.RepresentanteAdicionar,
+    component: <RepresentanteFormPage action={FormAction.Create} />,
+  },
+  {
+    title: 'Representante',
+    path: PrivateRoutePath.RepresentanteEditarId,
+    component: <RepresentanteFormPage action={FormAction.Edit} />,
+  },
+  {
+    title: 'Visualizar representante',
+    path: PrivateRoutePath.RepresentanteVisualizarId,
+    component: <RepresentanteFormPage action={FormAction.View} />,
   },
   {
     title: 'Produtos',

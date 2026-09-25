@@ -64,6 +64,14 @@ export class YupAdapter {
         return this;
     }
 
+    optionalEmail(fieldName: string) {
+        this.shape[fieldName] = yup
+            .string()
+            .email('E-mail inválido')
+            .notRequired();
+        return this;
+    }
+
     arrayOfObjectsOptional(fieldName: string, objectShape: any) {
         this.shape[fieldName] = yup.array().of(objectShape);
         return this;

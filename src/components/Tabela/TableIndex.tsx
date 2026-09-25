@@ -59,6 +59,7 @@ export interface ITableIndexProps {
   menuItems?: MenuAppItem[]
   preencherLargura?: boolean
   barraRolagemCompacta?: boolean
+  obterUrlParamsAlterarStatus?: (id: string, ativo: boolean) => string
 }
 
 export function TableIndex(props: ITableIndexProps) {
@@ -139,7 +140,9 @@ export function TableIndex(props: ITableIndexProps) {
   async function alterarStatus(item: any) {
     const ativo = !item.ativo
     const response = await alterarStatusApi.action({
-      urlParams: `${ApiResourceRoutePath.AlterarStatus}/${encodeURIComponent(item.id)}/${ativo}`,
+      urlParams: props.obterUrlParamsAlterarStatus
+        ? props.obterUrlParamsAlterarStatus(item.id, ativo)
+        : `${ApiResourceRoutePath.AlterarStatus}/${encodeURIComponent(item.id)}/${ativo}`,
       message: `Registro ${ativo ? 'ativado' : 'inativado'} com sucesso`,
     })
 

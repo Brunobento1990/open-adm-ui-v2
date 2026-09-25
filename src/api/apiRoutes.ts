@@ -21,6 +21,7 @@ export enum ApiRoutePath {
   PedidoCobranca = '/pedido',
   Produto = '/produtos',
   RelatorioVendaProduto = '/relatorio-venda-produto',
+  Representante = '/representantes',
   PublicoComanda = '/publico/comandas',
   TabelaDePreco = '/tabelas-de-precos',
   Tamanho = '/tamanhos',
