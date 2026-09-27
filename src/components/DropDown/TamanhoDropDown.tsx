@@ -1,5 +1,4 @@
 import { ApiResourceRoutePath, ApiRoutePath } from '../../api/apiRoutes'
-import { ApiMethod } from '../../hook/useApi'
 import type { Tamanho } from '../../types/TamanhoTypes'
 import { TamanhoFormField } from '../../types/TamanhoTypes'
 import { DropDownAutoFetchOpenApp } from './DropDownAutoFetchOpenApp'
@@ -41,12 +40,10 @@ export function TamanhoDropDown({
       label={label}
       onBlur={onBlur}
       onChange={(_, tamanho) => onChange?.(id, tamanho)}
-      method={ApiMethod.Get}
       readonly={readonly}
       required={required}
       value={value}
-      utilizarURLSearch
-      url={`${ApiRoutePath.Tamanho}${ApiResourceRoutePath.Dropdown}`}
+      url={`${ApiRoutePath.TamanhoRepresentante}${ApiResourceRoutePath.Paginacao}`}
     />
   )
 }

@@ -35,7 +35,7 @@ export function useApiTabelaDePreco() {
   })
   const apiObterAtiva = useApi({
     method: ApiMethod.Get,
-    url: `${ApiRoutePath.TabelaDePreco}${TabelaDePrecoApiRoutePath.ObterAtiva}`,
+    url: `${ApiRoutePath.TabelaDePrecoRepresentante}${TabelaDePrecoApiRoutePath.ObterAtiva}`,
     naoRenderizarResposta: true,
   })
 

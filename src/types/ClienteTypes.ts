@@ -6,10 +6,16 @@ export enum ClienteFormField {
 
 export interface Cliente {
   id: string
-  dataDeCadastro: string
+  dataDeCadastro?: string
+  dataDeCriacao?: string
   dataDeAtualizacao?: string
   nome: string
+  email?: string
   cpf?: string
+  cnpj?: string
   telefone?: string
+  enderecoUsuario?: EnderecoClienteVenda
+  isAtacado?: boolean
   ativo: boolean
 }
+import type { EnderecoClienteVenda } from './ClienteVendaTypes'

@@ -34,7 +34,7 @@ export function TamanhoPage() {
       columns={columns}
       nomeDaTabela={TamanhoTable.Name}
       orderBy={TamanhoFormField.Numero}
-      url={ApiRoutePath.Tamanho}
+      url={ApiRoutePath.TamanhoRepresentante}
       urlAdd={PrivateRoutePath.TamanhoAdicionar}
       urlEdit={PrivateRoutePath.TamanhoEditar}
       urlView={PrivateRoutePath.TamanhoVisualizar}

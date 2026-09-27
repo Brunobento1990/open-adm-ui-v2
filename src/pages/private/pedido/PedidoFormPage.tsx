@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useApiCep } from '../../../api/useApiCep'
-import { useApiClienteVenda } from '../../../api/useApiClienteVenda'
+import { useApiCliente } from '../../../api/useApiCliente'
 import { useApiPedido } from '../../../api/useApiPedido'
 import { useApiTabelaDePreco } from '../../../api/useApiTabelaDePreco'
 import { BoxApp } from '../../../components/BoxApp/BoxApp'
@@ -12,7 +12,7 @@ import {
 } from '../../../components/BoxApp/boxAppTypes'
 import { ButtonApp } from '../../../components/ButtonApp/ButtonApp'
 import { CepConsultaButton } from '../../../components/CepConsultaButton/CepConsultaButton'
-import { ClienteEcommerceDropDown } from '../../../components/DropDown/ClienteEcommerceDropDown'
+import { ClienteRepresentanteDropDown } from '../../../components/DropDown/ClienteRepresentanteDropDown'
 import { PesoDropDown } from '../../../components/DropDown/PesoDropDown'
 import { ProdutoDropDown } from '../../../components/DropDown/ProdutoDropDown'
 import { TabelaDePrecoDropDown } from '../../../components/DropDown/TabelaDePrecoDropDown'
@@ -88,7 +88,7 @@ export function PedidoFormPage() {
   const { navigate } = useNavigationApp()
   const { isCelular } = useMediaQueryApp()
   const { consultar: consultarCepApi } = useApiCep()
-  const { obter: obterCliente } = useApiClienteVenda()
+  const { obter: obterCliente } = useApiCliente()
   const { criar } = useApiPedido()
   const { listarItens, obterAtiva } = useApiTabelaDePreco()
   const [tab, setTab] = useState<number>(PedidoTab.Geral)
@@ -278,7 +278,7 @@ export function PedidoFormPage() {
         <>
           <FormRoot.FormRow>
             <FormRoot.FormItemRow sm={6} xs={12}>
-              <ClienteEcommerceDropDown
+              <ClienteRepresentanteDropDown
                 error={form.error(PedidoFormField.UsuarioId)}
                 helperText={form.helperText(PedidoFormField.UsuarioId)}
                 onChange={selecionarCliente}

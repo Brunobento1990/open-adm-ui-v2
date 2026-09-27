@@ -71,7 +71,7 @@ export function ProdutoPage() {
       nomeDaTabela={ProdutoTable.Name}
       orderBy={ProdutoColumnField.Descricao}
       rowHeight={66}
-      url={ApiRoutePath.Produto}
+      url={ApiRoutePath.ProdutoRepresentante}
       urlAdd={PrivateRoutePath.ProdutoAdicionar}
       urlEdit={PrivateRoutePath.ProdutoEditar}
       urlView={PrivateRoutePath.ProdutoVisualizar}

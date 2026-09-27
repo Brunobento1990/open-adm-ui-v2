@@ -12,7 +12,7 @@ import { ApiRoutePath, PedidoApiRoutePath, PedidoCobrancaApiRoutePath } from './
 export function useApiPedido() {
   const apiCriar = useApi({
     method: ApiMethod.Post,
-    url: `${ApiRoutePath.PedidoAdm}${PedidoApiRoutePath.Criar}`,
+    url: `${ApiRoutePath.PedidoRepresentante}${PedidoApiRoutePath.Criar}`,
   })
   const apiObter = useApi({
     method: ApiMethod.Get,

@@ -25,7 +25,7 @@ export function TabelaDePrecoDropDown(props: TabelaDePrecoDropDownProps) {
       readonly={props.readonly}
       required
       value={props.value}
-      url={`${ApiRoutePath.TabelaDePreco}${ApiResourceRoutePath.Paginacao}`}
+      url={`${ApiRoutePath.TabelaDePrecoRepresentante}${ApiResourceRoutePath.Paginacao}`}
     />
   )
 }

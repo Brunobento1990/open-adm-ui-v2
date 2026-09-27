@@ -1,5 +1,4 @@
 import { ApiResourceRoutePath, ApiRoutePath } from '../../api/apiRoutes'
-import { ApiMethod } from '../../hook/useApi'
 import type { Peso } from '../../types/PesoTypes'
 import { PesoFormField } from '../../types/PesoTypes'
 import { DropDownAutoFetchOpenApp } from './DropDownAutoFetchOpenApp'
@@ -41,12 +40,10 @@ export function PesoDropDown({
       label={label}
       onBlur={onBlur}
       onChange={(_, peso) => onChange?.(id, peso)}
-      method={ApiMethod.Get}
       readonly={readonly}
       required={required}
       value={value}
-      utilizarURLSearch
-      url={`${ApiRoutePath.Peso}${ApiResourceRoutePath.Dropdown}`}
+      url={`${ApiRoutePath.PesoRepresentante}${ApiResourceRoutePath.Paginacao}`}
     />
   )
 }

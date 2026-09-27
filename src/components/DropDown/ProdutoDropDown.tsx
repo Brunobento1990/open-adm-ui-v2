@@ -1,6 +1,5 @@
 import { Stack, Typography } from '@mui/material'
 import { ApiResourceRoutePath, ApiRoutePath } from '../../api/apiRoutes'
-import { ApiMethod } from '../../hook/useApi'
 import type { Produto } from '../../types/ProdutoTypes'
 import { ProdutoFormField } from '../../types/ProdutoTypes'
 import { DropDownAutoFetchOpenApp } from './DropDownAutoFetchOpenApp'
@@ -42,23 +41,26 @@ export function ProdutoDropDown({
       label={label}
       onBlur={onBlur}
       onChange={(_, produto) => onChange?.(id, produto)}
-      method={ApiMethod.Get}
       readonly={readonly}
       required={required}
       value={value}
-      utilizarURLSearch
-      url={`${ApiRoutePath.Produto}${ApiResourceRoutePath.Dropdown}`}
+      url={`${ApiRoutePath.ProdutoRepresentante}${ApiResourceRoutePath.Paginacao}`}
       renderOption={(props: any, produto: any) => {
-        const { key, ...optionProps } = props;
+        const { key, ...optionProps } = props
         return (
-          <Stack key={key} {...optionProps} direction="row" spacing={1.25} sx={{ alignItems: 'center', height: '100%' }}>
+          <Stack
+            key={key}
+            {...optionProps}
+            direction="row"
+            spacing={1.25}
+            sx={{ alignItems: 'center', height: '100%' }}
+          >
             <Typography noWrap variant="body2" sx={{ fontWeight: 600, fontSize: '1rem' }}>
               {produto.descricao}
             </Typography>
           </Stack>
-        );
+        )
       }}
-
     />
   )
 }

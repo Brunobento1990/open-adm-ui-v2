@@ -298,7 +298,7 @@ export function PedidoPage() {
         barraRolagemCompacta={isCelular}
         rowHeight={isCelular ? 112 : undefined}
         refreshPai={state.refresh}
-        url={ApiRoutePath.Pedido}
+        url={ApiRoutePath.PedidoRepresentante}
         urlAdd={PrivateRoutePath.PedidoAdicionar}
       />
       <ModalChildren

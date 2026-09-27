@@ -36,7 +36,7 @@ export function PesoPage() {
       columns={columns}
       nomeDaTabela={PesoTable.Name}
       orderBy={PesoFormField.Numero}
-      url={ApiRoutePath.Peso}
+      url={ApiRoutePath.PesoRepresentante}
       urlAdd={PrivateRoutePath.PesoAdicionar}
       urlEdit={PrivateRoutePath.PesoEditar}
       urlView={PrivateRoutePath.PesoVisualizar}
