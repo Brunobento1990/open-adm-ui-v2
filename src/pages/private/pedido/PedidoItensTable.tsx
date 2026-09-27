@@ -12,7 +12,6 @@ const PedidoItemTableField = {
   Produto: 'produto',
   Quantidade: 'quantidade',
   Total: 'total',
-  Variacao: 'variacao',
   ValorUnitario: 'valorUnitario',
 } as const
 
@@ -28,13 +27,7 @@ export function PedidoItensTable({ itens, onRemove }: PedidoItensTableProps) {
       headerName: 'Produto',
       flex: 1,
       minWidth: 200,
-      cellRenderer: ({ data }: any) => data?.produto?.descricao ?? '-',
-    },
-    {
-      field: PedidoItemTableField.Variacao,
-      headerName: 'Peso/Tamanho',
-      minWidth: 160,
-      cellRenderer: ({ data }: any) => data?.tamanho?.descricao ?? data?.peso?.descricao ?? '-',
+      cellRenderer: ({ data }: any) => data?.itemCatalogo?.descricao ?? data?.produto?.descricao ?? '-',
     },
     { field: PedidoItemTableField.Quantidade, headerName: 'Qtd.', width: 100 },
     {

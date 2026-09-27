@@ -19,9 +19,14 @@ export function useApiPedido() {
     url: `${ApiRoutePath.Pedido}${PedidoApiRoutePath.Obter}`,
     naoRenderizarResposta: true,
   })
-  const apiDownload = useApi({
+  const apiObterRepresentante = useApi({
     method: ApiMethod.Get,
-    url: `${ApiRoutePath.Pedido}${PedidoApiRoutePath.Download}`,
+    url: `${ApiRoutePath.PedidoRepresentante}${PedidoApiRoutePath.Obter}`,
+    naoRenderizarResposta: true,
+  })
+  const apiDownloadRepresentante = useApi({
+    method: ApiMethod.Get,
+    url: `${ApiRoutePath.PedidoRepresentante}${PedidoApiRoutePath.Download}`,
     naoRenderizarResposta: true,
   })
   const apiExcluir = useApi({
@@ -72,13 +77,19 @@ export function useApiPedido() {
       }),
       loading: apiObter.loading,
     },
-    download: {
+    obterRepresentante: {
+      fetch: (pedidoId: string) => apiObterRepresentante.action<Pedido>({
+        urlParams: `?pedidoId=${encodeURIComponent(pedidoId)}`,
+      }),
+      loading: apiObterRepresentante.loading,
+    },
+    downloadRepresentante: {
       fetch: (pedidoId: string) =>
-        apiDownload.action<Blob>({
+        apiDownloadRepresentante.action<Blob>({
           urlParams: `?pedidoId=${encodeURIComponent(pedidoId)}`,
           responseType: 'blob',
         }),
-      loading: apiDownload.loading,
+      loading: apiDownloadRepresentante.loading,
     },
     excluir: {
       fetch: async (id: string) => {

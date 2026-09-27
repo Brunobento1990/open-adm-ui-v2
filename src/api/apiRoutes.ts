@@ -131,6 +131,7 @@ export enum TabelaDePrecoApiRoutePath {
   Obter = '/get-tabela',
   ObterAtiva = '/get-tabela-ativa',
   Item = '/item',
+  ItensPaginacao = '/itens/paginacao',
 }
 
 export enum ItemTabelaDePrecoApiRoutePath {

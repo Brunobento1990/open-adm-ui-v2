@@ -75,3 +75,14 @@ export interface TabelaDePrecoItemPedido {
   valorUnitarioAtacado: number
   valorUnitarioVarejo: number
 }
+
+export interface ItemCatalogoRepresentante {
+  id: string
+  produtoId: string
+  tamanhoId?: string | null
+  pesoId?: string | null
+  fotoProduto?: string | null
+  descricao: string
+  valorUnitarioAtacado: number
+  valorUnitarioVarejo: number
+}

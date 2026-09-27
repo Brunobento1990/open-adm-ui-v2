@@ -2,15 +2,11 @@ name: Docker Image CI
 
 on:
   push:
-    tags:
-      - '*.*.*'
+    branches: ['representante']
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    env:
-      TAG: ${{ github.ref_name }}
 
     steps:
       - uses: actions/checkout@v4
@@ -28,8 +24,8 @@ jobs:
 
       - name: Build Image
         run: |
-          docker build . -t brunobentocaina/open-adm-ui-representante:$TAG
+          docker build . -t brunobentocaina/open-adm-ui-representante
 
       - name: Push
         run: |
-          docker push brunobentocaina/open-adm-ui-representante:$TAG
+          docker push brunobentocaina/open-adm-ui-representante

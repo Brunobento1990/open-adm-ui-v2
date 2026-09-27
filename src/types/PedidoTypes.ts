@@ -2,7 +2,8 @@ import { TipoPaletaCorEnum } from './TipoPaletaCorEnum'
 import type { ClienteVenda, EnderecoClienteVenda } from './ClienteVendaTypes'
 import type { Peso } from './PesoTypes'
 import type { Produto } from './ProdutoTypes'
-import type { TabelaDePreco } from './TabelaDePrecoTypes'
+import type { Representante } from './RepresentanteTypes'
+import type { ItemCatalogoRepresentante, TabelaDePreco } from './TabelaDePrecoTypes'
 import type { Tamanho } from './TamanhoTypes'
 
 export enum PedidoFormField {
@@ -21,6 +22,7 @@ export enum PedidoItemFormField {
 }
 
 export interface PedidoItemForm {
+  itemCatalogo?: ItemCatalogoRepresentante
   produtoId?: string
   produto?: Produto
   pesoId?: string
@@ -42,6 +44,7 @@ export interface PedidoFormValues {
 
 export interface PedidoCriarPayload {
   usuarioId: string
+  tabelaDePrecoId: string
   itensPedido: Array<{
     produtoId: string
     pesoId?: string
@@ -92,7 +95,9 @@ export enum PedidoColumnField {
   Estoque = 'temEstoqueDisponivel',
   Financeiro = 'financeiro',
   Numero = 'numero',
+  Representante = 'representante',
   Status = 'statusPedido',
+  TabelaDePreco = 'tabelaDePreco',
 }
 
 export interface PedidoPaginacao {
@@ -106,6 +111,8 @@ export interface PedidoPaginacao {
   totalAReceber: number
   porcentagemEstoqueAtendido: number
   usuario?: string
+  representante?: Representante
+  tabelaDePreco?: TabelaDePreco
   temEstoqueDisponivel: boolean
 }
 

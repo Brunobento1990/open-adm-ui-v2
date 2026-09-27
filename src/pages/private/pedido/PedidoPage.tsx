@@ -31,7 +31,6 @@ import {
 import { TipoPaletaCorEnum } from '../../../types/TipoPaletaCorEnum'
 import { formatarDataHoraUtcLocal } from '../../../utils/dateUtils'
 import { baixarPdf } from '../../../utils/pdfUtils'
-import { ExcluirPedidoButton } from './ExcluirPedidoButton'
 import { PedidoMobileRow } from './PedidoMobileRow'
 
 const PedidoTable = { Desktop: 'pedidos', Mobile: 'pedidos-mobile' } as const
@@ -46,7 +45,7 @@ type PedidoPageState = {
 }
 
 export function PedidoPage() {
-  const { download, excluir } = useApiPedido()
+  const { downloadRepresentante } = useApiPedido()
   const { getItem, removeItem, setItem } = useLocalStorageApp()
   const { navigate } = useNavigationApp()
   const { cores, getPaletteColor } = useThemeApp()
@@ -94,14 +93,8 @@ export function PedidoPage() {
   }
 
   async function downloadPedido(pedido: PedidoPaginacao) {
-    const response = await download.fetch(pedido.id)
+    const response = await downloadRepresentante.fetch(pedido.id)
     if (response) baixarPdf(response, `pedido-${pedido.numero}.pdf`)
-  }
-
-  async function excluirPedido(pedido: PedidoPaginacao) {
-    const sucesso = await excluir.fetch(pedido.id)
-    if (sucesso) setState((atual) => ({ ...atual, refresh: atual.refresh + 1 }))
-    return sucesso
   }
 
   const desktopColumns: TypeColumns[] = [
@@ -126,6 +119,20 @@ export function PedidoPage() {
       headerName: 'Cliente',
       flex: 1,
       minWidth: 200,
+    },
+    {
+      field: PedidoColumnField.Representante,
+      headerName: 'Representante',
+      minWidth: 180,
+      cellRenderer: ({ data }: ICellRendererParams<PedidoPaginacao>) =>
+        data?.representante?.nome ?? '',
+    },
+    {
+      field: PedidoColumnField.TabelaDePreco,
+      headerName: 'Tabela de preço',
+      minWidth: 180,
+      cellRenderer: ({ data }: ICellRendererParams<PedidoPaginacao>) =>
+        data?.tabelaDePreco?.descricao ?? '',
     },
     {
       field: PedidoColumnField.Estoque,
@@ -165,52 +172,6 @@ export function PedidoPage() {
         ),
     },
     {
-      field: PedidoColumnField.Baixar,
-      headerName: 'Baixar',
-      width: 100,
-      sortable: false,
-      cellRenderer: ({ data }: ICellRendererParams<PedidoPaginacao>) => {
-        if (
-          !data ||
-          data.statusPedido === PedidoStatus.Entregue ||
-          data.statusPedido === PedidoStatus.Cancelado
-        )
-          return null
-
-        return (
-          <IconButtonComTolltip
-            aria-label="Modificar status do pedido"
-            onClick={(event) => {
-              event.stopPropagation()
-              navigate(`${PrivateRoutePath.PedidoModificarStatus}/${data.id}`)
-            }}
-            tooltip="Modificar status do pedido"
-          >
-            <IconApp color={cores.primary} icon="fe:app-menu" />
-          </IconButtonComTolltip>
-        )
-      },
-    },
-    {
-      field: PedidoColumnField.Financeiro,
-      headerName: 'Financeiro',
-      width: 110,
-      sortable: false,
-      cellRenderer: ({ data }: ICellRendererParams<PedidoPaginacao>) =>
-        data && (
-          <IconButtonComTolltip
-            aria-label="Acessar financeiro do pedido"
-            onClick={(event) => {
-              event.stopPropagation()
-              navigate(`${PrivateRoutePath.ContaAReceber}?pedidoId=${encodeURIComponent(data.id)}`)
-            }}
-            tooltip="Acessar financeiro do pedido"
-          >
-            <IconApp color={cores.success} icon="solar:wallet-money-outline" />
-          </IconButtonComTolltip>
-        ),
-    },
-    {
       field: PedidoColumnField.Acoes,
       headerName: 'Ações',
       width: 160,
@@ -230,7 +191,7 @@ export function PedidoPage() {
             </IconButtonComTolltip>
             <IconButtonComTolltip
               aria-label="Download do pedido"
-              disabled={download.loading}
+              disabled={downloadRepresentante.loading}
               onClick={(event) => {
                 event.stopPropagation()
                 downloadPedido(data)
@@ -239,11 +200,6 @@ export function PedidoPage() {
             >
               <IconApp color={cores.primary} icon="material-symbols-light:download" />
             </IconButtonComTolltip>
-            <ExcluirPedidoButton
-              loading={excluir.loading}
-              numero={data.numero}
-              onConfirmar={() => excluirPedido(data)}
-            />
           </StackApp>
         ),
     },
@@ -260,10 +216,8 @@ export function PedidoPage() {
       cellRenderer: ({ data }: ICellRendererParams<PedidoPaginacao>) =>
         data ? (
           <PedidoMobileRow
-            downloadLoading={download.loading}
-            excluirLoading={excluir.loading}
+            downloadLoading={downloadRepresentante.loading}
             onDownload={() => downloadPedido(data)}
-            onExcluir={() => excluirPedido(data)}
             pedido={data}
           />
         ) : null,
@@ -296,7 +250,7 @@ export function PedidoPage() {
         orderBy={PedidoColumnField.Numero}
         preencherLargura={isCelular}
         barraRolagemCompacta={isCelular}
-        rowHeight={isCelular ? 112 : undefined}
+        rowHeight={isCelular ? 152 : undefined}
         refreshPai={state.refresh}
         url={ApiRoutePath.PedidoRepresentante}
         urlAdd={PrivateRoutePath.PedidoAdicionar}

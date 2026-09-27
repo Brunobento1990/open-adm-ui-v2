@@ -29,14 +29,14 @@ const PedidoItensTable = { Name: 'pedido-itens-visualizacao' } as const
 
 export function PedidoVisualizarPage() {
   const { id } = useParams<{ id: string }>()
-  const { obter } = useApiPedido()
+  const { obterRepresentante } = useApiPedido()
   const { cores, getPaletteColor } = useThemeApp()
   const [pedido, setPedido] = useState<Pedido>()
 
   useEffect(() => {
     if (!id) return
     async function carregar() {
-      const response = await obter.fetch(id as string)
+      const response = await obterRepresentante.fetch(id as string)
       if (response) setPedido({ ...response, itensPedido: response.itensPedido ?? [] })
     }
     carregar()
@@ -85,11 +85,11 @@ export function PedidoVisualizarPage() {
   return (
     <FormRoot.Form
       action={FormAction.View}
-      loading={obter.loading}
+      loading={obterRepresentante.loading}
       submit={async () => undefined}
       urlVoltar={PrivateRoutePath.Pedido}
     >
-      {obter.loading && <ProgressApp />}
+      {obterRepresentante.loading && <ProgressApp />}
       <TextApp component="h1" fontSize="1.25rem" weight={TextAppWeight.SemiBold}>
         Pedido {pedido?.numero ?? ''}
       </TextApp>
@@ -117,7 +117,7 @@ export function PedidoVisualizarPage() {
       <BoxApp flex={1} minHeight={240} overflow={BoxAppOverflow.Hidden}>
         <TabelaComDrag
           columns={columns}
-          loading={obter.loading}
+          loading={obterRepresentante.loading}
           nomeDaTabela={PedidoItensTable.Name}
           rows={pedido?.itensPedido ?? []}
         />

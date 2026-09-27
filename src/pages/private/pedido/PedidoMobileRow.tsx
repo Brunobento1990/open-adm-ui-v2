@@ -12,27 +12,16 @@ import {
   PedidoStatusLabel,
   type PedidoPaginacao,
 } from '../../../types/PedidoTypes'
-import { ExcluirPedidoButton } from './ExcluirPedidoButton'
 
 type PedidoMobileRowProps = {
   pedido: PedidoPaginacao
   downloadLoading: boolean
-  excluirLoading: boolean
   onDownload: () => void
-  onExcluir: () => Promise<boolean>
 }
 
-export function PedidoMobileRow({
-  pedido,
-  downloadLoading,
-  excluirLoading,
-  onDownload,
-  onExcluir,
-}: PedidoMobileRowProps) {
+export function PedidoMobileRow({ pedido, downloadLoading, onDownload }: PedidoMobileRowProps) {
   const { navigate } = useNavigationApp()
   const { cores, getPaletteColor } = useThemeApp()
-  const permiteModificarStatus =
-    pedido.statusPedido !== PedidoStatus.Entregue && pedido.statusPedido !== PedidoStatus.Cancelado
   const corEstoque =
     pedido.porcentagemEstoqueAtendido <= 20
       ? cores.error
@@ -40,26 +29,8 @@ export function PedidoMobileRow({
         ? cores.warning
         : cores.success
 
-  function criarMenuItems(abrirExclusao: () => void): MenuAppItem[] {
-    const items: MenuAppItem[] = []
-
-    if (permiteModificarStatus) {
-      items.push({
-        icon: 'fe:app-menu',
-        iconColor: cores.primary,
-        label: 'Modificar status',
-        onClick: () => navigate(`${PrivateRoutePath.PedidoModificarStatus}/${pedido.id}`),
-      })
-    }
-
-    items.push(
-      {
-        icon: 'solar:wallet-money-outline',
-        iconColor: cores.success,
-        label: 'Acessar financeiro',
-        onClick: () =>
-          navigate(`${PrivateRoutePath.ContaAReceber}?pedidoId=${encodeURIComponent(pedido.id)}`),
-      },
+  function criarMenuItems(): MenuAppItem[] {
+    return [
       {
         icon: 'solar:eye-linear',
         iconColor: cores.primary,
@@ -73,16 +44,7 @@ export function PedidoMobileRow({
         label: 'Download do pedido',
         onClick: onDownload,
       },
-      {
-        disabled: excluirLoading,
-        icon: 'solar:trash-bin-trash-linear',
-        iconColor: cores.error,
-        label: 'Excluir pedido',
-        onClick: abrirExclusao,
-      },
-    )
-
-    return items
+    ]
   }
 
   return (
@@ -140,24 +102,47 @@ export function PedidoMobileRow({
               />
             )}
           </StackApp>
+
+          {pedido.representante?.nome && (
+            <StackApp
+              direction="row"
+              spacing={0.5}
+              sx={{ alignItems: 'center', justifyContent: 'space-between' }}
+            >
+              <TextApp color={TextAppColor.Secondary} fontSize="0.75rem">
+                Representante
+              </TextApp>
+              <TextApp fontSize="0.75rem" noWrap weight={TextAppWeight.Medium}>
+                {pedido.representante.nome}
+              </TextApp>
+            </StackApp>
+          )}
+
+          {pedido.tabelaDePreco?.descricao && (
+            <StackApp
+              direction="row"
+              spacing={0.5}
+              sx={{ alignItems: 'center', justifyContent: 'space-between' }}
+            >
+              <TextApp color={TextAppColor.Secondary} fontSize="0.75rem">
+                Tabela de preço
+              </TextApp>
+              <TextApp fontSize="0.75rem" noWrap weight={TextAppWeight.Medium}>
+                {pedido.tabelaDePreco.descricao}
+              </TextApp>
+            </StackApp>
+          )}
         </StackApp>
 
         <StackApp sx={{ alignSelf: 'flex-start' }} onClick={(event) => event.stopPropagation()}>
-          <ExcluirPedidoButton
-            loading={excluirLoading}
-            numero={pedido.numero}
-            onConfirmar={onExcluir}
-            renderTrigger={(abrirExclusao) => (
-              <MenuApp
-                ariaLabel={`Ações do pedido ${pedido.numero}`}
-                buttonIcon="mdi:dots-vertical"
-                buttonSize="small"
-                buttonSx={{ padding: 0.5 }}
-                id={`pedido-acoes-${pedido.id}`}
-                items={criarMenuItems(abrirExclusao)}
-                tooltip="Ações do pedido"
-              />
-            )}
+          <MenuApp
+            ariaLabel={`Ações do pedido ${pedido.numero}`}
+            buttonIcon="mdi:dots-vertical"
+            buttonSize="small"
+            buttonSx={{ padding: 0.5 }}
+            id={`pedido-acoes-${pedido.id}`}
+            items={criarMenuItems()}
+            tooltip="Ações do pedido"
           />
         </StackApp>
       </StackApp>

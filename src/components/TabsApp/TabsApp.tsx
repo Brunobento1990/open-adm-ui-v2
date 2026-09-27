@@ -2,6 +2,7 @@ import { Box, Tab, Tabs, Tooltip } from '@mui/material'
 import { IconApp } from '../Icon/IconApp'
 
 type TabsAppItem = {
+  disabled?: boolean
   label: string
   value: number
   warning?: boolean
@@ -25,6 +26,7 @@ export function TabsApp({ ariaLabel, items, onChange, value }: TabsAppProps) {
     >
       {items.map((item) => (
         <Tab
+          disabled={item.disabled}
           key={item.value}
           label={(
             <Box sx={{ alignItems: 'center', display: 'flex', gap: 0.75 }}>
@@ -38,6 +40,7 @@ export function TabsApp({ ariaLabel, items, onChange, value }: TabsAppProps) {
               )}
             </Box>
           )}
+          sx={{ '&.Mui-disabled': { opacity: 1 } }}
           value={item.value}
         />
       ))}

@@ -13,18 +13,19 @@ import {
 import { ButtonApp } from '../../../components/ButtonApp/ButtonApp'
 import { CepConsultaButton } from '../../../components/CepConsultaButton/CepConsultaButton'
 import { ClienteRepresentanteDropDown } from '../../../components/DropDown/ClienteRepresentanteDropDown'
-import { PesoDropDown } from '../../../components/DropDown/PesoDropDown'
-import { ProdutoDropDown } from '../../../components/DropDown/ProdutoDropDown'
+import { ItemCatalogoRepresentanteDropDown } from '../../../components/DropDown/ItemCatalogoRepresentanteDropDown'
 import { TabelaDePrecoDropDown } from '../../../components/DropDown/TabelaDePrecoDropDown'
-import { TamanhoDropDown } from '../../../components/DropDown/TamanhoDropDown'
+import { IconApp } from '../../../components/Icon/IconApp'
+import { IconButtonComTolltip } from '../../../components/IconButtonComTolltip/IconButtonComTolltip'
+import { IconButtonComTooltipVariant } from '../../../components/IconButtonComTolltip/iconButtonComTooltipTypes'
 import { InputApp } from '../../../components/InputApp/InputApp'
 import { InputAppType } from '../../../components/InputApp/inputAppTypes'
 import { TabsApp } from '../../../components/TabsApp/TabsApp'
 import { TextApp, TextAppColor } from '../../../components/TextApp/TextApp'
 import { FormRoot } from '../../../form'
 import { useFormikAdapter } from '../../../hook/useFormikAdapter'
-import { useNavigationApp } from '../../../hook/useNavigationApp'
 import { useMediaQueryApp } from '../../../hook/useMediaQueryApp'
+import { useNavigationApp } from '../../../hook/useNavigationApp'
 import { YupAdapter } from '../../../lib/YupAdapter'
 import { PrivateRoutePath } from '../../../routes/appRoutes'
 import { EnderecoClienteVendaField } from '../../../types/ClienteVendaTypes'
@@ -35,10 +36,7 @@ import {
   type PedidoFormValues,
   type PedidoItemForm,
 } from '../../../types/PedidoTypes'
-import type { Peso } from '../../../types/PesoTypes'
-import type { Produto } from '../../../types/ProdutoTypes'
-import type { TabelaDePreco, TabelaDePrecoItemPedido } from '../../../types/TabelaDePrecoTypes'
-import type { Tamanho } from '../../../types/TamanhoTypes'
+import type { ItemCatalogoRepresentante, TabelaDePreco } from '../../../types/TabelaDePrecoTypes'
 import { PedidoItemCard } from './PedidoItemCard'
 import { PedidoItensTable } from './PedidoItensTable'
 
@@ -62,35 +60,13 @@ const validationSchema = new YupAdapter()
   .string(PedidoFormField.TabelaDePrecoId, 'Selecione a tabela de preço')
   .build()
 
-function encontrarPreco(
-  itens:
-    | Array<
-        Pick<
-          TabelaDePrecoItemPedido,
-          'pesoId' | 'produtoId' | 'tamanhoId' | 'valorUnitarioAtacado' | 'valorUnitarioVarejo'
-        >
-      >
-    | undefined,
-  item: PedidoItemForm,
-  isAtacado?: boolean,
-) {
-  const preco = itens?.find(
-    (current) =>
-      current.produtoId === item.produtoId &&
-      (current.pesoId ?? undefined) === item.pesoId &&
-      (current.tamanhoId ?? undefined) === item.tamanhoId,
-  )
-
-  return preco ? (isAtacado ? preco.valorUnitarioAtacado : preco.valorUnitarioVarejo) : undefined
-}
-
 export function PedidoFormPage() {
   const { navigate } = useNavigationApp()
   const { isCelular } = useMediaQueryApp()
   const { consultar: consultarCepApi } = useApiCep()
   const { obter: obterCliente } = useApiCliente()
   const { criar } = useApiPedido()
-  const { listarItens, obterAtiva } = useApiTabelaDePreco()
+  const { obterAtiva } = useApiTabelaDePreco()
   const [tab, setTab] = useState<number>(PedidoTab.Geral)
   const [itemPedido, setItemPedido] = useState<PedidoItemForm>({})
   const [itemError, setItemError] = useState('')
@@ -105,6 +81,7 @@ export function PedidoFormPage() {
       }
 
       const payload: PedidoCriarPayload = {
+        tabelaDePrecoId: values.tabelaDePrecoId as '',
         usuarioId: values.usuarioId as string,
         enderecoEntrega: values.enderecoEntrega,
         itensPedido: values.itensPedido.map((item) => ({
@@ -137,6 +114,7 @@ export function PedidoFormPage() {
 
   async function selecionarCliente(cliente?: { id: string; nome: string }) {
     if (!cliente) {
+      setTab(PedidoTab.Geral)
       form.setValue({ enderecoEntrega: {}, usuario: undefined, usuarioId: '' })
       return
     }
@@ -151,41 +129,33 @@ export function PedidoFormPage() {
   }
 
   async function selecionarTabelaDePreco(tabelaDePreco?: TabelaDePreco) {
+    setItemPedido({})
     if (!tabelaDePreco) {
+      setTab(PedidoTab.Geral)
       form.setValue({ tabelaDePreco: undefined, tabelaDePrecoId: '' })
       return
     }
-    const itens = await listarItens.fetch(tabelaDePreco.id)
     form.setValue({
-      tabelaDePreco: { ...tabelaDePreco, itensTabelaDePreco: itens ?? [] },
+      tabelaDePreco,
       tabelaDePrecoId: tabelaDePreco.id,
     })
   }
 
-  function atualizarSelecaoItem(values: Partial<PedidoItemForm>) {
-    setItemPedido((current) => {
-      const itemComVariacaoAtualizada = { ...current, ...values }
-      const valorUnitario = encontrarPreco(
-        form.values.tabelaDePreco?.itensTabelaDePreco,
-        itemComVariacaoAtualizada,
-        form.values.usuario?.isAtacado,
-      )
-
-      return { ...itemComVariacaoAtualizada, valorUnitario }
-    })
+  function selecionarItemCatalogo(itemCatalogo?: ItemCatalogoRepresentante) {
+    setItemPedido(
+      itemCatalogo
+        ? {
+            itemCatalogo,
+            pesoId: itemCatalogo.pesoId ?? undefined,
+            produtoId: itemCatalogo.produtoId,
+            tamanhoId: itemCatalogo.tamanhoId ?? undefined,
+            valorUnitario: form.values.usuario?.isAtacado
+              ? itemCatalogo.valorUnitarioAtacado
+              : itemCatalogo.valorUnitarioVarejo,
+          }
+        : {},
+    )
     setItemError('')
-  }
-
-  function selecionarProduto(_: string, produto?: Produto) {
-    atualizarSelecaoItem({ produto, produtoId: produto?.id })
-  }
-
-  function selecionarPeso(_: string, peso?: Peso) {
-    atualizarSelecaoItem({ peso, pesoId: peso?.id })
-  }
-
-  function selecionarTamanho(_: string, tamanho?: Tamanho) {
-    atualizarSelecaoItem({ tamanho, tamanhoId: tamanho?.id })
   }
 
   function adicionarItem() {
@@ -206,6 +176,15 @@ export function PedidoFormPage() {
     form.setValue({ itensPedido: [...form.values.itensPedido, itemPedido] })
     setItemPedido({})
     setItemError('')
+  }
+
+  function atualizarQuantidade(quantidade: number) {
+    setItemPedido((current) => ({ ...current, quantidade }))
+    setItemError('')
+  }
+
+  function alterarQuantidade(incremento: number) {
+    atualizarQuantidade(Math.max(1, (itemPedido.quantidade ?? 0) + incremento))
   }
 
   function removerItem(index: number) {
@@ -243,19 +222,23 @@ export function PedidoFormPage() {
 
   const endereco = form.values.enderecoEntrega ?? {}
   const loading =
-    criar.loading ||
-    obterCliente.loading ||
-    listarItens.loading ||
-    obterAtiva.loading ||
-    consultarCepApi.loading
+    criar.loading || obterCliente.loading || obterAtiva.loading || consultarCepApi.loading
+  const clientePendente = !form.values.usuarioId
   const tabelaDePrecoPendente = !form.values.tabelaDePrecoId
+  const itensBloqueados = clientePendente || tabelaDePrecoPendente
+  const itensBloqueadosMensagem = clientePendente
+    ? tabelaDePrecoPendente
+      ? 'Selecione o cliente e a tabela de preço na aba Geral'
+      : 'Selecione o cliente na aba Geral'
+    : 'Selecione a tabela de preço na aba Geral'
   const pedidoTabs = [
     { label: 'Geral', value: PedidoTab.Geral },
     {
+      disabled: itensBloqueados,
       label: 'Itens',
       value: PedidoTab.Itens,
-      warning: tabelaDePrecoPendente,
-      warningMessage: 'Selecione uma tabela de preço na aba Geral',
+      warning: itensBloqueados,
+      warningMessage: itensBloqueadosMensagem,
     },
   ]
 
@@ -385,28 +368,55 @@ export function PedidoFormPage() {
       {tab === PedidoTab.Itens && (
         <>
           <FormRoot.FormRow>
-            <FormRoot.FormItemRow sm={4} xs={12}>
-              <ProdutoDropDown onChange={selecionarProduto} value={itemPedido.produto} />
-            </FormRoot.FormItemRow>
-            <FormRoot.FormItemRow sm={4} xs={12}>
-              <PesoDropDown onChange={selecionarPeso} value={itemPedido.peso} />
-            </FormRoot.FormItemRow>
-            <FormRoot.FormItemRow sm={4} xs={12}>
-              <TamanhoDropDown onChange={selecionarTamanho} value={itemPedido.tamanho} />
+            <FormRoot.FormItemRow xs={12}>
+              <ItemCatalogoRepresentanteDropDown
+                onChange={selecionarItemCatalogo}
+                tabelaDePrecoId={form.values.tabelaDePrecoId}
+                value={itemPedido.itemCatalogo}
+              />
             </FormRoot.FormItemRow>
           </FormRoot.FormRow>
           <FormRoot.FormRow>
             <FormRoot.FormItemRow sm={4} xs={12}>
-              <InputApp
-                id={PedidoItemFormField.Quantidade}
-                label="Quantidade"
-                onChange={(_, value) => {
-                  setItemPedido((current) => ({ ...current, quantidade: Number(value) }))
-                  setItemError('')
-                }}
-                type={InputAppType.Number}
-                value={itemPedido.quantidade ?? ''}
-              />
+              {isCelular ? (
+                <BoxApp alignItems={BoxAppAlignItems.End} display={BoxAppDisplay.Flex} gap="0.5rem">
+                  <IconButtonComTolltip
+                    aria-label="Diminuir quantidade"
+                    disabled={(itemPedido.quantidade ?? 0) <= 1}
+                    onClick={() => alterarQuantidade(-1)}
+                    size="small"
+                    tooltip="Diminuir quantidade"
+                    variant={IconButtonComTooltipVariant.Contained}
+                  >
+                    <IconApp icon="tabler:minus" width="1.25rem" />
+                  </IconButtonComTolltip>
+                  <InputApp
+                    id={PedidoItemFormField.Quantidade}
+                    label="Quantidade"
+                    onChange={(_, value) => atualizarQuantidade(Number(value))}
+                    type={InputAppType.Number}
+                    value={itemPedido.quantidade ?? ''}
+                  />
+
+                  <IconButtonComTolltip
+                    aria-label="Aumentar quantidade"
+                    onClick={() => alterarQuantidade(1)}
+                    size="small"
+                    tooltip="Aumentar quantidade"
+                    variant={IconButtonComTooltipVariant.Contained}
+                  >
+                    <IconApp icon="tabler:plus" width="1.25rem" />
+                  </IconButtonComTolltip>
+                </BoxApp>
+              ) : (
+                <InputApp
+                  id={PedidoItemFormField.Quantidade}
+                  label="Quantidade"
+                  onChange={(_, value) => atualizarQuantidade(Number(value))}
+                  type={InputAppType.Number}
+                  value={itemPedido.quantidade ?? ''}
+                />
+              )}
             </FormRoot.FormItemRow>
             <FormRoot.FormItemRow sm={4} xs={12}>
               <InputApp
