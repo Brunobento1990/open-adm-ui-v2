@@ -18,7 +18,7 @@ export interface DashboardVariacaoMensal {
 
 export interface DashboardResumoMensalCategoria {
   categoriaId: string
-  categoria: string
+  categoria: string | null
   quantidadeItensVendidos: DashboardVariacaoMensal
 }
 
@@ -29,7 +29,11 @@ export interface DashboardResumoMensal {
   quantidadePedidos: DashboardVariacaoMensal
   valorTotalVendido: DashboardVariacaoMensal
   quantidadeItensVendidos: DashboardVariacaoMensal
-  categorias: DashboardResumoMensalCategoria[]
+  categorias: DashboardResumoMensalCategoria[] | null
+}
+
+export interface HomeRepresentante {
+  resumoMensal: DashboardResumoMensal
 }
 
 export interface DashboardStatusPedido {

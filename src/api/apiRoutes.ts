@@ -8,6 +8,7 @@ export enum ApiRoutePath {
   ClienteRepresentante = '/representante/clientes',
   Comanda = '/comanda',
   Dashboard = '/home/adm',
+  HomeRepresentante = '/home/representante',
   Contato = '/contato',
   ConexaoWhatsApp = '/conexao-whatsapp',
   ConfiguracaoPedido = '/configuracoes-de-pedido',
