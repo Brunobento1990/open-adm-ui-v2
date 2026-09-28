@@ -1,7 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useApiCliente } from '../../../api/useApiCliente'
 import { ClienteFormFields } from '../../../components/Cliente/ClienteFormFields'
+import { TabsApp } from '../../../components/TabsApp/TabsApp'
 import {
   clienteInitialValues,
   clienteValidationSchema,
@@ -13,24 +14,41 @@ import { useNavigationApp } from '../../../hook/useNavigationApp'
 import { PrivateRoutePath } from '../../../routes/appRoutes'
 import type { Cliente } from '../../../types/ClienteTypes'
 import { FormAction, type FormAction as FormActionType } from '../../../types/Form'
+import { ClienteHistoricoTab } from './ClienteHistoricoTab'
 
 type ClienteFormPageProps = {
   action: FormActionType
 }
 
+enum ClienteTab {
+  Geral,
+  Historico,
+}
+
+const clienteTabs = [
+  { label: 'Geral', value: ClienteTab.Geral },
+  { label: 'Histórico', value: ClienteTab.Historico },
+]
+
 export function ClienteFormPage({ action }: ClienteFormPageProps) {
   const { id } = useParams<{ id: string }>()
   const { atualizar, criar, obter } = useApiCliente()
   const { navigate } = useNavigationApp()
+  const [tab, setTab] = useState(ClienteTab.Geral)
   const readonly = action === FormAction.View
+  const exibirHistorico = action !== FormAction.Create && Boolean(id)
+  const tabs = exibirHistorico
+    ? clienteTabs
+    : clienteTabs.filter((item) => item.value === ClienteTab.Geral)
   const form = useFormikAdapter<Partial<Cliente>>({
     initialValues: clienteInitialValues,
     validationSchema: clienteValidationSchema,
     onSubmit: async (values) => {
       const cliente = prepararCliente(values)
-      const response = action === FormAction.Edit && id
-        ? await atualizar.fetch(id, cliente)
-        : await criar.fetch(cliente)
+      const response =
+        action === FormAction.Edit && id
+          ? await atualizar.fetch(id, cliente)
+          : await criar.fetch(cliente)
 
       if (response) navigate(PrivateRoutePath.Cliente)
     },
@@ -62,7 +80,12 @@ export function ClienteFormPage({ action }: ClienteFormPageProps) {
       textoButton="Salvar"
       urlVoltar={PrivateRoutePath.Cliente}
     >
-      <ClienteFormFields form={form} readonly={readonly} />
+      <TabsApp ariaLabel="Seções do cliente" items={tabs} onChange={setTab} value={tab} />
+
+      {tab === ClienteTab.Geral && <ClienteFormFields form={form} readonly={readonly} />}
+      {tab === ClienteTab.Historico && exibirHistorico && id && (
+        <ClienteHistoricoTab clienteId={id} />
+      )}
     </FormRoot.Form>
   )
 }

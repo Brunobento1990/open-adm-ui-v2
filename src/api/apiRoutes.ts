@@ -96,6 +96,10 @@ export enum ClienteVendaApiRoutePath {
   Obter = '/get-conta-adm',
 }
 
+export enum ClienteRepresentanteApiRoutePath {
+  Historico = '/historico',
+}
+
 export enum CnpjApiRoutePath {
   Consultar = '/consulta',
 }

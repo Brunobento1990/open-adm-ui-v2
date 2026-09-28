@@ -18,4 +18,11 @@ export interface Cliente {
   isAtacado?: boolean
   ativo: boolean
 }
+
+export interface HistoricoCliente {
+  ultimaCompra: string | null
+  ticketMedio: string | null
+  produtoMaisComprado: string | null
+  ultimoPedido: string | null
+}
 import type { EnderecoClienteVenda } from './ClienteVendaTypes'
