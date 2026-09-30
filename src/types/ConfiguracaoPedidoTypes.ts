@@ -2,6 +2,7 @@ export enum ConfiguracaoPedidoFormField {
   EmailDeEnvio = 'emailDeEnvio',
   PedidoMinimoAtacado = 'pedidoMinimoAtacado',
   PedidoMinimoVarejo = 'pedidoMinimoVarejo',
+  ListarProdutoSomenteComEstoque = 'listarProdutoSomenteComEstoque',
   VendaDeProdutoComEstoque = 'vendaDeProdutoComEstoque',
   WhatsApp = 'whatsApp',
 }
@@ -15,6 +16,7 @@ export interface ConfiguracaoPedido {
   whatsApp?: string
   pedidoMinimoAtacado?: number
   pedidoMinimoVarejo?: number
+  listarProdutoSomenteComEstoque: boolean
   vendaDeProdutoComEstoque: boolean
 }
 
@@ -24,6 +26,7 @@ export type AtualizarConfiguracaoPedido = Pick<
   | 'whatsApp'
   | 'pedidoMinimoAtacado'
   | 'pedidoMinimoVarejo'
+  | 'listarProdutoSomenteComEstoque'
   | 'vendaDeProdutoComEstoque'
 >
 

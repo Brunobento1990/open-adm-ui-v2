@@ -16,6 +16,7 @@ const valoresIniciais: ConfiguracaoPedidoForm = {
   whatsApp: '',
   pedidoMinimoAtacado: '',
   pedidoMinimoVarejo: '',
+  listarProdutoSomenteComEstoque: false,
   vendaDeProdutoComEstoque: false,
 }
 
@@ -38,6 +39,7 @@ export function ConfiguracaoPedidoPage() {
         whatsApp: limparTelefone(values.whatsApp),
         pedidoMinimoAtacado: valorMonetarioOuUndefined(values.pedidoMinimoAtacado),
         pedidoMinimoVarejo: valorMonetarioOuUndefined(values.pedidoMinimoVarejo),
+        listarProdutoSomenteComEstoque: values.listarProdutoSomenteComEstoque,
         vendaDeProdutoComEstoque: values.vendaDeProdutoComEstoque,
       })
       if (response) {
@@ -46,6 +48,8 @@ export function ConfiguracaoPedidoPage() {
           whatsApp: response.whatsApp ?? '',
           pedidoMinimoAtacado: response.pedidoMinimoAtacado ?? '',
           pedidoMinimoVarejo: response.pedidoMinimoVarejo ?? '',
+          listarProdutoSomenteComEstoque:
+            response.listarProdutoSomenteComEstoque ?? false,
           vendaDeProdutoComEstoque: response.vendaDeProdutoComEstoque,
         })
       }
@@ -61,6 +65,8 @@ export function ConfiguracaoPedidoPage() {
         whatsApp: response.whatsApp ?? '',
         pedidoMinimoAtacado: response.pedidoMinimoAtacado ?? '',
         pedidoMinimoVarejo: response.pedidoMinimoVarejo ?? '',
+        listarProdutoSomenteComEstoque:
+          response.listarProdutoSomenteComEstoque ?? false,
         vendaDeProdutoComEstoque: response.vendaDeProdutoComEstoque,
       })
     }
@@ -132,6 +138,16 @@ export function ConfiguracaoPedidoPage() {
         </FormRoot.FormItemRow>
       </FormRoot.FormRow>
       <FormRoot.FormRow>
+        <FormRoot.FormItemRow xs={12} sm={6}>
+          <InputApp
+            checked={form.values.listarProdutoSomenteComEstoque}
+            id={ConfiguracaoPedidoFormField.ListarProdutoSomenteComEstoque}
+            label="Listar produto somente com estoque"
+            name={ConfiguracaoPedidoFormField.ListarProdutoSomenteComEstoque}
+            onChange={form.onChange}
+            type={InputAppType.Checkbox}
+          />
+        </FormRoot.FormItemRow>
         <FormRoot.FormItemRow xs={12} sm={6}>
           <InputApp
             checked={form.values.vendaDeProdutoComEstoque}
