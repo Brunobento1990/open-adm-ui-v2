@@ -120,6 +120,8 @@ export function TabelaComDrag(props: TabelaComDragProps) {
       onContextMenu={(event) => event.preventDefault()}
       style={{
         width: props.width ?? '100%',
+        maxWidth: props.maxWidth,
+        minWidth: props.minWidth,
         height: props.height ?? '100%',
         marginTop: props.marginTop,
       }}

@@ -119,6 +119,7 @@ export function HeaderTable({
       active={listarInativos}
       ariaLabel={HeaderTableMenu.AriaLabel}
       buttonIcon={HeaderTableIcon.Menu}
+      buttonSx={{ flex: '0 0 auto' }}
       id={HeaderTableMenu.Id}
       items={menuItems}
       tooltip={HeaderTableMenu.Tooltip}
@@ -127,11 +128,11 @@ export function HeaderTable({
 
   if (isCelular) {
     return (
-      <Stack spacing={1} sx={{ width: '100%' }}>
+      <Stack spacing={1} sx={{ minWidth: 0, width: '100%' }}>
         <Stack
           direction="row"
           spacing={1}
-          sx={{ alignItems: 'center', width: '100%' }}
+          sx={{ alignItems: 'center', minWidth: 0, width: '100%' }}
         >
           {!notBtnAdd && urlAdd && (
             <Tooltip title="Adicionar">
@@ -169,7 +170,7 @@ export function HeaderTable({
     <Stack
       direction={isCelular ? 'column' : 'row'}
       spacing={1}
-      sx={{ alignItems: isCelular ? 'stretch' : 'center', width: '100%' }}
+      sx={{ alignItems: isCelular ? 'stretch' : 'center', minWidth: 0, width: '100%' }}
     >
       {!notBtnAdd && urlAdd && (
         <ButtonApp onClick={() => navigate(urlAdd)}>Adicionar</ButtonApp>

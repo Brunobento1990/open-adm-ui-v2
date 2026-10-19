@@ -164,6 +164,8 @@ export function TableIndex(props: ITableIndexProps) {
       overflow={BoxAppOverflow.Auto}
       height="100%"
       width="100%"
+      maxWidth="100%"
+      minWidth={0}
       minHeight={0}
       boxSizing="border-box"
       display={BoxAppDisplay.Flex}
@@ -186,7 +188,13 @@ export function TableIndex(props: ITableIndexProps) {
         />
       )}
 
-      <BoxApp flex={1} minHeight={0} overflow={BoxAppOverflow.Hidden}>
+      <BoxApp
+        flex={1}
+        width="100%"
+        maxWidth="100%"
+        minWidth={0}
+        minHeight={0}
+      >
         <TabelaComDrag
           loading={statusRequisicao === 'loading'}
           selecionarLinha={props.selecionarLinha}
@@ -195,6 +203,8 @@ export function TableIndex(props: ITableIndexProps) {
           }
           rowHeight={props.rowHeight}
           height="100%"
+          maxWidth="100%"
+          minWidth={0}
           columns={[...props.columns, ...defaultColumns]}
           rows={paginacao?.values ?? []}
           sorting={sorting}

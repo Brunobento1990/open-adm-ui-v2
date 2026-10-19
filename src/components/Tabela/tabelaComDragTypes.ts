@@ -35,6 +35,8 @@ export interface TabelaComDragProps {
   selecionarLinha?: (row: unknown, index: number) => void
   height?: number | string
   width?: number | string
+  minWidth?: number | string
+  maxWidth?: number | string
   marginTop?: string
   getBackgroundColor?: (row: unknown) => Record<string, string | number> | undefined
   onDoubleClick?: (item: unknown, index: number, key?: string) => void
