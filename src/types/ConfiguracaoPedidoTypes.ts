@@ -1,5 +1,6 @@
 export enum ConfiguracaoPedidoFormField {
   EmailDeEnvio = 'emailDeEnvio',
+  MensagemPedidoFinalizado = 'mensagemPedidoFinalizado',
   PedidoMinimoAtacado = 'pedidoMinimoAtacado',
   PedidoMinimoVarejo = 'pedidoMinimoVarejo',
   ListarProdutoSomenteComEstoque = 'listarProdutoSomenteComEstoque',
@@ -13,6 +14,7 @@ export interface ConfiguracaoPedido {
   dataDeAtualizacao: string
   numero: number
   emailDeEnvio: string
+  mensagemPedidoFinalizado?: string
   whatsApp?: string
   pedidoMinimoAtacado?: number
   pedidoMinimoVarejo?: number
@@ -23,6 +25,7 @@ export interface ConfiguracaoPedido {
 export type AtualizarConfiguracaoPedido = Pick<
   ConfiguracaoPedido,
   | 'emailDeEnvio'
+  | 'mensagemPedidoFinalizado'
   | 'whatsApp'
   | 'pedidoMinimoAtacado'
   | 'pedidoMinimoVarejo'

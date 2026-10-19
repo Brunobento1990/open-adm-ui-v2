@@ -13,6 +13,7 @@ import { limparTelefone } from '../../../utils/documentUtils'
 
 const valoresIniciais: ConfiguracaoPedidoForm = {
   emailDeEnvio: '',
+  mensagemPedidoFinalizado: '',
   whatsApp: '',
   pedidoMinimoAtacado: '',
   pedidoMinimoVarejo: '',
@@ -36,6 +37,7 @@ export function ConfiguracaoPedidoPage() {
     onSubmit: async (values: ConfiguracaoPedidoForm) => {
       const response = await atualizar.fetch({
         emailDeEnvio: values.emailDeEnvio,
+        mensagemPedidoFinalizado: values.mensagemPedidoFinalizado,
         whatsApp: limparTelefone(values.whatsApp),
         pedidoMinimoAtacado: valorMonetarioOuUndefined(values.pedidoMinimoAtacado),
         pedidoMinimoVarejo: valorMonetarioOuUndefined(values.pedidoMinimoVarejo),
@@ -45,6 +47,7 @@ export function ConfiguracaoPedidoPage() {
       if (response) {
         form.setValue({
           emailDeEnvio: response.emailDeEnvio,
+          mensagemPedidoFinalizado: response.mensagemPedidoFinalizado ?? '',
           whatsApp: response.whatsApp ?? '',
           pedidoMinimoAtacado: response.pedidoMinimoAtacado ?? '',
           pedidoMinimoVarejo: response.pedidoMinimoVarejo ?? '',
@@ -62,6 +65,7 @@ export function ConfiguracaoPedidoPage() {
       if (!response) return
       form.setValue({
         emailDeEnvio: response.emailDeEnvio,
+        mensagemPedidoFinalizado: response.mensagemPedidoFinalizado ?? '',
         whatsApp: response.whatsApp ?? '',
         pedidoMinimoAtacado: response.pedidoMinimoAtacado ?? '',
         pedidoMinimoVarejo: response.pedidoMinimoVarejo ?? '',
@@ -81,6 +85,21 @@ export function ConfiguracaoPedidoPage() {
       submit={form.onSubmit}
       textoButton="Salvar"
     >
+      <FormRoot.FormRow>
+        <FormRoot.FormItemRow xs={12}>
+          <InputApp
+            id={ConfiguracaoPedidoFormField.MensagemPedidoFinalizado}
+            label="Mensagem do pedido finalizado"
+            maxLength={3000}
+            multiline
+            name={ConfiguracaoPedidoFormField.MensagemPedidoFinalizado}
+            onBlur={form.onBlur}
+            onChange={form.onChange}
+            rows={6}
+            value={form.values.mensagemPedidoFinalizado ?? ''}
+          />
+        </FormRoot.FormItemRow>
+      </FormRoot.FormRow>
       <FormRoot.FormRow>
         <FormRoot.FormItemRow xs={12} sm={6}>
           <InputApp
