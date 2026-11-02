@@ -200,6 +200,8 @@ export enum PedidoApiRoutePath {
   Criar = '/create',
   Download = '/download-pedido',
   Excluir = '/delete',
+  Itens = '/itens',
+  ItensQuantidade = '/itens/quantidade',
   Obter = '/get',
   RelatorioPorPeriodo = '/relatorio-por-periodo',
   RelatorioPorPeriodoImprimir = '/relatorio-por-periodo/imprimir',

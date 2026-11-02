@@ -52,6 +52,20 @@ export interface PedidoCriarPayload {
   enderecoEntrega?: EnderecoClienteVenda
 }
 
+export interface PedidoItemAdicionarPayload {
+  pedidoId: string
+  produtoId: string
+  pesoId?: string
+  tamanhoId?: string
+  quantidade: number
+  valorUnitario: number
+}
+
+export interface PedidoItemAtualizarQuantidadePayload {
+  id: string
+  quantidade: number
+}
+
 export enum PedidoStatus {
   EmAberto = 0,
   Faturado = 1,
@@ -110,10 +124,12 @@ export interface PedidoPaginacao {
 }
 
 export enum PedidoItemColumnField {
+  Acoes = 'acoes',
   Estoque = 'estoqueDisponivel',
   PesoTamanho = 'pesoTamanho',
   Produto = 'produto',
   Quantidade = 'quantidade',
+  ValorTotal = 'valorTotal',
   ValorUnitario = 'valorUnitario',
 }
 

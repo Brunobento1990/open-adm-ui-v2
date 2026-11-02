@@ -4,10 +4,16 @@ import type {
   PedidoAtualizarStatusPayload,
   PedidoCobranca,
   PedidoCriarPayload,
+  PedidoItemAdicionarPayload,
+  PedidoItemAtualizarQuantidadePayload,
   RelatorioPedidoListagem,
   RelatorioPedidoPayload,
 } from '../types/PedidoTypes'
-import { ApiRoutePath, PedidoApiRoutePath, PedidoCobrancaApiRoutePath } from './apiRoutes'
+import {
+  ApiRoutePath,
+  PedidoApiRoutePath,
+  PedidoCobrancaApiRoutePath,
+} from './apiRoutes'
 
 export function useApiPedido() {
   const apiCriar = useApi({
@@ -31,6 +37,18 @@ export function useApiPedido() {
   const apiAtualizarStatus = useApi({
     method: ApiMethod.Put,
     url: `${ApiRoutePath.Pedido}${PedidoApiRoutePath.AtualizarStatus}`,
+  })
+  const apiExcluirItem = useApi({
+    method: ApiMethod.Delete,
+    url: `${ApiRoutePath.Pedido}${PedidoApiRoutePath.Itens}`,
+  })
+  const apiAdicionarItem = useApi({
+    method: ApiMethod.Post,
+    url: `${ApiRoutePath.Pedido}${PedidoApiRoutePath.Itens}`,
+  })
+  const apiEditarItem = useApi({
+    method: ApiMethod.Put,
+    url: `${ApiRoutePath.Pedido}${PedidoApiRoutePath.ItensQuantidade}`,
   })
   const apiCobranca = useApi({
     method: ApiMethod.Get,
@@ -96,6 +114,48 @@ export function useApiPedido() {
           message: 'Status atualizado com sucesso',
         }),
       loading: apiAtualizarStatus.loading,
+    },
+    excluirItem: {
+      fetch: async (id: string) => {
+        let sucesso = false
+        await apiExcluirItem.action({
+          urlParams: `?id=${encodeURIComponent(id)}`,
+          message: 'Item excluído com sucesso',
+          onSuccess: () => {
+            sucesso = true
+          },
+        })
+        return sucesso
+      },
+      loading: apiExcluirItem.loading,
+    },
+    adicionarItem: {
+      fetch: async (body: PedidoItemAdicionarPayload) => {
+        let sucesso = false
+        await apiAdicionarItem.action({
+          body,
+          message: 'Item adicionado com sucesso',
+          onSuccess: () => {
+            sucesso = true
+          },
+        })
+        return sucesso
+      },
+      loading: apiAdicionarItem.loading,
+    },
+    editarItem: {
+      fetch: async (body: PedidoItemAtualizarQuantidadePayload) => {
+        let sucesso = false
+        await apiEditarItem.action({
+          body,
+          message: 'Item atualizado com sucesso',
+          onSuccess: () => {
+            sucesso = true
+          },
+        })
+        return sucesso
+      },
+      loading: apiEditarItem.loading,
     },
     cobranca: {
       fetch: (pedidoId: string) => apiCobranca.action<PedidoCobranca>({
