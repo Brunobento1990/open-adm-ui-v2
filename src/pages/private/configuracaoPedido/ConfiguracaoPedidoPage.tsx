@@ -19,6 +19,7 @@ const valoresIniciais: ConfiguracaoPedidoForm = {
   pedidoMinimoVarejo: '',
   listarProdutoSomenteComEstoque: false,
   vendaDeProdutoComEstoque: false,
+  notificarCadastroNovoCliente: false,
 }
 
 const validacao = new YupAdapter()
@@ -43,6 +44,7 @@ export function ConfiguracaoPedidoPage() {
         pedidoMinimoVarejo: valorMonetarioOuUndefined(values.pedidoMinimoVarejo),
         listarProdutoSomenteComEstoque: values.listarProdutoSomenteComEstoque,
         vendaDeProdutoComEstoque: values.vendaDeProdutoComEstoque,
+        notificarCadastroNovoCliente: values.notificarCadastroNovoCliente,
       })
       if (response) {
         form.setValue({
@@ -54,6 +56,8 @@ export function ConfiguracaoPedidoPage() {
           listarProdutoSomenteComEstoque:
             response.listarProdutoSomenteComEstoque ?? false,
           vendaDeProdutoComEstoque: response.vendaDeProdutoComEstoque,
+          notificarCadastroNovoCliente:
+            response.notificarCadastroNovoCliente ?? false,
         })
       }
     },
@@ -72,6 +76,8 @@ export function ConfiguracaoPedidoPage() {
         listarProdutoSomenteComEstoque:
           response.listarProdutoSomenteComEstoque ?? false,
         vendaDeProdutoComEstoque: response.vendaDeProdutoComEstoque,
+        notificarCadastroNovoCliente:
+          response.notificarCadastroNovoCliente ?? false,
       })
     }
     carregar()
@@ -173,6 +179,16 @@ export function ConfiguracaoPedidoPage() {
             id={ConfiguracaoPedidoFormField.VendaDeProdutoComEstoque}
             label="Venda de produto somente com estoque"
             name={ConfiguracaoPedidoFormField.VendaDeProdutoComEstoque}
+            onChange={form.onChange}
+            type={InputAppType.Checkbox}
+          />
+        </FormRoot.FormItemRow>
+        <FormRoot.FormItemRow xs={12} sm={6}>
+          <InputApp
+            checked={form.values.notificarCadastroNovoCliente}
+            id={ConfiguracaoPedidoFormField.NotificarCadastroNovoCliente}
+            label="Notificar cadastro de novo cliente"
+            name={ConfiguracaoPedidoFormField.NotificarCadastroNovoCliente}
             onChange={form.onChange}
             type={InputAppType.Checkbox}
           />
