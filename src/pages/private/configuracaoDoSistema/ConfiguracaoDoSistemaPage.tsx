@@ -1,20 +1,20 @@
 import { useEffect } from 'react'
-import { useApiConfiguracaoPedido } from '../../../api/useApiConfiguracaoPedido'
+import { useApiConfiguracaoDoSistema } from '../../../api/useApiConfiguracaoDoSistema'
 import { InputApp } from '../../../components/InputApp/InputApp'
 import { InputAppType } from '../../../components/InputApp/inputAppTypes'
 import { FormRoot } from '../../../form'
 import { useFormikAdapter } from '../../../hook/useFormikAdapter'
 import { YupAdapter } from '../../../lib/YupAdapter'
 import {
-  ConfiguracaoPedidoFormField,
-  type ConfiguracaoPedidoForm,
-} from '../../../types/ConfiguracaoPedidoTypes'
+  ConfiguracaoDoSistemaFormField,
+  type ConfiguracaoDoSistemaForm,
+} from '../../../types/ConfiguracaoDoSistemaTypes'
 import { limparTelefone } from '../../../utils/documentUtils'
 
-const valoresIniciais: ConfiguracaoPedidoForm = {
-  emailDeEnvio: '',
+const valoresIniciais: ConfiguracaoDoSistemaForm = {
+  emailParaEnvioNotificacao: '',
   mensagemPedidoFinalizado: '',
-  whatsApp: '',
+  whatsAppParaEnvioNotificacao: '',
   pedidoMinimoAtacado: '',
   pedidoMinimoVarejo: '',
   listarProdutoSomenteComEstoque: false,
@@ -23,23 +23,28 @@ const valoresIniciais: ConfiguracaoPedidoForm = {
 }
 
 const validacao = new YupAdapter()
-  .email(ConfiguracaoPedidoFormField.EmailDeEnvio, 'Informe o e-mail!')
+  .email(
+    ConfiguracaoDoSistemaFormField.EmailParaEnvioNotificacao,
+    'Informe o e-mail!',
+  )
   .build()
 
 function valorMonetarioOuUndefined(value?: number | '') {
   return value === '' ? undefined : value
 }
 
-export function ConfiguracaoPedidoPage() {
-  const { atualizar, obter } = useApiConfiguracaoPedido()
-  const form = useFormikAdapter<ConfiguracaoPedidoForm>({
+export function ConfiguracaoDoSistemaPage() {
+  const { atualizar, obter } = useApiConfiguracaoDoSistema()
+  const form = useFormikAdapter<ConfiguracaoDoSistemaForm>({
     initialValues: valoresIniciais,
     validationSchema: validacao,
-    onSubmit: async (values: ConfiguracaoPedidoForm) => {
+    onSubmit: async (values: ConfiguracaoDoSistemaForm) => {
       const response = await atualizar.fetch({
-        emailDeEnvio: values.emailDeEnvio,
+        emailParaEnvioNotificacao: values.emailParaEnvioNotificacao,
         mensagemPedidoFinalizado: values.mensagemPedidoFinalizado,
-        whatsApp: limparTelefone(values.whatsApp),
+        whatsAppParaEnvioNotificacao: limparTelefone(
+          values.whatsAppParaEnvioNotificacao,
+        ),
         pedidoMinimoAtacado: valorMonetarioOuUndefined(values.pedidoMinimoAtacado),
         pedidoMinimoVarejo: valorMonetarioOuUndefined(values.pedidoMinimoVarejo),
         listarProdutoSomenteComEstoque: values.listarProdutoSomenteComEstoque,
@@ -48,9 +53,10 @@ export function ConfiguracaoPedidoPage() {
       })
       if (response) {
         form.setValue({
-          emailDeEnvio: response.emailDeEnvio,
+          emailParaEnvioNotificacao: response.emailParaEnvioNotificacao,
           mensagemPedidoFinalizado: response.mensagemPedidoFinalizado ?? '',
-          whatsApp: response.whatsApp ?? '',
+          whatsAppParaEnvioNotificacao:
+            response.whatsAppParaEnvioNotificacao ?? '',
           pedidoMinimoAtacado: response.pedidoMinimoAtacado ?? '',
           pedidoMinimoVarejo: response.pedidoMinimoVarejo ?? '',
           listarProdutoSomenteComEstoque:
@@ -68,9 +74,10 @@ export function ConfiguracaoPedidoPage() {
       const response = await obter.fetch()
       if (!response) return
       form.setValue({
-        emailDeEnvio: response.emailDeEnvio,
+        emailParaEnvioNotificacao: response.emailParaEnvioNotificacao,
         mensagemPedidoFinalizado: response.mensagemPedidoFinalizado ?? '',
-        whatsApp: response.whatsApp ?? '',
+        whatsAppParaEnvioNotificacao:
+          response.whatsAppParaEnvioNotificacao ?? '',
         pedidoMinimoAtacado: response.pedidoMinimoAtacado ?? '',
         pedidoMinimoVarejo: response.pedidoMinimoVarejo ?? '',
         listarProdutoSomenteComEstoque:
@@ -94,11 +101,11 @@ export function ConfiguracaoPedidoPage() {
       <FormRoot.FormRow>
         <FormRoot.FormItemRow xs={12}>
           <InputApp
-            id={ConfiguracaoPedidoFormField.MensagemPedidoFinalizado}
+            id={ConfiguracaoDoSistemaFormField.MensagemPedidoFinalizado}
             label="Mensagem do pedido finalizado"
             maxLength={3000}
             multiline
-            name={ConfiguracaoPedidoFormField.MensagemPedidoFinalizado}
+            name={ConfiguracaoDoSistemaFormField.MensagemPedidoFinalizado}
             onBlur={form.onBlur}
             onChange={form.onChange}
             rows={6}
@@ -109,39 +116,39 @@ export function ConfiguracaoPedidoPage() {
       <FormRoot.FormRow>
         <FormRoot.FormItemRow xs={12} sm={6}>
           <InputApp
-            error={form.error(ConfiguracaoPedidoFormField.EmailDeEnvio)}
+            error={form.error(ConfiguracaoDoSistemaFormField.EmailParaEnvioNotificacao)}
             focus
-            helperText={form.helperText(ConfiguracaoPedidoFormField.EmailDeEnvio)}
-            id={ConfiguracaoPedidoFormField.EmailDeEnvio}
-            label="E-mail de envio"
+            helperText={form.helperText(ConfiguracaoDoSistemaFormField.EmailParaEnvioNotificacao)}
+            id={ConfiguracaoDoSistemaFormField.EmailParaEnvioNotificacao}
+            label="E-mail para envio de notificação"
             maxLength={255}
-            name={ConfiguracaoPedidoFormField.EmailDeEnvio}
+            name={ConfiguracaoDoSistemaFormField.EmailParaEnvioNotificacao}
             onBlur={form.onBlur}
             onChange={form.onChange}
             required
             type={InputAppType.Email}
-            value={form.values.emailDeEnvio}
+            value={form.values.emailParaEnvioNotificacao}
           />
         </FormRoot.FormItemRow>
         <FormRoot.FormItemRow xs={12} sm={6}>
           <InputApp
-            id={ConfiguracaoPedidoFormField.WhatsApp}
-            label="WhatsApp de envio"
+            id={ConfiguracaoDoSistemaFormField.WhatsAppParaEnvioNotificacao}
+            label="WhatsApp para envio de notificação"
             maxLength={255}
-            name={ConfiguracaoPedidoFormField.WhatsApp}
+            name={ConfiguracaoDoSistemaFormField.WhatsAppParaEnvioNotificacao}
             onBlur={form.onBlur}
             onChange={form.onChange}
             type={InputAppType.Tel}
-            value={form.values.whatsApp}
+            value={form.values.whatsAppParaEnvioNotificacao}
           />
         </FormRoot.FormItemRow>
       </FormRoot.FormRow>
       <FormRoot.FormRow>
         <FormRoot.FormItemRow xs={12} sm={6}>
           <InputApp
-            id={ConfiguracaoPedidoFormField.PedidoMinimoAtacado}
+            id={ConfiguracaoDoSistemaFormField.PedidoMinimoAtacado}
             label="Pedido minimo no atacado"
-            name={ConfiguracaoPedidoFormField.PedidoMinimoAtacado}
+            name={ConfiguracaoDoSistemaFormField.PedidoMinimoAtacado}
             onBlur={form.onBlur}
             onChange={form.onChange}
             startAdornment="R$"
@@ -151,9 +158,9 @@ export function ConfiguracaoPedidoPage() {
         </FormRoot.FormItemRow>
         <FormRoot.FormItemRow xs={12} sm={6}>
           <InputApp
-            id={ConfiguracaoPedidoFormField.PedidoMinimoVarejo}
+            id={ConfiguracaoDoSistemaFormField.PedidoMinimoVarejo}
             label="Pedido minimo no varejo"
-            name={ConfiguracaoPedidoFormField.PedidoMinimoVarejo}
+            name={ConfiguracaoDoSistemaFormField.PedidoMinimoVarejo}
             onBlur={form.onBlur}
             onChange={form.onChange}
             startAdornment="R$"
@@ -166,9 +173,9 @@ export function ConfiguracaoPedidoPage() {
         <FormRoot.FormItemRow xs={12} sm={6}>
           <InputApp
             checked={form.values.listarProdutoSomenteComEstoque}
-            id={ConfiguracaoPedidoFormField.ListarProdutoSomenteComEstoque}
+            id={ConfiguracaoDoSistemaFormField.ListarProdutoSomenteComEstoque}
             label="Listar produto somente com estoque"
-            name={ConfiguracaoPedidoFormField.ListarProdutoSomenteComEstoque}
+            name={ConfiguracaoDoSistemaFormField.ListarProdutoSomenteComEstoque}
             onChange={form.onChange}
             type={InputAppType.Checkbox}
           />
@@ -176,9 +183,9 @@ export function ConfiguracaoPedidoPage() {
         <FormRoot.FormItemRow xs={12} sm={6}>
           <InputApp
             checked={form.values.vendaDeProdutoComEstoque}
-            id={ConfiguracaoPedidoFormField.VendaDeProdutoComEstoque}
+            id={ConfiguracaoDoSistemaFormField.VendaDeProdutoComEstoque}
             label="Venda de produto somente com estoque"
-            name={ConfiguracaoPedidoFormField.VendaDeProdutoComEstoque}
+            name={ConfiguracaoDoSistemaFormField.VendaDeProdutoComEstoque}
             onChange={form.onChange}
             type={InputAppType.Checkbox}
           />
@@ -186,9 +193,9 @@ export function ConfiguracaoPedidoPage() {
         <FormRoot.FormItemRow xs={12} sm={6}>
           <InputApp
             checked={form.values.notificarCadastroNovoCliente}
-            id={ConfiguracaoPedidoFormField.NotificarCadastroNovoCliente}
+            id={ConfiguracaoDoSistemaFormField.NotificarCadastroNovoCliente}
             label="Notificar cadastro de novo cliente"
-            name={ConfiguracaoPedidoFormField.NotificarCadastroNovoCliente}
+            name={ConfiguracaoDoSistemaFormField.NotificarCadastroNovoCliente}
             onChange={form.onChange}
             type={InputAppType.Checkbox}
           />

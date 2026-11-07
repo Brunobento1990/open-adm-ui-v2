@@ -1,22 +1,22 @@
-export enum ConfiguracaoPedidoFormField {
-  EmailDeEnvio = 'emailDeEnvio',
+export enum ConfiguracaoDoSistemaFormField {
+  EmailParaEnvioNotificacao = 'emailParaEnvioNotificacao',
   MensagemPedidoFinalizado = 'mensagemPedidoFinalizado',
   PedidoMinimoAtacado = 'pedidoMinimoAtacado',
   PedidoMinimoVarejo = 'pedidoMinimoVarejo',
   ListarProdutoSomenteComEstoque = 'listarProdutoSomenteComEstoque',
   VendaDeProdutoComEstoque = 'vendaDeProdutoComEstoque',
   NotificarCadastroNovoCliente = 'notificarCadastroNovoCliente',
-  WhatsApp = 'whatsApp',
+  WhatsAppParaEnvioNotificacao = 'whatsAppParaEnvioNotificacao',
 }
 
-export interface ConfiguracaoPedido {
+export interface ConfiguracaoDoSistema {
   id: string
   dataDeCriacao: string
   dataDeAtualizacao: string
   numero: number
-  emailDeEnvio: string
+  emailParaEnvioNotificacao: string
   mensagemPedidoFinalizado?: string
-  whatsApp?: string
+  whatsAppParaEnvioNotificacao?: string
   pedidoMinimoAtacado?: number
   pedidoMinimoVarejo?: number
   listarProdutoSomenteComEstoque: boolean
@@ -24,11 +24,11 @@ export interface ConfiguracaoPedido {
   notificarCadastroNovoCliente: boolean
 }
 
-export type AtualizarConfiguracaoPedido = Pick<
-  ConfiguracaoPedido,
-  | 'emailDeEnvio'
+export type AtualizarConfiguracaoDoSistema = Pick<
+  ConfiguracaoDoSistema,
+  | 'emailParaEnvioNotificacao'
   | 'mensagemPedidoFinalizado'
-  | 'whatsApp'
+  | 'whatsAppParaEnvioNotificacao'
   | 'pedidoMinimoAtacado'
   | 'pedidoMinimoVarejo'
   | 'listarProdutoSomenteComEstoque'
@@ -36,8 +36,8 @@ export type AtualizarConfiguracaoPedido = Pick<
   | 'notificarCadastroNovoCliente'
 >
 
-export type ConfiguracaoPedidoForm = Omit<
-  AtualizarConfiguracaoPedido,
+export type ConfiguracaoDoSistemaForm = Omit<
+  AtualizarConfiguracaoDoSistema,
   'pedidoMinimoAtacado' | 'pedidoMinimoVarejo'
 > & {
   pedidoMinimoAtacado?: number | ''

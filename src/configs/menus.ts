@@ -198,8 +198,8 @@ export const menus: Menu[] = [
       },
       {
         id: 26,
-        nome: 'Pedidos',
-        caminho: PrivateRoutePath.ConfiguracaoPedido,
+        nome: 'Configuração do sistema',
+        caminho: PrivateRoutePath.ConfiguracaoDoSistema,
         icone: 'material-symbols:order-approve-outline',
         filhos: [],
       },

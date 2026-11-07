@@ -9,7 +9,7 @@ export enum ApiRoutePath {
   Dashboard = '/home/adm',
   Contato = '/contato',
   ConexaoWhatsApp = '/conexao-whatsapp',
-  ConfiguracaoPedido = '/configuracoes-de-pedido',
+  ConfiguracaoDoSistema = '/configuracao-do-sistema',
   ConfiguracaoMercadoPago = '/configuracao-de-pagamento',
   AtendimentoNumero = '/telefone-atendimento',
   Autenticacao = '/login',
@@ -186,7 +186,7 @@ export enum CepApiRoutePath {
   Consultar = '/consultar',
 }
 
-export enum ConfiguracaoPedidoApiRoutePath {
+export enum ConfiguracaoDoSistemaApiRoutePath {
   Atualizar = '/update',
   Obter = '/get-configuracoes',
 }
